@@ -1,14 +1,5 @@
 <?
-/**
- * TRIBUNAL REGIONAL FEDERAL DA 4ª REGIÃO
- *
- * 29/04/2016 - criado por mga@trf4.jus.br
- *
- */
 
- /*
- No SIP criar os recursos md_resposta_processar, md_resposta_processar e md_abc_andamento_lancar e adicionar em um novo perfil chamado MD_ABC_Básico.
-*/
 
 class MdRespostaIntegracao extends SeiIntegracao{
 
@@ -20,18 +11,19 @@ class MdRespostaIntegracao extends SeiIntegracao{
   }
 
   public function getVersao() {
-    return '1.0.0';
+    return '0.0.1';
   }
 
   public function getInstituicao(){
-    return 'TRF4 - Tribunal Regional Federal da 4ª Região';
+    return 'Ministério da Economia - ME';
   }
 
   public function processarControlador($strAcao){
 
     switch($strAcao) {
 
-      case 'md_resposta_configuracao_cadastrar':
+      //case 'md_resposta_configuracao_cadastrar':
+      case 'md_resposta_configuracao':
         require_once dirname(__FILE__).'/resposta_configuracao.php';
         return true;
 
@@ -49,15 +41,30 @@ class MdRespostaIntegracao extends SeiIntegracao{
     return false;
   }
 
+
   public function montarBotaoProcesso(ProcedimentoAPI $objProcedimentoAPI){
 
     $arrBotoes = array();
+    $objPaginaSEI = PaginaSEI::getInstance();
+    $strDiretorioImagens = self::getDiretorio();
 
-    if (SessaoSEI::getInstance()->verificarPermissao('md_procedimento_enviar_resposta') && $objProcedimentoAPI->getSinAberto()=='S' && $objProcedimentoAPI->getCodigoAcesso() > 0) {
-      $arrBotoes[] = '<a href="#" onclick="enviarRespostalProcedimento();" tabindex="'.$numTabBotao.'" class="botaoSEI"><img class="infraCorBarraSistema"  tabindex="'.$numTabBotao.'" src="modulos/resposta/imagens/abc_grande.png" alt="Enviar Resposta" title="Enviar Resposta"/>';
+    //if (SessaoSEI::getInstance()->verificarPermissao('md_procedimento_enviar_resposta') && $objProcedimentoAPI->getSinAberto()=='S' && $objProcedimentoAPI->getCodigoAcesso() > 0) {
+    if (SessaoSEI::getInstance()->verificarPermissao('md_resposta_configuracao') && $objProcedimentoAPI->getSinAberto()=='S' && $objProcedimentoAPI->getCodigoAcesso() > 0) {
+      $numTabBotao = $objPaginaSEI->getProxTabBarraComandosSuperior();
+      $strLinkBotaoResposta  = '<a href="#" tabindex="'.$numTabBotao.'" class="botaoSEI">';
+      $strLinkBotaoResposta .= '<img class="infraCorBarraSistema" tabindex="'.$numTabBotao.'" src="'.$strDiretorioImagens.'/imagens/abc_grande.png" alt="Enviar Resposta" title="Enviar Resposta" />';
+      $strLinkBotaoResposta .= '</a>';
+
+      $arrBotoes[] = $strLinkBotaoResposta;
     }
 
     return $arrBotoes;
+  }
+
+  public static function getDiretorio() {
+    $arrConfig = ConfiguracaoSEI::getInstance()->getValor('SEI', 'Modulos');
+    $strPastaModulo = $arrConfig['MdRespostaIntegracao'];
+    return "modulos/".$strPastaModulo;
   }
 
 }

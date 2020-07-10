@@ -1,22 +1,18 @@
 <?
 
 try {
-    require_once dirname(__FILE__).'/../../SEI.php';
+  require_once dirname(__FILE__).'/../../SEI.php';
 
   session_start();
  
-  //////////////////////////////////////////////////////////////////////////////
   InfraDebug::getInstance()->setBolLigado(false);
   InfraDebug::getInstance()->setBolDebugInfra(true);
   InfraDebug::getInstance()->limpar();
-  //////////////////////////////////////////////////////////////////////////////
 
   SessaoSEI::getInstance()->validarLink();
-
   SessaoSEI::getInstance()->validarPermissao($_GET['acao']);
 
   $arrComandos = array();
-
 
   //Filtrar parâmetros
   $strParametros = '';
@@ -32,26 +28,27 @@ try {
   if (isset($_GET['id_documento'])){
     $strParametros .= "&id_documento=".$_GET['id_documento'];
   } 
-
-  if (isset($_GET['id_documento_edoc'])){
-    $strParametros .= "&id_documento_edoc=".$_GET['id_documento_edoc'];
-  } 
   
   $bolEnvioOK = false;
-	$strSinOuvidoriaTipoProcedimento = null;
 
   switch($_GET['acao']){
 
     case 'md_resposta_enviar':
-    	
-    	if ($_GET['acao']=='md_resposta_enviar'){
-    	  $strTitulo = 'Formulário Módudo de Resposta';  
-      }
+      
+      $strTitulo = 'Enviar Resposta ao Protocolo Eletrônico';
+      
+      $arrProtocolos = array();
+      $arrProtocolos[] = $_GET['id_procedimento'];     
+      
+      $objMdRespostaEnvioDTO = new MdRespostaEnvioDTO();
+      $objMdRespostaEnvioDTO->setNumIdResposta(null);
+		  $objMdRespostaEnvioDTO->setStrMensagem($_POST['txaMensagem']);
+      $objMdRespostaEnvioDTO->setDblIdProtocolo($_GET['id_procedimento']);
+      $objMdRespostaEnvioDTO->setStrSinConclusiva($_POST['rdoSinConclusiva']);
+      $objMdRespostaEnvioDTO->setDthDthResposta(InfraData::getStrDataHoraAtual());
 		  
-      //Monta tabela de documentos do processo
       $objProcedimentoDTO = new ProcedimentoDTO();
       $objProcedimentoDTO->retNumIdUnidadeGeradoraProtocolo();
-		  $objProcedimentoDTO->retStrSinOuvidoriaTipoProcedimento();
       $objProcedimentoDTO->setDblIdProcedimento($_GET['id_procedimento']);
       $objProcedimentoDTO->setStrSinDocTodos('S');
         
@@ -69,7 +66,6 @@ try {
 			$objDocumentoRN = new DocumentoRN();
 			
 			$numDocumentos = 0;
-			$strSinOuvidoriaTipoProcedimento = $objProcedimentoDTO->getStrSinOuvidoriaTipoProcedimento();
 			
 			if (InfraArray::contar($objProcedimentoDTO->getArrObjDocumentoDTO())){
 				
@@ -134,116 +130,28 @@ try {
 						  									</tr>'.
                                 $strResultadoDocumentos.
                                 '</table>';
-	    	
-				if ($_GET['acao']=='responder_formulario') {
+        
 
-          $objProtocoloDTO = new ProtocoloDTO();
-          $objProtocoloDTO->retStrSiglaUnidadeGeradora();
-          $objProtocoloDTO->retStrSiglaOrgaoUnidadeGeradora();
-          $objProtocoloDTO->retStrConteudoDocumento();
-          $objProtocoloDTO->retDblIdProcedimentoDocumento();
-          $objProtocoloDTO->retNumIdSerieDocumento();
-          $objProtocoloDTO->retStrStaDocumentoDocumento();
-          $objProtocoloDTO->setDblIdProtocolo($_GET['id_documento']);
+      if (isset($_POST['hdnFlagEnvio'])){
+      	
+     	  try{
+					$objMdRespostaEnvioDTO->setArrIdDocumentosProcesso(PaginaSEI::getInstance()->getArrStrItensSelecionados());
 
-          $objProtocoloRN = new ProtocoloRN();
-          $objProtocoloDTO = $objProtocoloRN->consultarRN0186($objProtocoloDTO);
-
-          if ($objProtocoloDTO == null) {
-            throw new InfraException('Formulário não encontrado.');
-          }
-
-          $objInfraParametro = new InfraParametro(BancoSEI::getInstance());
-          $arrParametros = $objInfraParametro->listarValores(array('SEI_ACESSO_FORMULARIO_OUVIDORIA', 'ID_SERIE_OUVIDORIA'));
-          $bolAcessoRestritoOuvidoria = ($arrParametros['SEI_ACESSO_FORMULARIO_OUVIDORIA'] == '1');
-          $numIdSerieOuvidoria = $arrParametros['ID_SERIE_OUVIDORIA'];
-
-          if ($objProtocoloDTO->getStrStaDocumentoDocumento() == DocumentoRN::$TD_FORMULARIO_AUTOMATICO &&
-              $objProtocoloDTO->getNumIdSerieDocumento() == $numIdSerieOuvidoria){
-
-            $objOrgaoDTO = new OrgaoDTO();
-            $objOrgaoDTO->setStrSigla($objProtocoloDTO->getStrSiglaOrgaoUnidadeGeradora());
-          }
-
-          if ($bolAcessoRestritoOuvidoria &&
-              $objProtocoloDTO->getStrStaDocumentoDocumento() == DocumentoRN::$TD_FORMULARIO_AUTOMATICO &&
-              $objProtocoloDTO->getNumIdSerieDocumento() == $numIdSerieOuvidoria){
-
-          }else {
-
-            $objAtividadeDTO = new AtividadeDTO();
-            $objAtividadeDTO->retDthAbertura();
-            $objAtividadeDTO->setDblIdProtocolo($objProtocoloDTO->getDblIdProcedimentoDocumento());
-            $objAtividadeDTO->setNumIdTarefa(TarefaRN::$TI_GERACAO_PROCEDIMENTO);
-
-            $objAtividadeRN = new AtividadeRN();
-            $objAtividadeDTO = $objAtividadeRN->consultarRN0033($objAtividadeDTO);
-
-            $strConteudo = '';
-            $strConteudo .= 'Formulário enviado em ' . $objAtividadeDTO->getDthAbertura() . '.' . "\n";
-            $strConteudo .= DocumentoINT::formatarExibicaoConteudo(DocumentoINT::$TV_TEXTO, $objProtocoloDTO->getStrConteudoDocumento());
-
-            $arrConteudo = explode("\n", $strConteudo);
-            $strConteudo = '';
-            foreach ($arrConteudo as $linha) {
-              $strConteudo .= '>  ' . $linha . "\n";
-            }
-          }
-				}else if ($_GET['acao']=='email_encaminhar'){
-				  
-      	  $objDocumentoDTO = new DocumentoDTO();
-      	  $objDocumentoDTO->retStrConteudo();
-      	  $objDocumentoDTO->setDblIdDocumento($_GET['id_documento']);
-      	  
-      	  $objDocumentoRN = new DocumentoRN();
-      	  $objDocumentoDTO = $objDocumentoRN->consultarRN0005($objDocumentoDTO);
-
-      	  if ($objDocumentoDTO==null){
-      	    throw new InfraException('Documento não encontrado.');
-      	  }
-      	   
-      	  $strConteudo = $objDocumentoDTO->getStrConteudo();
-      	  
-      		if (!InfraString::isBolVazia($strConteudo) && substr($strConteudo,0,5) == '<?xml'){
-      
-      			$objXml = new DomDocument('1.0','iso-8859-1');
-      
-      			$objXml->loadXML($strConteudo);
-      
-      			$arrAtributos = $objXml->getElementsByTagName('atributo');
-
-      			$objAnexoRN = new AnexoRN();
-      			$arrAnexos = array();
-      			foreach($arrAtributos as $atributo){
-      				if ($atributo->getAttribute('nome') == 'Anexos'){
-      				  $arrAnexosEncaminhar = $atributo->getElementsByTagName('valor');
-      				  foreach($arrAnexosEncaminhar as $objAnexoEncaminhar){
-      				    foreach($objAnexoEncaminhar->attributes as $attr) {
-      				      if ($attr->nodeName == 'id'){
-
-      				        $strNomeArquivo = DocumentoINT::formatarTagConteudo(DocumentoINT::$TV_TEXTO,trim($objAnexoEncaminhar->nodeValue));
-											$strNomeUpload = $objAnexoRN->gerarNomeArquivoTemporario();
-
-      				        $objAnexoDTO = new AnexoDTO();
-      				        $objAnexoDTO->retNumIdAnexo();      				        
-      				        $objAnexoDTO->retDthInclusao();
-      				        $objAnexoDTO->setNumIdAnexo($attr->nodeValue);
-      				        $objAnexoDTO = $objAnexoRN->consultarRN0736($objAnexoDTO);      				        
-              				
-              				copy($objAnexoRN->obterLocalizacao($objAnexoDTO), DIR_SEI_TEMP.'/'.$strNomeUpload);
-              				
-              				$numTamanhoAnexo = filesize(DIR_SEI_TEMP.'/'.$strNomeUpload);
-              				
-              				$arrAnexos[] = array($strNomeUpload, PaginaSEI::tratarHTML($strNomeArquivo), date('d/m/Y H:i:s',time()), $numTamanhoAnexo, InfraUtil::formatarTamanhoBytes($numTamanhoAnexo));
-      				      }
-      				    }
-      				  }
-      				  $_POST['hdnAnexos'] = PaginaSEI::getInstance()->gerarItensTabelaDinamica($arrAnexos);
-      				  break;
-      				}
-      			}
-      		}
-				}
+					$objMdRespostaEnvioRN = new MdRespostaEnvioRN();
+					$objDocumentoDTO = $objMdRespostaEnvioRN->cadastrar($objMdRespostaEnvioDTO);
+					
+					//respostas de formulario usam remetente naoresponder (o erro nao volta para a caixa da unidade)
+					if ($_GET['acao']!='responder_formulario'){
+					  PaginaSEI::getInstance()->setStrMensagem(PaginaSEI::getInstance()->formatarParametrosJavaScript('Resposta enviada.'),PaginaSEI::$TIPO_MSG_AVISO);
+					}
+					
+					$strLinkRetorno = SessaoSEI::getInstance()->assinarLink('controlador.php?acao=arvore_visualizar&acao_origem='.$_GET['acao'].'&id_procedimento='.$_GET['id_procedimento'].'&id_documento='.$objDocumentoDTO->getDblIdDocumento().'&atualizar_arvore=1');
+					$bolEnvioOK = true;
+					
+        }catch(Exception $e){
+          PaginaSEI::getInstance()->processarExcecao($e);
+        }
+	    }
       
       break;
      
@@ -253,8 +161,8 @@ try {
 
 	$arrComandos[] = '<button type="button" onclick="submeterFormulario();" accesskey="E" name="btnEnviar" value="Enviar" class="infraButton"><span class="infraTeclaAtalho">E</span>nviar</button>';
 	$arrComandos[] = '<button type="button" accesskey="C" id="btnCancelar" name="btnCancelar" value="Cancelar" onclick="window.close();" class="infraButton"><span class="infraTeclaAtalho">C</span>ancelar</button>';
-  
-  $strLinkAjaxTextoPadrao = SessaoSEI::getInstance()->assinarLink('controlador_ajax.php?acao_ajax=texto_padrao_buscar_conteudo');
+
+  $strItensSelProcedimentos = ProcedimentoINT::conjuntoCompletoFormatadoRI0903($arrProtocolos);
 
 }catch(Exception $e){
   PaginaSEI::getInstance()->processarExcecao($e);
@@ -269,17 +177,13 @@ PaginaSEI::getInstance()->montarStyle();
 PaginaSEI::getInstance()->abrirStyle();
 ?>
 
-#hAlterar{margin-left: 30px;}
-#spLocalizadorPrincipal{margin-left: 30px;}
-#resultado_localizadores{font-size: 1.1em;}	
+#lblProcedimentos {position:absolute;left:0%;top:0%;}
+#selProcedimentos {position:absolute;left:0%;top:45%;width:95.5%;}
 
-#lblMensagem {position:absolute;left:0%;top:0%;}
-#txaMensagem {position:absolute;left:0%;top:8%;width:95%;}
+#lblMensagem {position:absolute;left:0%;top:5%;}
+#txaMensagem {position:absolute;left:0%;top:13%;width:95%;}
 
-#lblArquivo {position:absolute;left:0%;top:0%;width:95%;}
-#filArquivo {position:absolute;left:0%;top:40%;width:95%;}
-
-#divOpcao {position:absolute;left:23%;top:0%;width:30%;}
+#divAnexos {<?=$strDisplayAnexos?>}
 
 .remover {display:none;color:blue;float:right;font-size:0.8em;}
 .select2-highlighted a {display: inline}
@@ -292,181 +196,13 @@ PaginaSEI::getInstance()->adicionarJavaScript('js/select2/select2_locale_pt-BR.j
 PaginaSEI::getInstance()->abrirJavaScript();
 
 ?>
-////<script>
-
-function emailTokenizer(input, selection, selectCallback, opts) {
-	var original = input, // store the original so we can compare and know if we need to tell the search to update its text
-			dupe = false, // check for whether a token we extracted represents a duplicate selected choice
-			token, // token
-			index, // position at which the separator was found
-			i, l, // looping variables
-			separator; // the matched separator
-	while (true) {
-		index = -1;
-
-		for (i = 0, l = opts.tokenSeparators.length; i < l; i++) {
-			separator = opts.tokenSeparators[i];
-			index = input.indexOf(separator);
-			if (index >= 0) {
-				var a=input.indexOf('"');
-				if (a==-1 || a>index ) break;
-				var b=input.indexOf('"',a+1);
-				if (b==-1 || b<index)	break;
-				index = input.indexOf(separator,b);
-			}
-		}
-
-		if (index < 0) break; // did not find any token separator in the input string, bail
-
-		token = input.substring(0, index);
-		input = input.substring(index + separator.length);
-
-		if (input.length>0 && input.substr(-1,1)!=separator) input=input+separator;
-
-		if (token.length > 0) {
-			token = opts.createSearchChoice.call(this, token, selection);
-			if (token !== undefined && token !== null && opts.id(token) !== undefined && opts.id(token) !== null) {
-				dupe = false;
-				for (i = 0, l = selection.length; i < l; i++) {
-					if (opts.id(token) === opts.id(selection[i])) {
-						dupe = true; break;
-					}
-				}
-
-				if (!dupe) selectCallback(token);
-			}
-		}
-	}
-
-	if (original!==input) return input;
-}
-
-function removeItem(event,divId){
-	event=event||window.event;
-  event.stopPropagation();
-  event.preventDefault();
-
-  var el=$('#'+divId);
-  var html=el.html();
-  html=html.substring(0,html.indexOf('<a '));
-  html=html.replace(/<span[^>]*>(.*)<\/span>/,'$1');
-  $.ajax({
-    type:"POST",
-    url: "<?=$strLinkRemoverEmail;?>",
-    dataType: "xml",
-    data: "email="+encodeURIComponent(html)
-  });
-//  el.parent('li').remove();
-  var hdn=$('#hdnDestinatario');
-  var term=hdn.select2('container').find('input').val();
-  hdn.select2('close');
-  hdn.select2('search',term);
-
-}
-
-function format(result, container, query, escapeMarkup) {
-  var markup=[];
-  Select2.util.markMatch(result.text, query.term, markup, escapeMarkup);
-  return markup.join("")+"<a href='#' class='remover' onmousedown='removeItem(event,\""+container.attr('id')+"\");'>Esquecer</a>";;
-}
-
-function autocompletarEmails(input) {
-  $(input).select2({
-    tags: true,
-    formatResult: format,
-
-    minimumInputLength: 1,
-    formatInputTooShort: "",
-    separator:';',
-		tokenizer: emailTokenizer,
-    tokenSeparators: [";",","],
-    createSearchChoice: function (term, data) {
-      if (infraValidarEmail(infraTrim(term))) return { id:infraTrim(term),text:infraTrim(term) };
-    },
-    initSelection: function (element, callback) {
-      var data = [];
-      var emails = element.val().split(";");
-      $(emails).each(function () {
-        data.push({
-          id: this.toString(),
-          text: this.toString()
-        });
-      });
-      $(element).val('');
-      callback(data);
-    },
-    multiple: true,
-    ajax: {
-      type:"POST",
-      url: "<?=$strLinkEmails;?>",
-      dataType: "json",
-      data: function (term, page) {
-        return {
-          palavras_pesquisa: infraTrim(term)
-        };
-      },
-      results: function (data, page) {
-        return {
-          results: data
-        };
-      }
-    }
-  });
-}
-
-$(document).ready(function () {
-  autocompletarEmails("#hdnDestinatario");
-
-  $("#hdnDestinatario").select2("container").find("ul.select2-choices").sortable({
-    containment: "parent",
-    start: function () {
-      $("#hdnDestinatario").select2("onSortStart");
-    },
-    update: function () {
-      $("#hdnDestinatario").select2("onSortEnd");
-    }
-  });
-
-});
-		    
-var objLupaGrupo = null;
-var objAjaxTextoPadrao = null;
-var objUpload = null;
+//<script>
 
 function inicializar(){
   
   <?if ($bolEnvioOK){ ?>
     self.setTimeout('window.close()',1000);
   <?}?>
-
-  infraEfeitoTabelas();
-  
-  objAjaxTextoPadrao.processarResultado = function(arr) {
-    if (arr != null) {
-      infraInserirCursor(document.getElementById('txaMensagem'), arr['Conteudo']);
-    }
-  };
-  objAjaxTextoPadrao.executar();
-  
-  //Anexos
-  objUpload = new infraUpload('frmAnexos','<?=$strLinkAnexos?>');
-  objUpload.finalizou = function(arr){
-   	objTabelaAnexos.adicionar([arr['nome_upload'],arr['nome'],arr['data_hora'],arr['tamanho'],infraFormatarTamanhoBytes(arr['tamanho'])]);
-  }
-
-	if ('<?=$strSinOuvidoriaTipoProcedimento?>' == 'S') {
-		document.getElementById('txaMensagem').focus();
-	}else {
-		if (document.getElementById('selDe').value=='null') {
-			document.getElementById('selDe').focus();
-		} else {
-      if ('<?=$_GET['acao']?>'=='documento_email_circular'){
-        document.getElementById('txtAssunto').focus();
-      }else{
-        $('.select2-input').focus();
-      }
-		}
-	}
 
   if (INFRA_IE == 0){
      window.scrollTo(0,0);  
@@ -476,18 +212,29 @@ function inicializar(){
 }
 
 function validarEnvio() {
+  
+  if (document.getElementById('selProcedimentos').value == 'null') {
+    alert('Processo não informado.');
+    document.getElementById('selProcedimentos').focus();
+    return false;
+  }
 
   if (infraTrim(document.getElementById('txaMensagem').value)=='') {
-    alert('Informe a Descrição da Resposta.');
+    alert('Informe a Mensagem.');
     document.getElementById('txaMensagem').focus();
     return false;
   }
 
   if (document.getElementById('hdnInfraItensSelecionados').value==''){
     alert('Nenhum documento selecionado.');
-    return;
+    return false;
   }
 
+  if (!document.getElementById('optSim').checked && !document.getElementById('optNao').checked){
+    alert('Selecione o Tipo de resposta.');
+    return false;
+  }
+    
   return true;
 }
 
@@ -501,7 +248,7 @@ function submeterFormulario(){
        arrBotoesEnviar[i].disabled = true;
     } 
 	    
-    document.getElementById('frmEmail').submit();
+    document.getElementById('frmResposta').submit();
   }
 }
 
@@ -509,13 +256,7 @@ function finalizar(){
   <?if ($bolEnvioOK){ ?>
      <? if ($_GET['arvore'] == '1'){ ?>
        if (window.opener!=null){
-
-				 <?if ($_GET['acao']=='documento_email_circular'){?>
-				   window.opener.parent.document.getElementById('ifrArvore').src = '<?=$strLinkRetorno?>';
-				 <?}else{?>
 				   window.opener.location = '<?=$strLinkRetorno?>';
-				 <?}?>
-
        }
      <?}?>  
   <?}?>
@@ -527,15 +268,22 @@ PaginaSEI::getInstance()->fecharJavaScript();
 PaginaSEI::getInstance()->fecharHead();
 PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();" onunload="finalizar();"');
 ?>
-<form id="frmEnviarResposta" method="post" action="<?=SessaoSEI::getInstance()->assinarLink('controlador.php?acao='.$_GET['acao'].'&acao_origem='.$_GET['acao'].$strParametros)?>" style="display:inline;">
+<form id="frmResposta" method="post" action="<?=SessaoSEI::getInstance()->assinarLink('controlador.php?acao='.$_GET['acao'].'&acao_origem='.$_GET['acao'].$strParametros)?>" style="display:inline;">
 <?
 PaginaSEI::getInstance()->montarBarraComandosSuperior($arrComandos);
 ?>
-  <div id="divAssuntoMensagem" class="infraAreaDados" style="height:30em;">
+  <div id="divProcedimentos" class="infraAreaDados" style="height:4em;">
+	 	<label id="lblProcedimentos" for="selProcedimentos" class="infraLabelObrigatorio">Processos:</label>
+	  <select id="selProcedimentos" name="selProcedimentos" disabled="disabled" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>">
+	  <?=$strItensSelProcedimentos?>
+    </select>
+  </div>
+
+  <div id="divMensagem" class="infraAreaDados" style="height:30em;">
   
-  <label id="lblMensagem" for="txaMensagem" accesskey="" class="infraLabelObrigatorio">Descrição da Resposta:</label> 
-  <textarea id="txaMensagem" name="txaMensagem" rows="<?=PaginaSEI::getInstance()->isBolNavegadorFirefox()?'15':'16'?>" class="infraText" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" onselect="infraPosicionarCursor(this);" onclick="infraPosicionarCursor(this);" onkeyup="infraPosicionarCursor(this);"></textarea>
-  <input type="hidden" id="hdnIdDocumentoCircular" name="hdnIdDocumentoCircular" value="<?=$strIdDocumentoCircular?>"/>
+  <label id="lblMensagem" for="txaMensagem" accesskey="" class="infraLabelObrigatorio">Mensagem:</label>
+  <textarea id="txaMensagem" name="txaMensagem" maxlength="5000" rows="<?=PaginaSEI::getInstance()->isBolNavegadorFirefox()?'15':'16'?>" class="infraText" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" onselect="infraPosicionarCursor(this);" onclick="infraPosicionarCursor(this);" onkeyup="infraPosicionarCursor(this);"><?=PaginaSEI::tratarHTML($objMdRespostaEnvioDTO->getStrMensagem())?></textarea>
+	<input type="hidden" id="hdnFlagEnvio" name="hdnFlagEnvio" value="1" />
 
   </div>
 
@@ -544,20 +292,15 @@ PaginaSEI::getInstance()->montarBarraComandosSuperior($arrComandos);
      PaginaSEI::getInstance()->montarAreaTabela($strResultadoDocumentos,$numDocumentos);
      ?>
   </div>
-  
-  </br>
 
-  <div id="divRespostaConclusiva" class="infraAreaDados" style="height:5em;">
-  
-  <label id="lblRespostaConclusiva" accesskey="" class="infraLabelObrigatorio">Resposta é Conclusiva?</label> 
-  
-  <div id="divOpcao">
-    <input type="radio" id="Sim" name="chkRespostaConclusiva" value="S">
-    <label for="Sim">Sim</label><br>
-    <input type="radio" id="Não" name="chkRespostaConclusiva" value="N">
-    <label for="Não">Não</label><br>
+  <div id="divSinConclusiva" style="margin-top:.7em;">
+  <label id="lblConclusiva" accesskey="" class="infraLabelObrigatorio">Resposta Conclusiva?</label>
+    <input type="radio" id="optSim" name="rdoSinConclusiva" class="infraRadio" value="S" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" />
+    <label id="lblSim" for="lblSim" class="infraLabelRadio">Sim</label>
+    <input type="radio" id="optNao" name="rdoSinConclusiva" class="infraRadio" value="N" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" />
+    <label id="lblNao" for="lblNao" class="infraLabelRadio">Não</label>
   </div>
-  </div>  
+
 </form>
 <? 
 PaginaSEI::getInstance()->montarBarraComandosInferior($arrComandos,true);

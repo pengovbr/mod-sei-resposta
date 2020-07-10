@@ -6,6 +6,7 @@ require_once dirname(__FILE__).'/../../../SEI.php';
 class MdRespostaParametroRN extends InfraRN {
 
   const PARAM_SISTEMA = 'PARAM_SISTEMA';
+  const PARAM_TIPO_DOCUMENTO = 'PARAM_TIPO_DOCUMENTO';
   
   public function __construct(){
     parent::__construct();

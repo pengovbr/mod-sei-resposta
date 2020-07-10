@@ -37,6 +37,7 @@ try {
         }
       } else {
         $objMdRespostaParametroSistemaDTO = $objMdRespostaParametroRN->consultar(MDRespostaParametroRN::PARAM_SISTEMA);
+        $objMdRespostaParametroTipoDocDTO = $objMdRespostaParametroRN->consultar(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO);
       }
 
       break;
@@ -47,6 +48,16 @@ try {
 
   $strParametroSistema = !is_null($objMdRespostaParametroSistemaDTO) ? $objMdRespostaParametroSistemaDTO->getStrValor() : null;  
   $strItensSelSistema = UsuarioINT::montarSelectSiglaSistema('null','&nbsp;', $strParametroSistema);
+
+  $strParametroTipoDoc = !is_null($objMdRespostaParametroTipoDocDTO) ? $objMdRespostaParametroTipoDocDTO->getStrValor() : null;  
+  
+  $objSerieDTO = new SerieDTO();
+  $objSerieDTO->retNumIdSerie();
+  $objSerieDTO->retStrNome();
+  
+  // Consulta nas classes de regra de negócio
+  $objSerieRN = new SerieRN();
+  $arrObjSerieDTO = $objSerieRN->listarRN0646($objSerieDTO);
   
 }catch(Exception $e){
   PaginaSEI::getInstance()->processarExcecao($e);
@@ -63,6 +74,9 @@ PaginaSEI::getInstance()->abrirStyle();
 
 #lblSistema {position:absolute;left:0%;top:0%;width:50%;}
 #selSistema {position:absolute;left:0%;top:6%;width:50%;}
+
+#lblTipoDocumento {position:absolute;left:0%;top:16%;width:50%;}
+#selTipoDocumento {position:absolute;left:0%;top:22%;width:50%;}
 
 <?
 PaginaSEI::getInstance()->fecharStyle();
@@ -100,12 +114,17 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
 PaginaSEI::getInstance()->montarBarraComandosSuperior($arrComandos);
 PaginaSEI::getInstance()->abrirAreaDados('30em');
 ?>
-  <label id="lblSistema" for="selSistema" accesskey="g" class="infraLabelObrigatorio"><span class="infraTeclaAtalho">S</span>istema:</label>
+  <label id="lblSistema" for="selSistema" accesskey="s" class="infraLabelObrigatorio"><span class="infraTeclaAtalho">S</span>istema:</label>
   <select id="selSistema" name="selSistema" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" >
   <?=$strItensSelSistema?>
   </select>
   
+  <label id="lblTipoDocumento" for="selTipoDocumento" accesskey="t" class="infraLabelObrigatorio"><span class="infraTeclaAtalho">T</span>ipo Documento:</label>
   <?
+  echo '<select id="selTipoDocumento" name="selTipoDocumento" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="'.PaginaSEI::getInstance()->getProxTabDados().'">';
+  echo InfraINT::montarSelectArrInfraDTO('null', '&nbsp;', $strParametroTipoDoc, $arrObjSerieDTO, 'IdSerie', 'Nome');
+  echo '<select>';  
+
   PaginaSEI::getInstance()->fecharAreaDados();
   ?>
 </form>

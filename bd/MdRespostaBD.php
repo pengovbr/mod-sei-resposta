@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../../SEI.php';
 
-class MdRelRespostaDocumentoBD extends InfraBD {
+class MdRespostaBD extends InfraBD {
 
   public function __construct(InfraIBanco $objInfraIBanco){
   	 parent::__construct($objInfraIBanco);

@@ -14,10 +14,9 @@ try {
   SessaoSEI::getInstance()->validarLink();
 
   SessaoSEI::getInstance()->validarPermissao($_GET['acao']);
-
-  $objMdRespostaParametroRN = new MdRespostaParametroRN();
-  $objMdRespostaParametroSistemaDTO = null;
   
+  $objMdRespostaParametroRN = new MdRespostaParametroRN();
+
   $arrComandos = array();
 
   switch($_GET['acao']){
@@ -28,17 +27,46 @@ try {
       $arrComandos[] = '<button type="button" accesskey="C" name="btnCancelar" id="btnCancelar" value="Cancelar" onclick="location.href=\''.SessaoSEI::getInstance()->assinarLink('controlador.php?acao='.PaginaSEI::getInstance()->getAcaoRetorno().'&acao_origem='.$_GET['acao']).'\';" class="infraButton"><span class="infraTeclaAtalho">C</span>ancelar</button>';
 
       if (isset($_POST['sbmSalvar'])) {
-        try{          
-          $strParametroSistema = $_POST['selSistema'];
-          $objMdRespostaParametroSistemaDTO = $objMdRespostaParametroRN->atribuir(MDRespostaParametroRN::PARAM_SISTEMA, $strParametroSistema);
-          PaginaSEI::getInstance()->setStrMensagem('Mapeamento cadastrado com sucesso.');
+        try{
+
+          foreach ($_POST as $campo => $valor) { 
+
+            switch($campo) {
+
+              case 'selTipoProcesso':
+              case 'selTipoDocumento':
+              case 'selSistema':
+                $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
+                if($campo == 'selSistema'){
+                  $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_SISTEMA);
+                }elseif($campo == 'selTipoProcesso'){
+                  $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_PROCESSO);
+                }elseif($campo == 'selTipoDocumento'){
+                  $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO);
+                }
+                $objMdRespostaParametroDTO->setStrValor($valor);
+                $arrObjMdRespostaParametroDTO[] = $objMdRespostaParametroDTO;
+            }
+
+          }
+
+          $objMdRespostaParametroDTO = $objMdRespostaParametroRN->atribuir($arrObjMdRespostaParametroDTO);
+
+          if ($_GET['acao']!='responder_formulario'){
+            PaginaSEI::getInstance()->setStrMensagem(PaginaSEI::getInstance()->formatarParametrosJavaScript('Mapeamento cadastrado com sucesso.'),PaginaSEI::$TIPO_MSG_AVISO);
+          }
+
         }catch(Exception $e){
           PaginaSEI::getInstance()->processarExcecao($e);
         }
-      } else {
-        $objMdRespostaParametroSistemaDTO = $objMdRespostaParametroRN->consultar(MDRespostaParametroRN::PARAM_SISTEMA);
-        $objMdRespostaParametroTipoDocDTO = $objMdRespostaParametroRN->consultar(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO);
       }
+
+      $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
+      $objMdRespostaParametroDTO->retStrNome();
+      $objMdRespostaParametroDTO->retStrValor();
+
+      $objMdRespostaParametroRN = new MdRespostaParametroRN();
+      $arrObjMdRespostaParametroDTO = $objMdRespostaParametroRN->listar($objMdRespostaParametroDTO);
 
       break;
   	
@@ -46,10 +74,29 @@ try {
       throw new InfraException("Ação '".$_GET['acao']."' não reconhecida.");
   }
 
-  $strParametroSistema = !is_null($objMdRespostaParametroSistemaDTO) ? $objMdRespostaParametroSistemaDTO->getStrValor() : null;  
-  $strItensSelSistema = UsuarioINT::montarSelectSiglaSistema('null','&nbsp;', $strParametroSistema);
+  $strParametroSistema = null;
+  $strParametroTipoDoc = null;
+  $strParametroProcesso = null;
 
-  $strParametroTipoDoc = !is_null($objMdRespostaParametroTipoDocDTO) ? $objMdRespostaParametroTipoDocDTO->getStrValor() : null;  
+  foreach($arrObjMdRespostaParametroDTO as $objMdRespostaDTO){
+
+    switch($objMdRespostaDTO->getStrNome()) {
+
+      case 'PARAM_SISTEMA':
+        $strParametroSistema = $objMdRespostaDTO->getStrValor();
+      break;
+      case 'PARAM_TIPO_PROCESSO':
+        $strParametroProcesso = $objMdRespostaDTO->getStrValor();
+      break;
+      case 'PARAM_TIPO_DOCUMENTO':
+        $strParametroTipoDoc = $objMdRespostaDTO->getStrValor();
+      break;
+    }
+
+  }
+
+  $strItensSelSistema = UsuarioINT::montarSelectSiglaSistema('null','&nbsp;', $strParametroSistema);
+  $strItensSelTipoProcedimento 	= TipoProcedimentoINT::montarSelectNome('null','Todos',$strParametroProcesso);
   
   $objSerieDTO = new SerieDTO();
   $objSerieDTO->retNumIdSerie();
@@ -75,8 +122,11 @@ PaginaSEI::getInstance()->abrirStyle();
 #lblSistema {position:absolute;left:0%;top:0%;width:50%;}
 #selSistema {position:absolute;left:0%;top:6%;width:50%;}
 
-#lblTipoDocumento {position:absolute;left:0%;top:16%;width:50%;}
-#selTipoDocumento {position:absolute;left:0%;top:22%;width:50%;}
+#lblTipoProcesso {position:absolute;left:0%;top:16%;width:50%;}
+#selTipoProcesso {position:absolute;left:0%;top:22%;width:50%;}
+
+#lblTipoDocumento {position:absolute;left:0%;top:30%;width:50%;}
+#selTipoDocumento {position:absolute;left:0%;top:36%;width:50%;}
 
 <?
 PaginaSEI::getInstance()->fecharStyle();
@@ -102,6 +152,18 @@ function validarFormParametrosCadastro() {
     return false;
   }
 
+  if (!infraSelectSelecionado('selTipoProcesso')) {
+    alert('Selecione o Tipo de Processo.');
+    document.getElementById('selTipoProcesso').focus();
+    return false;
+  }
+
+  if (!infraSelectSelecionado('selTipoDocumento')) {
+    alert('Selecione o Tipo de Documento.');
+    document.getElementById('selTipoDocumento').focus();
+    return false;
+  }
+
   return true;
 }
 <?
@@ -117,6 +179,11 @@ PaginaSEI::getInstance()->abrirAreaDados('30em');
   <label id="lblSistema" for="selSistema" accesskey="s" class="infraLabelObrigatorio"><span class="infraTeclaAtalho">S</span>istema:</label>
   <select id="selSistema" name="selSistema" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" >
   <?=$strItensSelSistema?>
+  </select>
+
+  <label id="lblTipoProcesso" for="selTipoProcesso" accesskey="p" class="infraLabelObrigatorio">Tipo de <span class="infraTeclaAtalho">P</span>rocesso:</label>
+  <select id="selTipoProcesso" name="selTipoProcesso" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" >
+  <?=$strItensSelTipoProcedimento?>
   </select>
   
   <label id="lblTipoDocumento" for="selTipoDocumento" accesskey="t" class="infraLabelObrigatorio"><span class="infraTeclaAtalho">T</span>ipo Documento:</label>

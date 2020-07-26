@@ -7,6 +7,7 @@ class MdRespostaParametroRN extends InfraRN {
 
   const PARAM_SISTEMA = 'PARAM_SISTEMA';
   const PARAM_TIPO_DOCUMENTO = 'PARAM_TIPO_DOCUMENTO';
+  const PARAM_TIPO_PROCESSO = 'PARAM_TIPO_PROCESSO';
   
   public function __construct(){
     parent::__construct();
@@ -16,19 +17,22 @@ class MdRespostaParametroRN extends InfraRN {
     return BancoSEI::getInstance();
   }
  
-  public function atribuir($parNomeParametro, $parValorParametro) 
+  public function atribuir($arrObjMdRespostaParametroDTO) 
   {
-    $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
-    $objMdRespostaParametroDTO->setStrNome($parNomeParametro);
-    $objMdRespostaParametroDTO->setStrValor($parValorParametro);
 
-    try {
-      $this->alterar($objMdRespostaParametroDTO);  
-    } catch (\Exception $th) {
-      $objMdRespostaParametroDTO = $this->cadastrar($objMdRespostaParametroDTO);
+    for ($i = 0; $i < count($arrObjMdRespostaParametroDTO); $i++) {
+      $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
+      $objMdRespostaParametroDTO = $arrObjMdRespostaParametroDTO[$i];
+
+      try {
+        $this->alterar($objMdRespostaParametroDTO);  
+      } catch (\Exception $th) {
+        $objMdRespostaParametroDTO = $this->cadastrar($objMdRespostaParametroDTO);
+      }
+
     }
 
-    return $objMdRespostaParametroDTO;
+    return $arrObjMdRespostaParametroDTO;
   }
 
   protected function cadastrarControlado(MdRespostaParametroDTO $objMdRespostaParametroDTO) 
@@ -98,7 +102,23 @@ class MdRespostaParametroRN extends InfraRN {
     }
   }
   
-  
+  protected function listarConectado($objMdRespostaParametroDTO) 
+  {
+    try {
+      
+      //Valida Permissao
+      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao', __METHOD__, $objMdRespostaParametroDTO);
+      
+      $objMdRespostaParametroBD = new MdRespostaParametroBD($this->getObjInfraIBanco());
+      $arrObjMdRespostaParametroDTO = $objMdRespostaParametroBD->listar($objMdRespostaParametroDTO);
+      
+      return $arrObjMdRespostaParametroDTO;
+      
+    }catch(Exception $e){
+      throw new InfraException('Erro listar parâmetros do módulo de resposta.',$e);
+    }
+  }  
+
   // private function validarNumIdPais(MdRespostaConfiguracaoDTO $objMdRespostaConfiguracaoDTO, InfraException $objInfraException){
     // 	if (InfraString::isBolVazia($objMdRespostaConfiguracaoDTO->getNumIdPais())){
       //       $objInfraException->adicionarValidacao('País não selecionado.');

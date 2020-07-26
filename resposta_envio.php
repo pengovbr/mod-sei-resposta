@@ -20,14 +20,10 @@ try {
     PaginaSEI::getInstance()->setBolArvore($_GET['arvore']);
     $strParametros .= '&arvore='.$_GET['arvore'];
   }
-  
-  if (isset($_GET['id_procedimento'])){
-    $strParametros .= "&id_procedimento=".$_GET['id_procedimento'];
-  } 
 
-  if (isset($_GET['id_documento'])){
-    $strParametros .= "&id_documento=".$_GET['id_documento'];
-  } 
+  if (isset($_GET['id_procedimento'])){
+    $strParametros .= '&id_procedimento='.$_GET['id_procedimento'];
+  }
   
   $bolEnvioOK = false;
 
@@ -140,13 +136,12 @@ try {
 					$objMdRespostaEnvioRN = new MdRespostaEnvioRN();
 					$objDocumentoDTO = $objMdRespostaEnvioRN->cadastrar($objMdRespostaEnvioDTO);
 					
-					//respostas de formulario usam remetente naoresponder (o erro nao volta para a caixa da unidade)
 					if ($_GET['acao']!='responder_formulario'){
 					  PaginaSEI::getInstance()->setStrMensagem(PaginaSEI::getInstance()->formatarParametrosJavaScript('Resposta enviada.'),PaginaSEI::$TIPO_MSG_AVISO);
 					}
-					
-					$strLinkRetorno = SessaoSEI::getInstance()->assinarLink('controlador.php?acao=arvore_visualizar&acao_origem='.$_GET['acao'].'&id_procedimento='.$_GET['id_procedimento'].'&id_documento='.$objDocumentoDTO->getDblIdDocumento().'&atualizar_arvore=1');
-					$bolEnvioOK = true;
+          
+          header('Location: '.SessaoSEI::getInstance()->assinarLink('controlador.php?acao=arvore_visualizar&acao_origem='.$_GET['acao'].'&id_procedimento='.$_GET['id_procedimento'].'&id_documento='.$objDocumentoDTO->getDblIdDocumento().'&atualizar_arvore=1'));
+          die;
 					
         }catch(Exception $e){
           PaginaSEI::getInstance()->processarExcecao($e);
@@ -225,6 +220,11 @@ function validarEnvio() {
     return false;
   }
 
+  if (document.getElementById('hdnInfraItensSelecionados') == null){
+    alert('Não há documento(s) no processo.');
+    return false;
+  }
+
   if (document.getElementById('hdnInfraItensSelecionados').value==''){
     alert('Nenhum documento selecionado.');
     return false;
@@ -252,26 +252,14 @@ function submeterFormulario(){
   }
 }
 
-function finalizar(){
-  <?if ($bolEnvioOK){ ?>
-     <? if ($_GET['arvore'] == '1'){ ?>
-       if (window.opener!=null){
-				   window.opener.location = '<?=$strLinkRetorno?>';
-       }
-     <?}?>  
-  <?}?>
-}
-
 //</script>
 <?
 PaginaSEI::getInstance()->fecharJavaScript();
 PaginaSEI::getInstance()->fecharHead();
-PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();" onunload="finalizar();"');
+PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
 ?>
 <form id="frmResposta" method="post" action="<?=SessaoSEI::getInstance()->assinarLink('controlador.php?acao='.$_GET['acao'].'&acao_origem='.$_GET['acao'].$strParametros)?>" style="display:inline;">
-<?
-PaginaSEI::getInstance()->montarBarraComandosSuperior($arrComandos);
-?>
+
   <div id="divProcedimentos" class="infraAreaDados" style="height:4em;">
 	 	<label id="lblProcedimentos" for="selProcedimentos" class="infraLabelObrigatorio">Processos:</label>
 	  <select id="selProcedimentos" name="selProcedimentos" disabled="disabled" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>">

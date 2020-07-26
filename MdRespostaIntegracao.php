@@ -41,17 +41,25 @@ class MdRespostaIntegracao extends SeiIntegracao{
     $objPaginaSEI = PaginaSEI::getInstance();
     $strDiretorioImagens = self::getDiretorio();
 
-    /*if (SessaoSEI::getInstance()->verificarPermissao('md_resposta_enviar') && $objProcedimentoAPI->getSinAberto()=='S' && $objProcedimentoAPI->getCodigoAcesso() > 0) {
+    $strParametros = '';
+  
+    if (isset($_GET['id_procedimento'])){
+      $strParametros .= "&id_procedimento=".$_GET['id_procedimento'];
+    }
+
+    $objMdRespostaParametroRN = new MdRespostaParametroRN();
+    $objMdRespostaTipoProcessoDTO = $objMdRespostaParametroRN->consultar(MDRespostaParametroRN::PARAM_TIPO_PROCESSO);
+
+    if (SessaoSEI::getInstance()->verificarPermissao('md_resposta_enviar') 
+      && $objProcedimentoAPI->getSinAberto()=='S' 
+      && $objProcedimentoAPI->getCodigoAcesso() > 0
+      && $objProcedimentoAPI->getIdTipoProcedimento() == $objMdRespostaTipoProcessoDTO->getStrValor()) {
       $numTabBotao = $objPaginaSEI->getProxTabBarraComandosSuperior();
-      $strLinkBotaoResposta  = '<a href="controlador.php?acao="md_resposta_enviar"&acao_origem="'.$_GET['acao'].'" tabindex="'.$numTabBotao.'" class="botaoSEI">';
-      //controlador.php?acao=md_procedimento_enviar_resposta&acao_origem=arvore_visualizar&acao_retorno=arvore_visualizar&id_procedimento='.$_GET['id_procedimento'].'&arvore=1'
-      $strLinkBotaoResposta .= '<img class="infraCorBarraSistema" tabindex="'.$numTabBotao.'" src="'.$strDiretorioImagens.'/imagens/abc_grande.png" alt="Enviar Resposta" title="Enviar Resposta" />';
+      $strLinkBotaoResposta  = '<a href="'.SessaoSEI::getInstance()->assinarLink('controlador.php?acao=md_resposta_enviar&acao_origem=arvore_visualizar&acao_retorno=arvore_visualizar&id_procedimento='.$_GET['id_procedimento'].'&arvore=1').'" tabindex="'.$numTabBotao.'" class="botaoSEI">';
+      $strLinkBotaoResposta .= '<img class="infraCorBarraSistema" tabindex="'.$numTabBotao.'" src="'.$strDiretorioImagens.'/imagens/enviar_resposta.png" alt="Enviar Resposta" title="Enviar Resposta" />';
       $strLinkBotaoResposta .= '</a>';
 
       $arrBotoes[] = $strLinkBotaoResposta;
-    }*/
-    if (SessaoSEI::getInstance()->verificarPermissao('md_resposta_enviar') && $objProcedimentoAPI->getSinAberto()=='S' && $objProcedimentoAPI->getCodigoAcesso() > 0) {
-      $arrBotoes[] = '<a href="#" onclick="enviarRespostalProcedimento();" tabindex="'.$numTabBotao.'" class="botaoSEI"><img class="infraCorBarraSistema"  tabindex="'.$numTabBotao.'" src="modulos/resposta/imagens/abc_grande.png" alt="Enviar Resposta" title="Enviar Resposta"/>';
     }    
 
     return $arrBotoes;

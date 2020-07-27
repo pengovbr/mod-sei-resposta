@@ -58,9 +58,8 @@ class MdRespostaEnvioRN extends InfraRN {
     try{
 
       ini_set('max_execution_time','600');
-      //ini_set('memory_limit','1024M');
+      ini_set('memory_limit','1024M');
 
-      //$strAssunto = $objMdRespostaEnvioDTO->getStrAssunto();
       $strMensagem = $objMdRespostaEnvioDTO->getStrMensagem();
       $dthDataAtual = $objMdRespostaEnvioDTO->getDthDthResposta();
 

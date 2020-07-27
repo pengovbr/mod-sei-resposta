@@ -16,7 +16,7 @@ class MdRespostaRN extends InfraRN {
 		try {
 	
 			//Valida Permissao
-			//SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_listar',__METHOD__,$objMdRespostaDTO);
+			SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_listar',__METHOD__,$objMdRespostaDTO);
 	
 			$objMdRespostaBD = new MdRespostaBD($this->getObjInfraIBanco());
 			$arrObjMdRespostaDTO = $objMdRespostaBD->listar($objMdRespostaDTO);

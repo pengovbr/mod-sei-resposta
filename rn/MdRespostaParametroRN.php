@@ -118,11 +118,5 @@ class MdRespostaParametroRN extends InfraRN {
       throw new InfraException('Erro listar parâmetros do módulo de resposta.',$e);
     }
   }  
-
-  // private function validarNumIdPais(MdRespostaConfiguracaoDTO $objMdRespostaConfiguracaoDTO, InfraException $objInfraException){
-    // 	if (InfraString::isBolVazia($objMdRespostaConfiguracaoDTO->getNumIdPais())){
-      //       $objInfraException->adicionarValidacao('País não selecionado.');
-      //   }
-      // }
-    }
-    ?>
+}
+?>

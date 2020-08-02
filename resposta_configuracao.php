@@ -28,24 +28,30 @@ try {
 
       if (isset($_POST['sbmSalvar'])) {
         try{
-
           foreach ($_POST as $campo => $valor) { 
-
+           
             switch($campo) {
 
-              case 'selTipoProcesso':
               case 'selTipoDocumento':
               case 'selSistema':
                 $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
                 if($campo == 'selSistema'){
                   $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_SISTEMA);
-                }elseif($campo == 'selTipoProcesso'){
-                  $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_PROCESSO);
                 }elseif($campo == 'selTipoDocumento'){
                   $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO);
                 }
                 $objMdRespostaParametroDTO->setStrValor($valor);
                 $arrObjMdRespostaParametroDTO[] = $objMdRespostaParametroDTO;
+              break;
+
+              case 'selTipoProcesso':
+                  foreach ($_POST['selTipoProcesso'] as $tipoProcesso) {
+                    $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
+                    $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_PROCESSO);
+                    $objMdRespostaParametroDTO->setStrValor($tipoProcesso);
+                    $arrObjMdRespostaParametroDTO[] = $objMdRespostaParametroDTO;
+                  }
+                break;              
             }
 
           }
@@ -76,7 +82,7 @@ try {
 
   $strParametroSistema = null;
   $strParametroTipoDoc = null;
-  $strParametroProcesso = null;
+  $strParametroProcesso = array();
 
   foreach($arrObjMdRespostaParametroDTO as $objMdRespostaDTO){
 
@@ -86,7 +92,7 @@ try {
         $strParametroSistema = $objMdRespostaDTO->getStrValor();
       break;
       case 'PARAM_TIPO_PROCESSO':
-        $strParametroProcesso = $objMdRespostaDTO->getStrValor();
+        $strParametroProcesso[] = $objMdRespostaDTO->getStrValor();
       break;
       case 'PARAM_TIPO_DOCUMENTO':
         $strParametroTipoDoc = $objMdRespostaDTO->getStrValor();
@@ -96,7 +102,6 @@ try {
   }
 
   $strItensSelSistema = UsuarioINT::montarSelectSiglaSistema('null','&nbsp;', $strParametroSistema);
-  $strItensSelTipoProcedimento 	= TipoProcedimentoINT::montarSelectNome('null','Todos',$strParametroProcesso);
   
   $objSerieDTO = new SerieDTO();
   $objSerieDTO->retNumIdSerie();
@@ -105,6 +110,15 @@ try {
   // Consulta nas classes de regra de negócio
   $objSerieRN = new SerieRN();
   $arrObjSerieDTO = $objSerieRN->listarRN0646($objSerieDTO);
+
+
+  $objTipoProcedimentoDTO = new TipoProcedimentoDTO();
+  $objTipoProcedimentoDTO->retNumIdTipoProcedimento();
+  $objTipoProcedimentoDTO->retStrNome();
+  $objTipoProcedimentoDTO->setOrdStrNome(InfraDTO::$TIPO_ORDENACAO_ASC);
+
+  $objTipoProcedimentoRN = new TipoProcedimentoRN();
+  $arrObjTipoProcedimentoDTO = $objTipoProcedimentoRN->listarRN0244($objTipoProcedimentoDTO);
   
 }catch(Exception $e){
   PaginaSEI::getInstance()->processarExcecao($e);
@@ -125,8 +139,8 @@ PaginaSEI::getInstance()->abrirStyle();
 #lblTipoProcesso {position:absolute;left:0%;top:16%;width:50%;}
 #selTipoProcesso {position:absolute;left:0%;top:22%;width:50%;}
 
-#lblTipoDocumento {position:absolute;left:0%;top:30%;width:50%;}
-#selTipoDocumento {position:absolute;left:0%;top:36%;width:50%;}
+#lblTipoDocumento {position:absolute;left:0%;top:43%;width:50%;}
+#selTipoDocumento {position:absolute;left:0%;top:49%;width:50%;}
 
 <?
 PaginaSEI::getInstance()->fecharStyle();
@@ -182,9 +196,11 @@ PaginaSEI::getInstance()->abrirAreaDados('30em');
   </select>
 
   <label id="lblTipoProcesso" for="selTipoProcesso" accesskey="p" class="infraLabelObrigatorio">Tipo de <span class="infraTeclaAtalho">P</span>rocesso:</label>
-  <select id="selTipoProcesso" name="selTipoProcesso" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" >
-  <?=$strItensSelTipoProcedimento?>
-  </select>
+  <?
+  echo '<select id="selTipoProcesso" name="selTipoProcesso[]" multiple="multiple" size="3" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="'.PaginaSEI::getInstance()->getProxTabDados().'">';
+  echo InfraINT::montarSelectArrInfraDTO('null', 'Todos', $strParametroProcesso, $arrObjTipoProcedimentoDTO, 'IdTipoProcedimento', 'Nome');
+  echo '<select>';  
+  ?>
   
   <label id="lblTipoDocumento" for="selTipoDocumento" accesskey="t" class="infraLabelObrigatorio"><span class="infraTeclaAtalho">T</span>ipo Documento:</label>
   <?

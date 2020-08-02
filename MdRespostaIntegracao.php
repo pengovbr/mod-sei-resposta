@@ -47,13 +47,24 @@ class MdRespostaIntegracao extends SeiIntegracao{
       $strParametros .= "&id_procedimento=".$_GET['id_procedimento'];
     }
 
+    $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
+    $objMdRespostaParametroDTO -> retStrValor();
+    $objMdRespostaParametroDTO -> setStrNome('PARAM_TIPO_PROCESSO');
+
     $objMdRespostaParametroRN = new MdRespostaParametroRN();
-    $objMdRespostaTipoProcessoDTO = $objMdRespostaParametroRN->consultar(MDRespostaParametroRN::PARAM_TIPO_PROCESSO);
+    $arrObjMdRespostaTipoProcessoDTO = $objMdRespostaParametroRN->listar($objMdRespostaParametroDTO);
+
+    $liberarAcesso = false;
+    foreach($arrObjMdRespostaTipoProcessoDTO as $objMdRespostaTipoProcessoDTO){
+      if($objProcedimentoAPI->getIdTipoProcedimento() == $objMdRespostaTipoProcessoDTO->getStrValor()){
+        $liberarAcesso=true;
+      }
+    }
 
     if (SessaoSEI::getInstance()->verificarPermissao('md_resposta_enviar') 
       && $objProcedimentoAPI->getSinAberto()=='S' 
       && $objProcedimentoAPI->getCodigoAcesso() > 0
-      && $objProcedimentoAPI->getIdTipoProcedimento() == $objMdRespostaTipoProcessoDTO->getStrValor()) {
+      && $liberarAcesso) {
       $numTabBotao = $objPaginaSEI->getProxTabBarraComandosSuperior();
       $strLinkBotaoResposta  = '<a href="'.SessaoSEI::getInstance()->assinarLink('controlador.php?acao=md_resposta_enviar&acao_origem=arvore_visualizar&acao_retorno=arvore_visualizar&id_procedimento='.$_GET['id_procedimento'].'&arvore=1').'" tabindex="'.$numTabBotao.'" class="botaoSEI">';
       $strLinkBotaoResposta .= '<img class="infraCorBarraSistema" tabindex="'.$numTabBotao.'" src="'.$strDiretorioImagens.'/imagens/enviar_resposta.png" alt="Enviar Resposta" title="Enviar Resposta" />';

@@ -17,17 +17,20 @@ class MdRespostaParametroRN extends InfraRN {
     return BancoSEI::getInstance();
   }
  
-  public function atribuir($arrObjMdRespostaParametroDTO) 
-  {
+  public function atribuir($arrObjMdRespostaParametroDTO) {
+    
+    $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
+    $objMdRespostaParametroDTO -> setStrNome('PARAM_TIPO_PROCESSO');
+    $this->excluir($objMdRespostaParametroDTO);
 
     for ($i = 0; $i < count($arrObjMdRespostaParametroDTO); $i++) {
       $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
       $objMdRespostaParametroDTO = $arrObjMdRespostaParametroDTO[$i];
 
       try {
-        $this->alterar($objMdRespostaParametroDTO);  
-      } catch (\Exception $th) {
         $objMdRespostaParametroDTO = $this->cadastrar($objMdRespostaParametroDTO);
+      } catch (\Exception $th) {
+        $this->alterar($objMdRespostaParametroDTO);
       }
 
     }
@@ -53,10 +56,31 @@ class MdRespostaParametroRN extends InfraRN {
       return $ret;
       
     }catch(Exception $e){
-      throw new InfraException('Erro alterando do módulo de resposta.',$e);
+      throw new InfraException('Erro cadastrando parâmetro(s) do módulo de resposta.',$e);
     }
   }
 
+  protected function excluirControlado(MdRespostaParametroDTO $objMdRespostaParametroDTO) 
+  {
+    try{
+      
+      //Valida Permissao
+      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao',__METHOD__,$objMdRespostaParametroDTO);
+      
+      //Regras de Negocio
+      $objInfraException = new InfraException();
+
+      $objInfraException->lancarValidacoes();
+      
+      $objMdRespostaParametroBD = new MdRespostaParametroBD($this->getObjInfraIBanco());
+      $ret = $objMdRespostaParametroBD->excluir($objMdRespostaParametroDTO);
+      
+      return $ret;
+      
+    }catch(Exception $e){
+      throw new InfraException('Erro excluíndo parâmetro(s) do módulo de resposta.',$e);
+    }
+  }
 
   protected function alterarControlado(MdRespostaParametroDTO $objMdRespostaParametroDTO) 
   {
@@ -76,7 +100,7 @@ class MdRespostaParametroRN extends InfraRN {
       return $ret;
       
     }catch(Exception $e){
-      throw new InfraException('Erro alterando do módulo de resposta.',$e);
+      throw new InfraException('Erro alterando parâmetro(s) do módulo de resposta.',$e);
     }
   }
   
@@ -98,7 +122,7 @@ class MdRespostaParametroRN extends InfraRN {
       return $ret;
       
     }catch(Exception $e){
-      throw new InfraException('Erro consultado parâmetros do módulo de resposta.',$e);
+      throw new InfraException('Erro consultado parâmetro(s) do módulo de resposta.',$e);
     }
   }
   

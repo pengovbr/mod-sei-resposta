@@ -21,18 +21,20 @@ class MdRespostaParametroRN extends InfraRN {
     
     $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
     $objMdRespostaParametroDTO -> setStrNome('PARAM_TIPO_PROCESSO');
-    $this->excluir($objMdRespostaParametroDTO);
+    try {
+      $this->excluir($objMdRespostaParametroDTO);
+    } catch (\Exception $th) {
+      for ($i = 0; $i < count($arrObjMdRespostaParametroDTO); $i++) {
+        $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
+        $objMdRespostaParametroDTO = $arrObjMdRespostaParametroDTO[$i];
 
-    for ($i = 0; $i < count($arrObjMdRespostaParametroDTO); $i++) {
-      $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
-      $objMdRespostaParametroDTO = $arrObjMdRespostaParametroDTO[$i];
+        try {
+          $objMdRespostaParametroDTO = $this->cadastrar($objMdRespostaParametroDTO);
+        } catch (\Exception $th) {
+          $this->alterar($objMdRespostaParametroDTO);
+        }
 
-      try {
-        $objMdRespostaParametroDTO = $this->cadastrar($objMdRespostaParametroDTO);
-      } catch (\Exception $th) {
-        $this->alterar($objMdRespostaParametroDTO);
       }
-
     }
 
     return $arrObjMdRespostaParametroDTO;

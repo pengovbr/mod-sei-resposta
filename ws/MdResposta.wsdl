@@ -56,9 +56,9 @@
   </wsdl:types>
       
   <wsdl:message name="listarRespostaRequest">
-    <wsdl:part name="SiglaSistema" type="xsd:string" minOccurs="1"/>
-    <wsdl:part name="IdentificacaoServico" type="xsd:string" minOccurs="1"/>
-    <wsdl:part name="IdProcedimento" type="xsd:string" minOccurs="1"/>
+    <wsdl:part name="SiglaSistema" type="xsd:string" />
+    <wsdl:part name="IdentificacaoServico" type="xsd:string"/>
+    <wsdl:part name="IdProcedimento" type="xsd:string" />
     <wsdl:part name="IdResposta" type="xsd:string"/>
   </wsdl:message>
 

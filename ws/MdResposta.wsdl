@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions
+    name="MdResposta"
+    targetNamespace="SeiMdResposta"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+    xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:tns="SeiMdResposta">
+
+  <wsdl:types>
+    <xsd:schema targetNamespace="SeiMdResposta">
+
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+      <xsd:complexType name="Resposta">
+        <xsd:all>
+          <xsd:element name="IdResposta" type="xsd:string"/>
+          <xsd:element name="IdProcedimento" type="xsd:string"/>
+          <xsd:element name="NumProtocolo" type="xsd:string"/>
+          <xsd:element name="IdDocumento" type="xsd:string"/>
+          <xsd:element name="Mensagem" type="xsd:string"/>
+          <xsd:element name="SinConclusiva" type="xsd:string"/>
+          <xsd:element name="DthResposta" type="xsd:string"/>
+          <xsd:element name="IdDocumentos" type="tns:ArrayOfIdDocumentos"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="Documentos">
+        <xsd:all>
+          <xsd:element name="IdDocumento" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="ArrayOfResposta">
+        <xsd:complexContent>
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Resposta[]" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="ArrayOfIdDocumentos">
+        <xsd:complexContent>
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Documentos[]" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+    </xsd:schema>
+  </wsdl:types>
+      
+  <wsdl:message name="listarRespostaRequest">
+    <wsdl:part name="SiglaSistema" type="xsd:string" />
+    <wsdl:part name="IdentificacaoServico" type="xsd:string"/>
+    <wsdl:part name="IdProcedimento" type="xsd:string" />
+    <wsdl:part name="IdResposta" type="xsd:string"/>
+  </wsdl:message>
+
+  <wsdl:message name="listarRespostaResponse">
+    <wsdl:part name="parametros" type="tns:ArrayOfResposta"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="SeiMdRespostaPortType">
+
+    <wsdl:operation name="listarResposta">
+      <wsdl:documentation>Consulta Resposta ao Protocolo Digital</wsdl:documentation>
+      <wsdl:input message="tns:listarRespostaRequest"/>
+      <wsdl:output message="tns:listarRespostaResponse"/>
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+  <wsdl:binding name="SeiMdRespostaBinding" type="tns:SeiMdRespostaPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <wsdl:operation name="listarResposta">
+       <soap:operation soapAction="SeiMdRespostaAction" />
+     <wsdl:input>
+       <soap:body namespace="SeiMdResposta" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+     </wsdl:input>
+     <wsdl:output>
+      <soap:body namespace="SeiMdResposta" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+     </wsdl:output>
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <wsdl:service name="SeiMdRespostaService">
+    <wsdl:port name="SeiMdRespostaPortService" binding="tns:SeiMdRespostaBinding">
+      <soap:address location="[servidor]/modulos/mod-sei-resposta/ws/MdRespostaWS.php"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

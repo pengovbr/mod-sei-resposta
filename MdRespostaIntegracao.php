@@ -52,11 +52,12 @@ class MdRespostaIntegracao extends SeiIntegracao{
     $objMdRespostaParametroDTO -> setStrNome('PARAM_TIPO_PROCESSO');
 
     $objMdRespostaParametroRN = new MdRespostaParametroRN();
-    $arrObjMdRespostaTipoProcessoDTO = $objMdRespostaParametroRN->listar($objMdRespostaParametroDTO);
+    $objMdRespostaTipoProcessoDTO = $objMdRespostaParametroRN->consultar($objMdRespostaParametroDTO);
 
     $liberarAcesso = false;
-    foreach($arrObjMdRespostaTipoProcessoDTO as $objMdRespostaTipoProcessoDTO){
-      if($objProcedimentoAPI->getIdTipoProcedimento() == $objMdRespostaTipoProcessoDTO->getStrValor()){
+    $arrTipoProcesso = unserialize($objMdRespostaTipoProcessoDTO->getStrValor());
+    foreach($arrTipoProcesso as $valor){
+      if($objProcedimentoAPI->getIdTipoProcedimento() == $valor){
         $liberarAcesso=true;
       }
     }

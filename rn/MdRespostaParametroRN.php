@@ -18,23 +18,17 @@ class MdRespostaParametroRN extends InfraRN {
   }
  
   public function atribuir($arrObjMdRespostaParametroDTO) {
-    
-    $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
-    $objMdRespostaParametroDTO -> setStrNome('PARAM_TIPO_PROCESSO');
-    try {
-      $this->excluir($objMdRespostaParametroDTO);
-    } catch (\Exception $th) {
-      for ($i = 0; $i < count($arrObjMdRespostaParametroDTO); $i++) {
-        $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
-        $objMdRespostaParametroDTO = $arrObjMdRespostaParametroDTO[$i];
 
-        try {
-          $objMdRespostaParametroDTO = $this->cadastrar($objMdRespostaParametroDTO);
-        } catch (\Exception $th) {
-          $this->alterar($objMdRespostaParametroDTO);
-        }
+    for ($i = 0; $i < count($arrObjMdRespostaParametroDTO); $i++) {
+      $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
+      $objMdRespostaParametroDTO = $arrObjMdRespostaParametroDTO[$i];
 
+      try {
+        $objMdRespostaParametroDTO = $this->cadastrar($objMdRespostaParametroDTO);
+      } catch (\Exception $th) {
+        $this->alterar($objMdRespostaParametroDTO);
       }
+
     }
 
     return $arrObjMdRespostaParametroDTO;
@@ -107,16 +101,12 @@ class MdRespostaParametroRN extends InfraRN {
   }
   
   
-  protected function consultarConectado($parStrNomeParametro) 
+  protected function consultarConectado($objMdRespostaParametroDTO) 
   {
     try {
       
       //Valida Permissao
-      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao', __METHOD__, $parStrNomeParametro);
-      
-      $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
-      $objMdRespostaParametroDTO->setStrNome($parStrNomeParametro);
-      $objMdRespostaParametroDTO->retStrValor();
+      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao', __METHOD__, $objMdRespostaParametroDTO);
       
       $objMdRespostaParametroBD = new MdRespostaParametroBD($this->getObjInfraIBanco());
       $ret = $objMdRespostaParametroBD->consultar($objMdRespostaParametroDTO);

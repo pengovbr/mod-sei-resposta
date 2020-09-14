@@ -71,7 +71,12 @@ class MdRespostaEnvioRN extends InfraRN {
       $this->prepararAnexos($objMdRespostaEnvioDTO);
 
       $objMdRespostaParametroRN = new MdRespostaParametroRN();
-      $objParametroTipoDocumentoDTO = $objMdRespostaParametroRN->consultar(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO);
+      
+      $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
+      $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO);
+      $objMdRespostaParametroDTO->retStrValor();
+
+      $objParametroTipoDocumentoDTO = $objMdRespostaParametroRN->consultar($objMdRespostaParametroDTO);
 
       $objDocumentoDTO = new DocumentoDTO();
       $objDocumentoDTO->setDblIdDocumento(null);

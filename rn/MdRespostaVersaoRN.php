@@ -144,7 +144,7 @@ class MdRespostaVersaoRN extends InfraRN {
 
             //Criando a tabela de pacotes nos três bancos
             BancoSEI::getInstance()->executarSql("CREATE TABLE md_resposta_envio ( 
-                id_resposta int(11) NOT NULL,
+                id_resposta bigint(20) NOT NULL,
                 id_procedimento bigint(20) NOT NULL,
                 id_documento bigint(20) NOT NULL,
                 mensagem varchar(5000) NOT NULL,
@@ -162,7 +162,7 @@ class MdRespostaVersaoRN extends InfraRN {
                 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 
             BancoSEI::getInstance()->executarSql("CREATE TABLE md_resposta_rel_documento (
-                id_resposta int(11) NOT NULL,
+                id_resposta bigint(20) NOT NULL,
                 id_documento bigint(20) NOT NULL,
                 PRIMARY KEY (id_resposta,id_documento),
                 CONSTRAINT fk_md_resposta_rel_documento_resposta_envio FOREIGN KEY (id_resposta) REFERENCES md_resposta_envio (id_resposta)

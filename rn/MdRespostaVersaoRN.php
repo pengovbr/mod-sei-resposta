@@ -95,13 +95,14 @@ class MdRespostaVersaoRN extends InfraRN {
                     break;
                 default:
                     $instalacao["operacoes"] = null;
-                    $instalacao["erro"] = "Erro instalando/atualizando Módulo de Resposta - Gov.br no SEI. Versão do módulo".$strVersaoPreviaModuloResposta." inválida";
+                    $instalacao["erro"] = "Erro instalando/atualizando Modulo de Resposta - Gov.br no SEI. Versao do modulo".$strVersaoPreviaModuloResposta." inválida";
                     break;      
             }
             if (isset($instalacao["erro"])) {
                  $this->finalizar($instalacao["erro"],true);
             } else {
-                 $this->logar("Instalação/Atualização realizada com sucesso");
+                 $this->logar("Instalacao/Atualizacao realizada com sucesso");
+                 $this->logar('FIM');
             }
             
             InfraDebug::getInstance()->setBolLigado(false);

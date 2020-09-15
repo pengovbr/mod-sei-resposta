@@ -198,18 +198,11 @@ class ModuloRespostaVersaoSipRN extends InfraRN {
 		   
 		  if (InfraString::isBolVazia($strVersaoModuloResposta)){
 		    
-		    $this->instalarv001();
-		  	 	
-		  }else if($strVersaoModuloResposta=='0.0.1') {
-		  		BancoSip::getInstance()->executarSql('update infra_parametro set valor=\''.$this->versaoAtualDesteModulo.'\' where nome=\''.$this->nomeParametroModulo.'\'');
-				$this->logar('ATUALIZAÇÔES DO MÓDULO DE RESPOSTA - GOV.BR NA BASE DO SIP REALIZADAS COM SUCESSO');
-		  }else if($strVersaoModuloResposta==$this->versaoAtualDesteModulo){
+			$this->instalarv001();
+			BancoSip::getInstance()->executarSql('update infra_parametro set valor=\''.$this->versaoAtualDesteModulo.'\' where nome=\''.$this->nomeParametroModulo.'\'');
+			$this->logar('ATUALIZACOES DO MODULO DE RESPOSTA - GOV.BR NA BASE DO SIP REALIZADAS COM SUCESSO');
+			$this->logar('FIM');
 
-		  	$this->finalizar('Erro instalando/atualizando Módulo de Resposta - Gov.br no SIP.Versão '.$strVersaoModuloResposta.' já instalada',false);
-		  }else{
-
-		  	$this->finalizar('Erro instalando/atualizando Módulo de Resposta - Gov.br no SIP.Versão do módulo'.$this->versaoAtualDesteModulo.' inválida',false);
-		  	
 		  }
 
 		} catch(Exception $e){

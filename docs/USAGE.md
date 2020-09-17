@@ -22,6 +22,8 @@ Ao enviar resposta, a Plataforma Gov.br, são obrigatórios os campos **processo
 
 ![Tela de envio de resposta](imagens/tela_mod_resposta.gif)
 
+---
+
 ![Validação dos Campos obrigatórios no momento do envio da resposta](imagens/mod_resposta_validacoes.gif)
 
 ### Consulta às respostas enviadas

@@ -79,7 +79,7 @@ $ php -c /etc/php.ini <DIRETÓRIO RAIZ DE INSTALAÇÃO DO SEI E SIP>/sip/scripts
 
 ### 1.7. Atualizar a base de dados do SEI com as tabelas do **mod-sei-resposta**
 
-Nesta etapa é instalado/atualizado as tabelas de banco de dados vinculadas do **mod-sei-resposta**. Todas estas tabelas possuem o prefixo **md_pen_** para organização e fácil localização no banco de dados.
+Nesta etapa é instalado/atualizado as tabelas de banco de dados vinculadas do **mod-sei-resposta**. Todas estas tabelas possuem o prefixo **md_resposta_** para organização e fácil localização no banco de dados.
 
 O script de atualização da base de dados do SIP fica localizado em ```<DIRETÓRIO RAIZ DE INSTALAÇÃO DO SEI E SIP>/sei/web/modulos/mod-sei-resposta/sei_atualizar_versao_modulo_sei_resposta.php``` e deverá ser copiado para ```<DIRETÓRIO RAIZ DE INSTALAÇÃO DO SEI E SIP>/sei/scripts```.
 

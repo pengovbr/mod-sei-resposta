@@ -19,9 +19,22 @@ class MdRespostaParametroRN extends InfraRN {
  
   public function atribuir($arrObjMdRespostaParametroDTO) {
 
-    for ($i = 0; $i < count($arrObjMdRespostaParametroDTO); $i++) {
+    //Valida Permissao
+    SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao',__METHOD__,$objMdRespostaConfiguracaoDTO);
+
+    //Regras de Negocio
+    $objInfraException = new InfraException();
+    
+    $this->validarParametros($arrObjMdRespostaParametroDTO, $objInfraException);
+    $objInfraException->lancarValidacoes();             
+
+
+    foreach ($arrObjMdRespostaParametroDTO as $objMdRespostaParametro) {
       $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
-      $objMdRespostaParametroDTO = $arrObjMdRespostaParametroDTO[$i];
+      $objMdRespostaParametroDTO = $objMdRespostaParametro;
+
+      //$this->validarParametros($objMdRespostaParametroDTO, $objInfraException);
+      //$objInfraException->lancarValidacoes();             
 
       try {
         $objMdRespostaParametroDTO = $this->cadastrar($objMdRespostaParametroDTO);
@@ -40,11 +53,10 @@ class MdRespostaParametroRN extends InfraRN {
       
       //Valida Permissao
       SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao',__METHOD__,$objMdRespostaConfiguracaoDTO);
-      
+
       //Regras de Negocio
       $objInfraException = new InfraException();
-
-      $objInfraException->lancarValidacoes();
+      $objInfraException->lancarValidacoes();   
       
       $objMdRespostaParametroBD = new MdRespostaParametroBD($this->getObjInfraIBanco());
       $ret = $objMdRespostaParametroBD->cadastrar($objMdRespostaParametroDTO);
@@ -134,5 +146,45 @@ class MdRespostaParametroRN extends InfraRN {
       throw new InfraException('Erro listar parâmetros do módulo de resposta.',$e);
     }
   }  
+
+  private function validarParametros($arrObjMdRespostaParametroDTO, InfraException $objInfraException){
+
+    $sistemaVazio = true;
+    $tipoProcessoVazio = true;
+    $tipoDocumentoVazio = true;
+
+    foreach ($arrObjMdRespostaParametroDTO as $objMdRespostaParametroDTO) {
+      if($objMdRespostaParametroDTO->getStrNome() == MDRespostaParametroRN::PARAM_SISTEMA){
+        if (!InfraString::isBolVazia($objMdRespostaParametroDTO->getStrValor())){
+          $sistemaVazio = false;
+        }
+      }
+
+      if($objMdRespostaParametroDTO->getStrNome() == MDRespostaParametroRN::PARAM_TIPO_PROCESSO){
+        if (!InfraString::isBolVazia($objMdRespostaParametroDTO->getStrValor())){
+          $tipoProcessoVazio = false;
+        }
+      }
+
+      if($objMdRespostaParametroDTO->getStrNome() == MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO){
+        if (!InfraString::isBolVazia($objMdRespostaParametroDTO->getStrValor())){
+          $tipoDocumentoVazio = false;
+        }
+      }
+    }
+
+    if($sistemaVazio){
+      $objInfraException->adicionarValidacao('Selecione o Sistema.');
+    }
+
+    if($tipoProcessoVazio){
+      $objInfraException->adicionarValidacao('Selecione o Tipo de Processo.');
+    }
+
+    if($tipoDocumentoVazio){
+      $objInfraException->adicionarValidacao('Selecione o Tipo de Documento.');
+    }
+
+  }
 }
 ?>

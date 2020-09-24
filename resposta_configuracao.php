@@ -47,7 +47,7 @@ try {
                   $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_PROCESSO);
                   $objMdRespostaParametroDTO->setStrValor(serialize($_POST['selTipoProcesso']));
                   $arrObjMdRespostaParametroDTO[] = $objMdRespostaParametroDTO;
-                break;              
+              break;              
             }
 
           }
@@ -165,7 +165,7 @@ function validarFormParametrosCadastro() {
     return false;
   }
 
-  if (!infraSelectSelecionado('selTipoProcesso')) {
+  if (document.getElementById("selTipoProcesso").value == "") {
     alert('Selecione o Tipo de Processo.');
     document.getElementById('selTipoProcesso').focus();
     return false;

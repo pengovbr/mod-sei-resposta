@@ -23,6 +23,7 @@ class MdRespostaEnvioRN extends InfraRN {
 
       $this->validarDblIdProtocolo($objMdRespostaEnvioDTO, $objInfraException);
       $this->validarStrMensagem($objMdRespostaEnvioDTO, $objInfraException);
+      $this->validarArrIdDocumentosProcesso($objMdRespostaEnvioDTO, $objInfraException);
       $this->validarStrSinConclusiva($objMdRespostaEnvioDTO, $objInfraException);
 
       $objInfraException->lancarValidacoes();      
@@ -353,6 +354,12 @@ class MdRespostaEnvioRN extends InfraRN {
 	      $objInfraException->adicionarValidacao('Mensagem não Informada.');
 	  }
   }
+
+  private function validarArrIdDocumentosProcesso(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException){
+  	if (count($objMdRespostaEnvioDTO->getArrIdDocumentosProcesso()) == 0){
+	      $objInfraException->adicionarValidacao('Nenhum documento selecionado.');
+	  }
+  }  
 
   private function validarStrSinConclusiva(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException){
   	if (InfraString::isBolVazia($objMdRespostaEnvioDTO->getStrSinConclusiva())){

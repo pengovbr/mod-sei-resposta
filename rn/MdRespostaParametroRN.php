@@ -31,10 +31,7 @@ class MdRespostaParametroRN extends InfraRN {
 
     foreach ($arrObjMdRespostaParametroDTO as $objMdRespostaParametro) {
       $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
-      $objMdRespostaParametroDTO = $objMdRespostaParametro;
-
-      //$this->validarParametros($objMdRespostaParametroDTO, $objInfraException);
-      //$objInfraException->lancarValidacoes();             
+      $objMdRespostaParametroDTO = $objMdRespostaParametro;           
 
       try {
         $objMdRespostaParametroDTO = $this->cadastrar($objMdRespostaParametroDTO);

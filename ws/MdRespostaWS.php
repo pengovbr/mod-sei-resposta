@@ -5,11 +5,11 @@ require_once dirname(__FILE__).'/../../../SEI.php';
 
 class MdRespostaWS extends InfraWS {
 
-  public function getObjInfraLog(){
+	public function getObjInfraLog(){
 		return LogSEI::getInstance();
-  }
+	}
 
-  public function listarResposta($SiglaSistema, $IdentificacaoServico, $IdProcedimento, $IdResposta = "") {
+	public function listarResposta($objSOAP) {
   	try {
             
         $InfraException = new InfraException();
@@ -18,19 +18,37 @@ class MdRespostaWS extends InfraWS {
   		InfraDebug::getInstance()->setBolDebugInfra(false);
   		InfraDebug::getInstance()->limpar();
   			
-  		SessaoSEI::getInstance(false);
+		SessaoSEI::getInstance(false);
+
+		$SiglaSistema = $objSOAP->SiglaSistema;
+		$IdentificacaoServico = $objSOAP->IdentificacaoServico;
+		$arrIdProcedimento = $objSOAP->IdProcedimentos;
+		$arrNumProcedimento = $objSOAP->NumProcedimentos;
+		$IdResposta = $objSOAP->IdResposta;
   			
   		$objServicoDTO = self::obterServico($SiglaSistema, $IdentificacaoServico);
   			
 		$this->validarAcessoAutorizado(explode(',', str_replace(' ', '', $objServicoDTO->getStrServidor())));
 
-		$objProcedimentoDTO = new ProcedimentoDTO();
-		$objProcedimentoDTO->retStrProtocoloProcedimentoFormatado();
-		$objProcedimentoDTO->setDblIdProcedimento($IdProcedimento);
+		$arrObjProcedimentoDTO = new ProcedimentoDTO();
+		$arrObjProcedimentoDTO->retDblIdProcedimento();
+		$arrObjProcedimentoDTO->retStrProtocoloProcedimentoFormatado();
+		if(empty($arrIdProcedimento)){
+			$arrObjProcedimentoDTO->setStrProtocoloProcedimentoFormatadoPesquisa($arrNumProcedimento, InfraDTO::$OPER_IN);
+		}else{
+			$arrObjProcedimentoDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
+		}
 		
 		// Consulta nas classes de regra de negócio
 		$objProcedimentoRN = new ProcedimentoRN();
-		$objProcedimentoDTO = $objProcedimentoRN->consultarRN0201($objProcedimentoDTO);	
+		$arrObjProcedimentoDTO = $objProcedimentoRN->listarRN0278($arrObjProcedimentoDTO);
+		$arrObjProcedimentoDTOIndexado = InfraArray::indexarArrInfraDTO($arrObjProcedimentoDTO, "IdProcedimento");
+
+		if(empty($arrIdProcedimento)){
+			foreach ($arrObjProcedimentoDTO as $objProcedimento){
+				$arrIdProcedimento[] = $objProcedimento->getDblIdProcedimento();
+			}
+		}
 		
 		$objMdRespostaDTO = new MdRespostaDTO();
 		
@@ -43,7 +61,7 @@ class MdRespostaWS extends InfraWS {
 		$objMdRespostaDTO->retDthDthResposta();
 		$objMdRespostaDTO->retDblIdDocumentoAnexo(); 
 		
-		$objMdRespostaDTO->setDblIdProcedimento($IdProcedimento);
+		$objMdRespostaDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
 		
 		if($IdResposta != null || $IdResposta != ""){
 			$objMdRespostaDTO->setNumIdResposta($IdResposta);
@@ -51,8 +69,6 @@ class MdRespostaWS extends InfraWS {
 
   		$objMdRespostaRN = new MdRespostaRN();
 		$arrObjMdRespostaDTO = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
-		
-		$ret = array();
 
 		if (count($arrObjMdRespostaDTO)){
   
@@ -67,20 +83,21 @@ class MdRespostaWS extends InfraWS {
 						$arrDocumentos[] = (object) array('IdDocumento' => $objDocumentos->getDblIdDocumentoAnexo());
 					}
 				}
-
-				$ret[] = (object) array(
+				
+				$Resposta[] = (object) array("Resposta" =>  (object) array(
 					'IdResposta' => $objMdRespostaDTO->getNumIdResposta(),
 					'IdProcedimento' => $objMdRespostaDTO->getDblIdProcedimento(),
-					'NumProtocolo' => $objProcedimentoDTO->getStrProtocoloProcedimentoFormatado(),
+					'NumProtocolo' => $arrObjProcedimentoDTOIndexado[$objMdRespostaDTO->getDblIdProcedimento()]->getStrProtocoloProcedimentoFormatado(),
 					'IdDocumento' => $objMdRespostaDTO->getDblIdDocumento(),
 					'Mensagem' => $objMdRespostaDTO->getStrMensagem(),
 					'SinConclusiva' => $objMdRespostaDTO->getStrSinConclusiva(),
 					'DthResposta' => $objMdRespostaDTO->getDthDthResposta(),
-					'IdDocumentos' => $arrDocumentos);
+					'IdDocumentos' => $arrDocumentos
+				));
 			}
 		  }
-  
-		  return $ret;
+
+		  return $Resposta;
 
 		}		
 
@@ -131,7 +148,6 @@ class MdRespostaWS extends InfraWS {
 }
 
 $servidorSoap = new SoapServer("MdResposta.wsdl",array('encoding'=>'ISO-8859-1'));
-
 $servidorSoap->setClass("MdRespostaWS");
 
 //Só processa se acessado via POST

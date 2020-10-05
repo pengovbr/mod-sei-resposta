@@ -1,45 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<wsdl:definitions
-    name="MdResposta"
-    targetNamespace="SeiMdResposta"
-    xmlns="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
-    xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
-    xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:tns="SeiMdResposta">
-
+<wsdl:definitions 
+  name="MdResposta"
+  targetNamespace="SeiMdResposta"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+  xmlns:tns="SeiMdResposta">
+  
+  <wsdl:documentation>
+    Este Web Service é voltado a obter as resposta do SEI para plataforma Gov.br.
+  </wsdl:documentation>
+  
   <wsdl:types>
     <xsd:schema targetNamespace="SeiMdResposta">
 
-      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+      <xsd:element name="RespostaRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            
+            <xsd:element name="SiglaSistema" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe o nome do sistema habilitado para receber resposta do SEI.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
 
-      <xsd:complexType name="Resposta">
-        <xsd:all>
-          <xsd:element name="IdResposta" type="xsd:string"/>
-          <xsd:element name="IdProcedimento" type="xsd:string"/>
-          <xsd:element name="NumProtocolo" type="xsd:string"/>
-          <xsd:element name="IdDocumento" type="xsd:string"/>
-          <xsd:element name="Mensagem" type="xsd:string"/>
-          <xsd:element name="SinConclusiva" type="xsd:string"/>
-          <xsd:element name="DthResposta" type="xsd:string"/>
-          <xsd:element name="IdDocumentos" type="tns:ArrayOfIdDocumentos"/>
-        </xsd:all>
+            <xsd:element name="IdentificacaoServico" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe a identificação do serviço habilitado para receber resposta do SEI.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="IdProcedimentos" type="tns:ArrayOfIdProcedimento" minOccurs="0" maxOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe o identificador dos processos a serem consultados no SEI.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="NumProcedimentos" type="tns:ArrayOfNumProcedimento" minOccurs="0" maxOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe o número dos processos a serem consultados no SEI.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="IdResposta" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe o identificador da resposta a ser consultada no SEI.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="Resposta">
+        <xsd:complexType>
+          <xsd:sequence>
+            
+            <xsd:element name="IdResposta" type="xsd:int" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Identificador da resposta devolvido do Web Service.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="IdProcedimento" type="xsd:int" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Identificador do processo devolvido do Web Service.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="NumProtocolo" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Número do processo devolvido do Web Service.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="IdDocumento" type="xsd:int" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Identificador da resposta devolvida do Web Service.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="Mensagem" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Mensagem da resposta devolvida do Web Service.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="SinConclusiva" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Identificador se é conclusivo ou não devolvido do Web Service.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="DthResposta" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Data de envio da resposta devolvida do Web Service.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="IdDocumentos" type="tns:ArrayOfIdDocumentos" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Identificador do processo devolvido do Web Service.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:complexType name="ArrayOfIdProcedimento">
+        <xsd:complexContent>
+          <xsd:restriction base="SOAP-ENC:Array">
+
+            <xsd:sequence>
+              <xsd:element minOccurs="0" maxOccurs="2" name="IdProcedimento" type="xsd:int"/>
+            </xsd:sequence>
+
+            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:int[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
       </xsd:complexType>
 
-      <xsd:complexType name="Documentos">
-        <xsd:all>
-          <xsd:element name="IdDocumento" type="xsd:string"/>
-        </xsd:all>
+      <xsd:complexType name="ArrayOfNumProcedimento">
+        <xsd:complexContent>
+          <xsd:restriction base="SOAP-ENC:Array">
+
+            <xsd:sequence>
+              <xsd:element minOccurs="0" maxOccurs="2" name="NumProcedimento" type="xsd:string"/>
+            </xsd:sequence>
+
+            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
       </xsd:complexType>
 
       <xsd:complexType name="ArrayOfResposta">
         <xsd:complexContent>
           <xsd:restriction base="SOAP-ENC:Array">
-            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Resposta[]" />
+            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Resposta[]"/>
           </xsd:restriction>
         </xsd:complexContent>
       </xsd:complexType>
@@ -47,54 +174,52 @@
       <xsd:complexType name="ArrayOfIdDocumentos">
         <xsd:complexContent>
           <xsd:restriction base="SOAP-ENC:Array">
-            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Documentos[]" />
+
+            <xsd:sequence>
+              <xsd:element minOccurs="0" maxOccurs="unbounded" name="IdDocumento" type="xsd:int"/>
+            </xsd:sequence>
+
+            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:int[]" />
           </xsd:restriction>
         </xsd:complexContent>
       </xsd:complexType>
 
     </xsd:schema>
   </wsdl:types>
-      
-  <wsdl:message name="listarRespostaRequest">
-    <wsdl:part name="SiglaSistema" type="xsd:string" />
-    <wsdl:part name="IdentificacaoServico" type="xsd:string"/>
-    <wsdl:part name="IdProcedimento" type="xsd:string" />
-    <wsdl:part name="IdResposta" type="xsd:string"/>
+
+  <wsdl:message name="RespostaRequest">
+    <wsdl:part element="tns:RespostaRequest" name="RespostaRequest" />
   </wsdl:message>
 
-  <wsdl:message name="listarRespostaResponse">
-    <wsdl:part name="parametros" type="tns:ArrayOfResposta"/>
+  <wsdl:message name="RespostaResponse">
+    <wsdl:part element="tns:ArrayOfResposta" name="RespostaResponse" />
   </wsdl:message>
-  
+
   <wsdl:portType name="SeiMdRespostaPortType">
-
     <wsdl:operation name="listarResposta">
       <wsdl:documentation>Consulta Resposta ao Protocolo Digital</wsdl:documentation>
-      <wsdl:input message="tns:listarRespostaRequest"/>
-      <wsdl:output message="tns:listarRespostaResponse"/>
+      <wsdl:input message="tns:RespostaRequest" />
+      <wsdl:output message="tns:RespostaResponse" />
     </wsdl:operation>
-
   </wsdl:portType>
 
-  <wsdl:binding name="SeiMdRespostaBinding" type="tns:SeiMdRespostaPortType">
-    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <wsdl:binding name="SeiMdRespostaSOAP" type="tns:SeiMdRespostaPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
 
     <wsdl:operation name="listarResposta">
-       <soap:operation soapAction="SeiMdRespostaAction" />
-     <wsdl:input>
-       <soap:body namespace="SeiMdResposta" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-     </wsdl:input>
-     <wsdl:output>
-      <soap:body namespace="SeiMdResposta" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-     </wsdl:output>
+      <soap:operation soapAction="SeiMdRespostaAction" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:output>
     </wsdl:operation>
-
   </wsdl:binding>
 
-  <wsdl:service name="SeiMdRespostaService">
-    <wsdl:port name="SeiMdRespostaPortService" binding="tns:SeiMdRespostaBinding">
-      <soap:address location="[servidor]/modulos/mod-sei-resposta/ws/MdRespostaWS.php"/>
+  <wsdl:service name="SeiMdResposta">
+    <wsdl:port binding="tns:SeiMdRespostaSOAP" name="SeiMdRespostaSOAP">
+      <soap:address location="http://localhost/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php" />
     </wsdl:port>
   </wsdl:service>
-
 </wsdl:definitions>

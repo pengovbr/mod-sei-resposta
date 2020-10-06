@@ -5,7 +5,6 @@
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
   xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
   xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
   xmlns:tns="SeiMdResposta">
@@ -37,7 +36,7 @@
               </xsd:annotation>
             </xsd:element>
 
-            <xsd:element name="IdProcedimentos" type="tns:ArrayOfIdProcedimento" minOccurs="0" maxOccurs="1">
+            <xsd:element name="IdProcedimentos" type="tns:IdProcedimentos" minOccurs="0" maxOccurs="1">
               <xsd:annotation>
                 <xsd:documentation>
                   Informe o identificador dos processos a serem consultados no SEI.
@@ -45,7 +44,7 @@
               </xsd:annotation>
             </xsd:element>
 
-            <xsd:element name="NumProcedimentos" type="tns:ArrayOfNumProcedimento" minOccurs="0" maxOccurs="1">
+            <xsd:element name="NumProcedimentos" type="tns:NumProcedimentos" minOccurs="0" maxOccurs="1">
               <xsd:annotation>
                 <xsd:documentation>
                   Informe o número dos processos a serem consultados no SEI.
@@ -65,7 +64,7 @@
         </xsd:complexType>
       </xsd:element>
 
-      <xsd:element name="Resposta">
+      <xsd:element name="Resposta" minOccurs="1" maxOccurs="unbounded">
         <xsd:complexType>
           <xsd:sequence>
             
@@ -125,7 +124,7 @@
               </xsd:annotation>
             </xsd:element>
 
-            <xsd:element name="IdDocumentos" type="tns:ArrayOfIdDocumentos" minOccurs="1">
+            <xsd:element name="IdDocumentos" type="tns:IdDocumentos" minOccurs="1">
               <xsd:annotation>
                 <xsd:documentation>
                   Identificador do processo devolvido do Web Service.
@@ -137,51 +136,22 @@
         </xsd:complexType>
       </xsd:element>
 
-      <xsd:complexType name="ArrayOfIdProcedimento">
-        <xsd:complexContent>
-          <xsd:restriction base="SOAP-ENC:Array">
-
-            <xsd:sequence>
-              <xsd:element minOccurs="0" maxOccurs="2" name="IdProcedimento" type="xsd:int"/>
-            </xsd:sequence>
-
-            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:int[]"/>
-          </xsd:restriction>
-        </xsd:complexContent>
+      <xsd:complexType name="IdProcedimentos">
+        <xsd:sequence>
+          <xsd:element name="IdProcedimento" type="xsd:int" minOccurs="0" maxOccurs="2" />
+        </xsd:sequence>
       </xsd:complexType>
 
-      <xsd:complexType name="ArrayOfNumProcedimento">
-        <xsd:complexContent>
-          <xsd:restriction base="SOAP-ENC:Array">
-
-            <xsd:sequence>
-              <xsd:element minOccurs="0" maxOccurs="2" name="NumProcedimento" type="xsd:string"/>
-            </xsd:sequence>
-
-            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:string[]"/>
-          </xsd:restriction>
-        </xsd:complexContent>
+      <xsd:complexType name="NumProcedimentos">
+        <xsd:sequence>
+          <xsd:element name="NumProcedimento" type="xsd:string" minOccurs="0" maxOccurs="2" />
+        </xsd:sequence>
       </xsd:complexType>
 
-      <xsd:complexType name="ArrayOfResposta">
-        <xsd:complexContent>
-          <xsd:restriction base="SOAP-ENC:Array">
-            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Resposta[]"/>
-          </xsd:restriction>
-        </xsd:complexContent>
-      </xsd:complexType>
-
-      <xsd:complexType name="ArrayOfIdDocumentos">
-        <xsd:complexContent>
-          <xsd:restriction base="SOAP-ENC:Array">
-
-            <xsd:sequence>
-              <xsd:element minOccurs="0" maxOccurs="unbounded" name="IdDocumento" type="xsd:int"/>
-            </xsd:sequence>
-
-            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:int[]" />
-          </xsd:restriction>
-        </xsd:complexContent>
+      <xsd:complexType name="IdDocumentos">
+        <xsd:sequence>
+          <xsd:element name="IdDocumento" type="xsd:int" minOccurs="0" maxOccurs="2" />
+        </xsd:sequence>
       </xsd:complexType>
 
     </xsd:schema>
@@ -192,7 +162,7 @@
   </wsdl:message>
 
   <wsdl:message name="RespostaResponse">
-    <wsdl:part element="tns:ArrayOfResposta" name="RespostaResponse" />
+    <wsdl:part element="tns:Resposta[]" name="RespostaResponse" />
   </wsdl:message>
 
   <wsdl:portType name="SeiMdRespostaPortType">

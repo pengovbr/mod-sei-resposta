@@ -22,8 +22,8 @@ class MdRespostaWS extends InfraWS {
 
 		$SiglaSistema = $objSOAP->SiglaSistema;
 		$IdentificacaoServico = $objSOAP->IdentificacaoServico;
-		$arrIdProcedimento = $objSOAP->IdProcedimentos;
-		$arrNumProcedimento = $objSOAP->NumProcedimentos;
+		$arrIdProcedimento = $objSOAP->IdProcedimentos->IdProcedimento;
+		$arrNumProcedimento = $objSOAP->NumProcedimentos->NumProcedimento;
 		$IdResposta = $objSOAP->IdResposta;
   			
   		$objServicoDTO = self::obterServico($SiglaSistema, $IdentificacaoServico);
@@ -34,8 +34,10 @@ class MdRespostaWS extends InfraWS {
 		$arrObjProcedimentoDTO->retDblIdProcedimento();
 		$arrObjProcedimentoDTO->retStrProtocoloProcedimentoFormatado();
 		if(empty($arrIdProcedimento)){
+			is_array($arrNumProcedimento) ? $arrNumProcedimento : $arrNumProcedimento = array($arrNumProcedimento);
 			$arrObjProcedimentoDTO->setStrProtocoloProcedimentoFormatadoPesquisa($arrNumProcedimento, InfraDTO::$OPER_IN);
 		}else{
+			is_array($arrIdProcedimento) ? $arrIdProcedimento : $arrIdProcedimento = array($arrIdProcedimento);
 			$arrObjProcedimentoDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
 		}
 		

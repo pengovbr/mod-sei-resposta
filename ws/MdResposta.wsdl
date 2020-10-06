@@ -189,7 +189,7 @@
 
   <wsdl:service name="SeiMdResposta">
     <wsdl:port binding="tns:SeiMdRespostaSOAP" name="SeiMdRespostaSOAP">
-      <soap:address location="http://localhost/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php" />
+      <soap:address location="[servidor]/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -127,7 +127,7 @@
             <xsd:element name="IdDocumentos" type="tns:IdDocumentos" minOccurs="1">
               <xsd:annotation>
                 <xsd:documentation>
-                  Identificador do processo devolvido do Web Service.
+                  Identificador dos documentos devolvidos do Web Service.
                 </xsd:documentation>
               </xsd:annotation>
             </xsd:element>
@@ -150,26 +150,26 @@
 
       <xsd:complexType name="IdDocumentos">
         <xsd:sequence>
-          <xsd:element name="IdDocumento" type="xsd:int" minOccurs="0" maxOccurs="2" />
+          <xsd:element name="IdDocumento" type="xsd:int" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
       </xsd:complexType>
 
     </xsd:schema>
   </wsdl:types>
 
-  <wsdl:message name="RespostaRequest">
-    <wsdl:part element="tns:RespostaRequest" name="RespostaRequest" />
+  <wsdl:message name="listarRespostaRequest">
+    <wsdl:part element="tns:RespostaRequest" name="listarRespostaRequest" />
   </wsdl:message>
 
-  <wsdl:message name="RespostaResponse">
-    <wsdl:part element="tns:Resposta[]" name="RespostaResponse" />
+  <wsdl:message name="listarRespostaResponse">
+    <wsdl:part element="tns:Resposta[]" name="listarRespostaResponse" />
   </wsdl:message>
 
   <wsdl:portType name="SeiMdRespostaPortType">
     <wsdl:operation name="listarResposta">
       <wsdl:documentation>Consulta Resposta ao Protocolo Digital</wsdl:documentation>
-      <wsdl:input message="tns:RespostaRequest" />
-      <wsdl:output message="tns:RespostaResponse" />
+      <wsdl:input message="tns:listarRespostaRequest" />
+      <wsdl:output message="tns:listarRespostaResponse" />
     </wsdl:operation>
   </wsdl:portType>
 

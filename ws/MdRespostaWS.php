@@ -8,8 +8,89 @@ class MdRespostaWS extends InfraWS {
 	public function getObjInfraLog(){
 		return LogSEI::getInstance();
 	}
+	
+	public function __call($func, $params) {
+		try{
 
-	public function listarResposta($objSOAP) {
+			SessaoSEI::getInstance(false);
+
+			if (!method_exists($this, $func.'Monitorado')) {
+				throw new InfraException('Serviço ['.get_class($this).'.'.$func.'] não encontrado.');
+			}
+
+			BancoSEI::getInstance()->abrirConexao();
+
+			$SiglaSistema = $params[0]->SiglaSistema;
+			$IdentificacaoServico = $params[0]->IdentificacaoServico;
+			$arrIdProcedimento = $params[0]->IdProcedimentos->IdProcedimento;
+			$arrNumProcedimento = $params[0]->NumProcedimentos->NumProcedimento;
+			$IdResposta = $params[0]->IdResposta;
+					
+			$objServicoDTO = self::obterServico($SiglaSistema, $IdentificacaoServico);
+					
+			$this->validarAcessoAutorizado(explode(',', str_replace(' ', '', $objServicoDTO->getStrServidor())));
+
+			SessaoSEI::getInstance()->setObjServicoDTO($objServicoDTO);
+
+			$numSeg = InfraUtil::verificarTempoProcessamento();
+
+			$debugWebServices = (int)ConfiguracaoSEI::getInstance()->getValor('SEI','DebugWebServices',false,0);
+
+			if ($debugWebServices) {
+				InfraDebug::getInstance()->setBolLigado(true);
+				InfraDebug::getInstance()->setBolDebugInfra(($debugWebServices==2));
+				InfraDebug::getInstance()->limpar();
+
+				InfraDebug::getInstance()->gravar("Serviço: ".$func."\nParâmetros: ".$this->debugParametros($params));
+
+				if ($debugWebServices==1) {
+					LogSEI::getInstance()->gravar(InfraDebug::getInstance()->getStrDebug(),InfraLog::$DEBUG);
+				}
+			}
+
+			$ret = call_user_func_array(array($this, $func.'Monitorado'), $params);
+
+			if ($debugWebServices==2) {
+				LogSEI::getInstance()->gravar(InfraDebug::getInstance()->getStrDebug(),InfraLog::$DEBUG);
+			}
+
+			try {
+
+				$numSeg = InfraUtil::verificarTempoProcessamento($numSeg);
+
+				$objMonitoramentoServicoDTO = new MonitoramentoServicoDTO();
+				$objMonitoramentoServicoDTO->setNumIdServico($objServicoDTO->getNumIdServico());
+				$objMonitoramentoServicoDTO->setStrOperacao($func);
+				$objMonitoramentoServicoDTO->setDblTempoExecucao($numSeg*1000);
+				$objMonitoramentoServicoDTO->setStrIpAcesso(InfraUtil::getStrIpUsuario());
+				$objMonitoramentoServicoDTO->setDthAcesso(InfraData::getStrDataHoraAtual());
+				$objMonitoramentoServicoDTO->setStrServidor(substr($_SERVER['SERVER_NAME'].' ('.$_SERVER['SERVER_ADDR'].')',0,250));
+				$objMonitoramentoServicoDTO->setStrUserAgent(substr($_SERVER['HTTP_USER_AGENT'], 0, 250));
+
+				$objMonitoramentoServicoRN = new MonitoramentoServicoRN();
+				$objMonitoramentoServicoRN->cadastrar($objMonitoramentoServicoDTO);
+
+			}catch(Exception $e){
+				try{
+					LogSEI::getInstance()->gravar('Erro monitorando acesso do serviço.'."\n".InfraException::inspecionar($e));
+				}catch (Exception $e){}
+			}
+
+			BancoSEI::getInstance()->fecharConexao();
+
+			return $ret;
+
+		}catch(Exception $e){
+
+			try{
+				BancoSEI::getInstance()->fecharConexao();
+			}catch(Exception $e2){}
+
+			$this->processarExcecao($e);
+		}
+	}
+
+	protected function listarRespostaMonitorado($objSOAP) {
   	try {
             
         $InfraException = new InfraException();
@@ -82,20 +163,21 @@ class MdRespostaWS extends InfraWS {
 				$arrDocumentos = array();
 				foreach($arrObjMdRespostaDTO as $objDocumentos){
 					if($IdResposta == $objDocumentos->getNumIdResposta()){
-						$arrDocumentos[] = (object) array('IdDocumento' => $objDocumentos->getDblIdDocumentoAnexo());
+						$arrDocumentos[] = (object) array('IdDocumento' => (int) $objDocumentos->getDblIdDocumentoAnexo());
 					}
 				}
 				
-				$Resposta[] = (object) array("Resposta" =>  (object) array(
-					'IdResposta' => $objMdRespostaDTO->getNumIdResposta(),
-					'IdProcedimento' => $objMdRespostaDTO->getDblIdProcedimento(),
-					'NumProtocolo' => $arrObjProcedimentoDTOIndexado[$objMdRespostaDTO->getDblIdProcedimento()]->getStrProtocoloProcedimentoFormatado(),
-					'IdDocumento' => $objMdRespostaDTO->getDblIdDocumento(),
-					'Mensagem' => $objMdRespostaDTO->getStrMensagem(),
-					'SinConclusiva' => $objMdRespostaDTO->getStrSinConclusiva(),
-					'DthResposta' => $objMdRespostaDTO->getDthDthResposta(),
+				$Resposta[] = (object) array(
+					'IdResposta' => (int) $objMdRespostaDTO->getNumIdResposta(),
+					'IdProcedimento' => (int) $objMdRespostaDTO->getDblIdProcedimento(),
+					'NumProtocolo' => (string) $arrObjProcedimentoDTOIndexado[$objMdRespostaDTO->getDblIdProcedimento()]->getStrProtocoloProcedimentoFormatado(),
+					'IdDocumento' => (int) $objMdRespostaDTO->getDblIdDocumento(),
+					'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
+					'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
+					'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
 					'IdDocumentos' => $arrDocumentos
-				));
+				);
+
 			}
 		  }
 

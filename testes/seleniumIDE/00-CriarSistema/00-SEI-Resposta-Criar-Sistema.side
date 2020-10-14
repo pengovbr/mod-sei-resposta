@@ -1,0 +1,347 @@
+{
+  "id": "3cd41667-7ac1-4a12-84f2-26a1e096d202",
+  "version": "2.0",
+  "name": "00-SEI-Resposta-Criar-Sistema",
+  "url": "http://sei.resposta.nuvem.gov.br/sei/",
+  "tests": [{
+    "id": "6a600a99-7f84-42a9-b3ac-d3f049ce1947",
+    "name": "CriarSistema",
+    "commands": [{
+      "id": "2e7bed5d-120c-492e-ad02-1d9d2d45bd9c",
+      "comment": "",
+      "command": "open",
+      "target": "/sip/login.php?sigla_orgao_sistema=ME&sigla_sistema=SEI",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c1d5de75-728b-4c83-b0bc-47981ca2050a",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsuario",
+      "targets": [
+        ["id=txtUsuario", "id"],
+        ["name=txtUsuario", "name"],
+        ["css=#txtUsuario", "css:finder"],
+        ["xpath=//input[@id='txtUsuario']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "24aa6a52-c9b6-46ce-bbb1-00734b288323",
+      "comment": "",
+      "command": "click",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "819d9b49-f226-4671-a3fb-9d5f15ff6527",
+      "comment": "",
+      "command": "type",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "2c3cc90a-a91c-4f1b-9b59-c6af092af69e",
+      "comment": "",
+      "command": "click",
+      "target": "id=sbmLogin",
+      "targets": [
+        ["id=sbmLogin", "id"],
+        ["name=sbmLogin", "name"],
+        ["css=#sbmLogin", "css:finder"],
+        ["xpath=//button[@id='sbmLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='divBotoes']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Acessar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "87c7f242-7f1b-4678-b3b2-6b32fe545993",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"main-menu\"]/li[1]/a",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2be50b1b-de75-4f90-aa62-167cd17b99a9",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"main-menu\"]/li[1]/ul/li[16]/a",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "098c02b0-6064-4aa8-95df-f7a62b0f3adf",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Novo",
+      "targets": [
+        ["linkText=Novo", "linkText"],
+        ["css=ul:nth-child(2) > li:nth-child(17) li:nth-child(1) > a", "css:finder"],
+        ["xpath=(//a[contains(text(),'Novo')])[12]", "xpath:link"],
+        ["xpath=//ul[@id='main-menu']/li/ul/li[17]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'controlador.php?acao=usuario_sistema_cadastrar&infra_sistema=100000100&infra_unidade_atual=110000002&infra_hash=5d44f1f510a1c2fa5a93f0e4106727a7e4327a8d344817e7469e0d0f3718683d')]", "xpath:href"],
+        ["xpath=//li[17]/ul/li/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "60b90767-2d73-49f3-a715-61a50de594c6",
+      "comment": "",
+      "command": "select",
+      "target": "id=selOrgao",
+      "targets": [],
+      "value": "label=ME"
+    }, {
+      "id": "a1d34f7c-0d5c-4363-baf1-9d751237288b",
+      "comment": "",
+      "command": "click",
+      "target": "id=selOrgao",
+      "targets": [
+        ["id=selOrgao", "id"],
+        ["name=selOrgao", "name"],
+        ["css=#selOrgao", "css:finder"],
+        ["xpath=//select[@id='selOrgao']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/select", "xpath:idRelative"],
+        ["xpath=//div[2]/select", "xpath:position"],
+        ["xpath=//select[contains(.,' \nABC')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0d98d50c-7250-4400-84fb-e5ce7401be06",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtSigla",
+      "targets": [
+        ["id=txtSigla", "id"],
+        ["name=txtSigla", "name"],
+        ["css=#txtSigla", "css:finder"],
+        ["xpath=//input[@id='txtSigla']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1bc97de0-953d-4328-a4e1-30d1b9b97409",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtSigla",
+      "targets": [
+        ["id=txtSigla", "id"],
+        ["name=txtSigla", "name"],
+        ["css=#txtSigla", "css:finder"],
+        ["xpath=//input[@id='txtSigla']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "PD_GOV_BR"
+    }, {
+      "id": "8d3020da-5fd8-43d3-9f61-030a8f10adfe",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtNome",
+      "targets": [
+        ["id=txtNome", "id"],
+        ["name=txtNome", "name"],
+        ["css=#txtNome", "css:finder"],
+        ["xpath=//input[@id='txtNome']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Protocolo Digital"
+    }, {
+      "id": "26d84c52-8fa5-4f9d-b056-101a6a3bb86f",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7765c36c-2d10-4383-9d32-d3a693bde13a",
+      "comment": "",
+      "command": "click",
+      "target": "name=sbmCadastrarSistema",
+      "targets": [
+        ["name=sbmCadastrarSistema", "name"],
+        ["css=.infraButton:nth-child(1)", "css:finder"],
+        ["xpath=//button[@name='sbmCadastrarSistema']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraBarraComandosSuperior']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Salvar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "439d4001-86cc-4ae3-8bb3-94063c743855",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"main-menu\"]/li[1]/a",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "edac3f6a-71fb-4c64-8a5e-152d4bd1b6ff",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"main-menu\"]/li[1]/ul/li[16]/a",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d55a6185-8db8-46f8-a414-717b6b6f5654",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Listar",
+      "targets": [
+        ["linkText=Listar", "linkText"],
+        ["css=ul:nth-child(2) > li:nth-child(17) li:nth-child(2) > a", "css:finder"],
+        ["xpath=(//a[contains(text(),'Listar')])[15]", "xpath:link"],
+        ["xpath=//ul[@id='main-menu']/li/ul/li[17]/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'controlador.php?acao=usuario_sistema_listar&infra_sistema=100000100&infra_unidade_atual=110000002&infra_hash=ac75d0e4dffa4b7937bc68767ddcc61cae89837a62e2beb8f94dc05ae6165a51')]", "xpath:href"],
+        ["xpath=//li[17]/ul/li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "48c9d5b7-af2a-43bd-a221-2a39333d8ec6",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=(//img[@alt='Serviços'])[4]",
+      "targets": [
+        ["css=.infraTrSelecionada a:nth-child(1) > .infraImg", "css:finder"],
+        ["xpath=(//img[@alt='Serviços'])[4]", "xpath:img"],
+        ["xpath=//div[@id='divInfraAreaTabela']/table/tbody/tr[5]/td[6]/a/img", "xpath:idRelative"],
+        ["xpath=//tr[5]/td[6]/a/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a6643afe-8396-4167-8f57-a1cb89f8750b",
+      "comment": "",
+      "command": "click",
+      "target": "css=#btnNovo > .infraTeclaAtalho",
+      "targets": [
+        ["css=#btnNovo > .infraTeclaAtalho", "css:finder"],
+        ["xpath=//button[@id='btnNovo']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7ecb93ac-e8f7-4766-88de-2122e3ea1de7",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtIdentificacao",
+      "targets": [
+        ["id=txtIdentificacao", "id"],
+        ["name=txtIdentificacao", "name"],
+        ["css=#txtIdentificacao", "css:finder"],
+        ["xpath=//input[@id='txtIdentificacao']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "SeiResposta"
+    }, {
+      "id": "bd9337f4-e295-4620-9cee-d40799437bc8",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtDescricao",
+      "targets": [
+        ["id=txtDescricao", "id"],
+        ["name=txtDescricao", "name"],
+        ["css=#txtDescricao", "css:finder"],
+        ["xpath=//input[@id='txtDescricao']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Resposta ao protoloco digital"
+    }, {
+      "id": "ed0a55a1-26c3-4c8c-b3f2-15f0ace138ef",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtServidor",
+      "targets": [
+        ["id=txtServidor", "id"],
+        ["name=txtServidor", "name"],
+        ["css=#txtServidor", "css:finder"],
+        ["xpath=//input[@id='txtServidor']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "973f25e4-6965-41b6-a9ea-d6b0f9607031",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtServidor",
+      "targets": [
+        ["id=txtServidor", "id"],
+        ["name=txtServidor", "name"],
+        ["css=#txtServidor", "css:finder"],
+        ["xpath=//input[@id='txtServidor']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "*"
+    }, {
+      "id": "7765474d-d2ca-48e5-9472-57affb1a94e6",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=txtServidor",
+      "targets": [
+        ["id=txtServidor", "id"],
+        ["name=txtServidor", "name"],
+        ["css=#txtServidor", "css:finder"],
+        ["xpath=//input[@id='txtServidor']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "3b109e92-ac59-4c17-8e93-3d1c5e335161",
+      "comment": "",
+      "command": "click",
+      "target": "name=sbmCadastrarServico",
+      "targets": [
+        ["name=sbmCadastrarServico", "name"],
+        ["css=.infraButton:nth-child(1)", "css:finder"],
+        ["xpath=//button[@name='sbmCadastrarServico']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraBarraComandosSuperior']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Salvar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bab83eb0-44cf-4856-9d71-2541ca887993",
+      "comment": "",
+      "command": "click",
+      "target": "id=btnFechar",
+      "targets": [
+        ["id=btnFechar", "id"],
+        ["css=#btnFechar", "css:finder"],
+        ["xpath=//button[@id='btnFechar']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraBarraComandosSuperior']/button[4]", "xpath:idRelative"],
+        ["xpath=//button[4]", "xpath:position"],
+        ["xpath=//button[contains(.,'Fechar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "31142019-0388-4c23-a33f-45d54ef162cf",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["6a600a99-7f84-42a9-b3ac-d3f049ce1947"]
+  }],
+  "urls": ["http://localhost/sei", "http://sei.resposta.nuvem.gov.br/sei/"],
+  "plugins": []
+}

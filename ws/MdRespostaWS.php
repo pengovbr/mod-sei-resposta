@@ -30,6 +30,8 @@ class MdRespostaWS extends InfraWS {
 					
 			$this->validarAcessoAutorizado(explode(',', str_replace(' ', '', $objServicoDTO->getStrServidor())));
 
+			$this->validarArrayProcedimento($arrIdProcedimento, $arrNumProcedimento);
+
 			SessaoSEI::getInstance()->setObjServicoDTO($objServicoDTO);
 
 			$numSeg = InfraUtil::verificarTempoProcessamento();
@@ -91,143 +93,156 @@ class MdRespostaWS extends InfraWS {
 	}
 
 	protected function listarRespostaMonitorado($objSOAP) {
-  	try {
-            
-        $InfraException = new InfraException();
-  			
-  		InfraDebug::getInstance()->setBolLigado(false);
-  		InfraDebug::getInstance()->setBolDebugInfra(false);
-  		InfraDebug::getInstance()->limpar();
-  			
-		SessaoSEI::getInstance(false);
+		try {
+				
+			$InfraException = new InfraException();
+				
+			InfraDebug::getInstance()->setBolLigado(false);
+			InfraDebug::getInstance()->setBolDebugInfra(false);
+			InfraDebug::getInstance()->limpar();
+				
+			SessaoSEI::getInstance(false);
 
-		$SiglaSistema = $objSOAP->SiglaSistema;
-		$IdentificacaoServico = $objSOAP->IdentificacaoServico;
-		$arrIdProcedimento = $objSOAP->IdProcedimentos->IdProcedimento;
-		$arrNumProcedimento = $objSOAP->NumProcedimentos->NumProcedimento;
-		$IdResposta = $objSOAP->IdResposta;
-  			
-  		$objServicoDTO = self::obterServico($SiglaSistema, $IdentificacaoServico);
-  			
-		$this->validarAcessoAutorizado(explode(',', str_replace(' ', '', $objServicoDTO->getStrServidor())));
+			$SiglaSistema = $objSOAP->SiglaSistema;
+			$IdentificacaoServico = $objSOAP->IdentificacaoServico;
+			$arrIdProcedimento = $objSOAP->IdProcedimentos->IdProcedimento;
+			$arrNumProcedimento = $objSOAP->NumProcedimentos->NumProcedimento;
+			$IdResposta = $objSOAP->IdResposta;
 
-		$arrObjProcedimentoDTO = new ProcedimentoDTO();
-		$arrObjProcedimentoDTO->retDblIdProcedimento();
-		$arrObjProcedimentoDTO->retStrProtocoloProcedimentoFormatado();
-		if(empty($arrIdProcedimento)){
-			is_array($arrNumProcedimento) ? $arrNumProcedimento : $arrNumProcedimento = array($arrNumProcedimento);
-			$arrObjProcedimentoDTO->setStrProtocoloProcedimentoFormatadoPesquisa($arrNumProcedimento, InfraDTO::$OPER_IN);
-		}else{
-			is_array($arrIdProcedimento) ? $arrIdProcedimento : $arrIdProcedimento = array($arrIdProcedimento);
-			$arrObjProcedimentoDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
-		}
-		
-		// Consulta nas classes de regra de negócio
-		$objProcedimentoRN = new ProcedimentoRN();
-		$arrObjProcedimentoDTO = $objProcedimentoRN->listarRN0278($arrObjProcedimentoDTO);
-		$arrObjProcedimentoDTOIndexado = InfraArray::indexarArrInfraDTO($arrObjProcedimentoDTO, "IdProcedimento");
-
-		if(empty($arrIdProcedimento)){
-			foreach ($arrObjProcedimentoDTO as $objProcedimento){
-				$arrIdProcedimento[] = $objProcedimento->getDblIdProcedimento();
+			$arrObjProcedimentoDTO = new ProcedimentoDTO();
+			$arrObjProcedimentoDTO->retDblIdProcedimento();
+			$arrObjProcedimentoDTO->retStrProtocoloProcedimentoFormatado();
+			if(empty($arrIdProcedimento)){
+				is_array($arrNumProcedimento) ? $arrNumProcedimento : $arrNumProcedimento = array($arrNumProcedimento);
+				$arrObjProcedimentoDTO->setStrProtocoloProcedimentoFormatadoPesquisa($arrNumProcedimento, InfraDTO::$OPER_IN);
+			}else{
+				is_array($arrIdProcedimento) ? $arrIdProcedimento : $arrIdProcedimento = array($arrIdProcedimento);
+				$arrObjProcedimentoDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
 			}
-		}
-		
-		$objMdRespostaDTO = new MdRespostaDTO();
-		
-		//campos que serão retornados
-		$objMdRespostaDTO->retNumIdResposta();
-		$objMdRespostaDTO->retDblIdProcedimento();
-		$objMdRespostaDTO->retDblIdDocumento();
-		$objMdRespostaDTO->retStrMensagem();
-		$objMdRespostaDTO->retStrSinConclusiva();
-		$objMdRespostaDTO->retDthDthResposta();
-		$objMdRespostaDTO->retDblIdDocumentoAnexo(); 
-		
-		$objMdRespostaDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
-		
-		if($IdResposta != null || $IdResposta != ""){
-			$objMdRespostaDTO->setNumIdResposta($IdResposta);
-		}
+			
+			// Consulta nas classes de regra de negócio
+			$objProcedimentoRN = new ProcedimentoRN();
+			$arrObjProcedimentoDTO = $objProcedimentoRN->listarRN0278($arrObjProcedimentoDTO);
+			$arrObjProcedimentoDTOIndexado = InfraArray::indexarArrInfraDTO($arrObjProcedimentoDTO, "IdProcedimento");
 
-  		$objMdRespostaRN = new MdRespostaRN();
-		$arrObjMdRespostaDTO = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
+			if(empty($arrIdProcedimento)){
+				foreach ($arrObjProcedimentoDTO as $objProcedimento){
+					$arrIdProcedimento[] = $objProcedimento->getDblIdProcedimento();
+				}
+			}
+			
+			$objMdRespostaDTO = new MdRespostaDTO();
+			
+			//campos que serão retornados
+			$objMdRespostaDTO->retNumIdResposta();
+			$objMdRespostaDTO->retDblIdProcedimento();
+			$objMdRespostaDTO->retDblIdDocumento();
+			$objMdRespostaDTO->retStrMensagem();
+			$objMdRespostaDTO->retStrSinConclusiva();
+			$objMdRespostaDTO->retDthDthResposta();
+			$objMdRespostaDTO->retDblIdDocumentoAnexo(); 
+			
+			$objMdRespostaDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
+			
+			if($IdResposta != null || $IdResposta != ""){
+				$objMdRespostaDTO->setNumIdResposta($IdResposta);
+			}
 
-		if (count($arrObjMdRespostaDTO)){
-  
-		  $IdResposta = "";
-		  foreach($arrObjMdRespostaDTO as $objMdRespostaDTO ){
-			if($IdResposta != $objMdRespostaDTO->getNumIdResposta()){
-				$IdResposta = $objMdRespostaDTO->getNumIdResposta();
+			$objMdRespostaRN = new MdRespostaRN();
+			$arrObjMdRespostaDTO = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
 
-				$arrDocumentos = array();
-				foreach($arrObjMdRespostaDTO as $objDocumentos){
-					if($IdResposta == $objDocumentos->getNumIdResposta()){
-						$arrDocumentos[] = (object) array('IdDocumento' => (int) $objDocumentos->getDblIdDocumentoAnexo());
+			if (count($arrObjMdRespostaDTO)){
+	
+				$IdResposta = "";
+				$arrResposta = new ArrayObject();
+				
+				foreach($arrObjMdRespostaDTO as $objMdRespostaDTO ){
+					if($IdResposta != $objMdRespostaDTO->getNumIdResposta()){
+						$IdResposta = $objMdRespostaDTO->getNumIdResposta();
+
+						$arrDocumentos = new ArrayObject();
+						foreach($arrObjMdRespostaDTO as $objDocumentos){
+							if($IdResposta == $objDocumentos->getNumIdResposta()){
+								$soapVar = new SoapVar($objDocumentos->getDblIdDocumentoAnexo(), XSD_INT, NULL, NULL, 'IdDocumento');
+								$arrDocumentos->append($soapVar);
+							}
+						}
+						
+						$Resposta = (object) array(
+							'IdResposta' => (int) $objMdRespostaDTO->getNumIdResposta(),
+							'IdProcedimento' => (int) $objMdRespostaDTO->getDblIdProcedimento(),
+							'NumProtocolo' => (string) $arrObjProcedimentoDTOIndexado[$objMdRespostaDTO->getDblIdProcedimento()]->getStrProtocoloProcedimentoFormatado(),
+							'IdDocumento' => (int) $objMdRespostaDTO->getDblIdDocumento(),
+							'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
+							'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
+							'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
+							'IdDocumentos' => $arrDocumentos
+						);
+
+						$soapVarResposta = new SoapVar($Resposta, NULL, NULL, NULL, 'Resposta');
+						$arrResposta->append($soapVarResposta);
 					}
 				}
-				
-				$Resposta[] = (object) array(
-					'IdResposta' => (int) $objMdRespostaDTO->getNumIdResposta(),
-					'IdProcedimento' => (int) $objMdRespostaDTO->getDblIdProcedimento(),
-					'NumProtocolo' => (string) $arrObjProcedimentoDTOIndexado[$objMdRespostaDTO->getDblIdProcedimento()]->getStrProtocoloProcedimentoFormatado(),
-					'IdDocumento' => (int) $objMdRespostaDTO->getDblIdDocumento(),
-					'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
-					'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
-					'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
-					'IdDocumentos' => $arrDocumentos
-				);
 
+			return $arrResposta;
+
+			}		
+
+			if ($arrObjMdRespostaDTO==null) {
+				throw new InfraException('Nenhuma resposta encontrada.');
 			}
-		  }
-
-		  return $Resposta;
-
-		}		
-
-        if ($arrObjMdRespostaDTO==null) {
-            throw new InfraException('Nenhuma resposta encontrada.');
-        }
-  
-  	} catch (Exception $e) {
-  		$this->processarExcecao($e);
+	
+		} catch (Exception $e) {
+			$this->processarExcecao($e);
+		}
   	}
-  }
 
-  private function obterServico($SiglaSistema, $IdentificacaoServico){
+	private function obterServico($SiglaSistema, $IdentificacaoServico){
+			
+		$objUsuarioDTO = new UsuarioDTO();
+		$objUsuarioDTO->retNumIdUsuario();
+		$objUsuarioDTO->setStrSigla($SiglaSistema);
+		$objUsuarioDTO->setStrStaTipo(UsuarioRN::$TU_SISTEMA);
 		
-	  $objUsuarioDTO = new UsuarioDTO();
-	  $objUsuarioDTO->retNumIdUsuario();
-	  $objUsuarioDTO->setStrSigla($SiglaSistema);
-	  $objUsuarioDTO->setStrStaTipo(UsuarioRN::$TU_SISTEMA);
-	  
-	  $objUsuarioRN = new UsuarioRN();
-	  $objUsuarioDTO = $objUsuarioRN->consultarRN0489($objUsuarioDTO);
-	  
-	  if ($objUsuarioDTO==null){
-	    throw new InfraException('Sistema ['.$SiglaSistema.'] não encontrado.');
-	  }
-	  
-	  $objServicoDTO = new ServicoDTO();
-	  $objServicoDTO->retNumIdServico();
-	  $objServicoDTO->retStrIdentificacao();
-	  $objServicoDTO->retStrSiglaUsuario();
-	  $objServicoDTO->retNumIdUsuario();
-	  $objServicoDTO->retStrServidor();
-	  $objServicoDTO->retStrSinLinkExterno();
-	  $objServicoDTO->retNumIdContatoUsuario();
-	  $objServicoDTO->setNumIdUsuario($objUsuarioDTO->getNumIdUsuario());
-	  $objServicoDTO->setStrIdentificacao($IdentificacaoServico);
+		$objUsuarioRN = new UsuarioRN();
+		$objUsuarioDTO = $objUsuarioRN->consultarRN0489($objUsuarioDTO);
+		
+		if ($objUsuarioDTO==null){
+			throw new InfraException('Sistema ['.$SiglaSistema.'] não encontrado.');
+		}
+		
+		$objServicoDTO = new ServicoDTO();
+		$objServicoDTO->retNumIdServico();
+		$objServicoDTO->retStrIdentificacao();
+		$objServicoDTO->retStrSiglaUsuario();
+		$objServicoDTO->retNumIdUsuario();
+		$objServicoDTO->retStrServidor();
+		$objServicoDTO->retStrSinLinkExterno();
+		$objServicoDTO->retNumIdContatoUsuario();
+		$objServicoDTO->setNumIdUsuario($objUsuarioDTO->getNumIdUsuario());
+		$objServicoDTO->setStrIdentificacao($IdentificacaoServico);
+				
+		$objServicoRN = new ServicoRN();
+		$objServicoDTO = $objServicoRN->consultar($objServicoDTO); 
+				
+		if ($objServicoDTO==null){
+			throw new InfraException('Serviço ['.$IdentificacaoServico.'] do sistema ['.$SiglaSistema.'] não encontrado.');
+		}
+				
+		return $objServicoDTO;
+		
+	}
+
+	private function validarArrayProcedimento($arrIdProcedimento = "", $arrNumProcedimento = ""){
 			
-	  $objServicoRN = new ServicoRN();
-	  $objServicoDTO = $objServicoRN->consultar($objServicoDTO); 
-			
-	  if ($objServicoDTO==null){
-		throw new InfraException('Serviço ['.$IdentificacaoServico.'] do sistema ['.$SiglaSistema.'] não encontrado.');
-	  }
-			
-	  return $objServicoDTO;
-	  
+		if (count($arrIdProcedimento) > 100) {
+			throw new InfraException('Número de repetições do atributo [IdProcedimento] superior ao permitido.');
+		}
+
+		if (count($arrNumProcedimento) > 100) {
+			throw new InfraException('Número de repetições do atributo [NumProcedimento] superior ao permitido.');
+		}
+		
 	}
 }
 

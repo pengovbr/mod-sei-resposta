@@ -1,8 +1,8 @@
 {
   "id": "b617c0e4-d881-4bbb-b4c9-754fd196cbb0",
   "version": "2.0",
-  "name": "02.00-SEI-MR-EnviarResposta",
-  "url": "http://sei.resposta.nuvem.gov.br/sei",
+  "name": "02-SEI-MR-EnviarResposta",
+  "url": "http://sei.resposta.nuvem.gov.br",
   "tests": [{
     "id": "abe81a93-0818-49b5-9c9b-9ce2e78f7d05",
     "name": "05-EnviarResposta",
@@ -2173,12 +2173,12 @@
   }],
   "suites": [{
     "id": "61368320-64d2-495a-b1ee-0a78235cb322",
-    "name": "02.00-SEI-GD-CadArquivaProc",
+    "name": "02-SEI-GD-CadArquivaProc",
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": []
+    "tests": ["ef6f6936-1e56-41d8-8396-886cbb159fa5", "a16be54d-3e10-4897-98e4-a91f16311dc7", "5fb6e7c9-7cfa-4a0b-901a-c4fa60adb4c3", "405c8926-a525-4b5b-9d11-638d7fbd2555", "f39f4693-4e95-410d-8ecc-7101663b0d59", "abe81a93-0818-49b5-9c9b-9ce2e78f7d05"]
   }],
-  "urls": ["http://seigd.nuvem.gov.br/sei", "http://seigd.intra.planejamento/sei", "http://seigd.intra.planejamento/", "http://localhost/sei", "http://sei.resposta.nuvem.gov.br/sei"],
+  "urls": ["http://seigd.nuvem.gov.br/sei", "http://seigd.intra.planejamento/sei", "http://seigd.intra.planejamento/", "http://localhost/sei", "http://sei.resposta.nuvem.gov.br/sei", "http://sei.resposta.nuvem.gov.br/"],
   "plugins": []
 }

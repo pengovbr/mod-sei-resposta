@@ -2,7 +2,7 @@
   "id": "3cd41667-7ac1-4a12-84f2-26a1e096d202",
   "version": "2.0",
   "name": "01-SEI-Resposta-Configs",
-  "url": "http://sei.resposta.nuvem.gov.br/sei",
+  "url": "http://sei.resposta.nuvem.gov.br",
   "tests": [{
     "id": "6a600a99-7f84-42a9-b3ac-d3f049ce1947",
     "name": "03-Config-Confirmacao",
@@ -155,7 +155,7 @@
       "command": "select",
       "target": "id=selTipoDocumento",
       "targets": [],
-      "value": "label=Ofício"
+      "value": "label=Resposta ao Protocolo Digital"
     }, {
       "id": "89138061-8cb9-4238-8869-27f0d2cf30d1",
       "comment": "",
@@ -720,12 +720,12 @@
   }],
   "suites": [{
     "id": "31142019-0388-4c23-a33f-45d54ef162cf",
-    "name": "Default Suite",
+    "name": "01-SEI-Resposta-Configs",
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["6a600a99-7f84-42a9-b3ac-d3f049ce1947"]
+    "tests": ["e7824756-5a01-4ff5-93f4-237a433d07f9", "d523ee7a-5b4b-4a6a-8a3a-f6c339630df4", "b52ef067-fecf-4e7d-ad30-ba3ff4c2a8c6", "6a600a99-7f84-42a9-b3ac-d3f049ce1947"]
   }],
-  "urls": ["http://localhost/sei", "http://sei.resposta.nuvem.gov.br/sei"],
+  "urls": ["http://localhost/sei", "http://sei.resposta.nuvem.gov.br/sei", "http://sei.resposta.nuvem.gov.br/"],
   "plugins": []
 }

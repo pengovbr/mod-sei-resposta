@@ -95,6 +95,18 @@ class Test01SEIRespostaConfigs():
     dropdown.find_element(By.XPATH, "//option[. = 'Resposta ao Protocolo Digital']").click()
     self.driver.find_element(By.ID, "selTipoDocumento").click()
     self.driver.find_element(By.NAME, "sbmSalvar").click()
-    assert self.driver.switch_to.alert.text == "Mapeamento cadastrado com sucesso."
+    time.sleep(2)
     self.driver.switch_to.alert.accept()
+    WebDriverWait(self.driver, 30000).until(expected_conditions.visibility_of_element_located((By.ID, "selTipoProcesso")))
+    WebDriverWait(self.driver, 30000).until(expected_conditions.presence_of_element_located((By.XPATH, "//*[@id=\"main-menu\"]/li[1]/a")))
+    self.driver.find_element(By.XPATH, "//*[@id=\"main-menu\"]/li[1]/a").click()
+    WebDriverWait(self.driver, 30000).until(expected_conditions.presence_of_element_located((By.XPATH, "//*[@id=\"main-menu\"]/li[1]/ul/li[11]/a")))
+    self.driver.find_element(By.XPATH, "//*[@id=\"main-menu\"]/li[1]/ul/li[11]/a").click()
+    WebDriverWait(self.driver, 30000).until(expected_conditions.presence_of_element_located((By.XPATH, "//*[@id=\"main-menu\"]/li[1]/ul/li[11]/ul/li/a")))
+    self.driver.find_element(By.XPATH, "//*[@id=\"main-menu\"]/li[1]/ul/li[11]/ul/li/a").click()
+    WebDriverWait(self.driver, 30000).until(expected_conditions.visibility_of_element_located((By.ID, "selTipoProcesso")))
+    element = self.driver.find_element(By.ID, "selTipoDocumento")
+    locator = "option[@value='{}']".format(element.get_attribute("value"))
+    selected_text = element.find_element(By.XPATH, locator).text
+    assert selected_text == "Resposta ao Protocolo Digital"
   

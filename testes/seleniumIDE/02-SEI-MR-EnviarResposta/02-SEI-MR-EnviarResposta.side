@@ -284,12 +284,19 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "a3fb0a54-801c-4c28-bca0-46625906636c",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=selCargoFuncao",
+      "targets": [],
+      "value": "30000"
+    }, {
       "id": "c11fccea-17ab-4045-a250-a31c0f038416",
       "comment": "",
       "command": "select",
       "target": "id=selCargoFuncao",
       "targets": [],
-      "value": "label=Fiscal de Contrato - Administrativo"
+      "value": "label=Corregedor"
     }, {
       "id": "29b281e9-816a-4df1-a0e4-b3892a782fda",
       "comment": "",
@@ -467,6 +474,13 @@
       ],
       "value": ""
     }, {
+      "id": "376bfa0b-1e27-4351-ae69-1264f3a51bd4",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "4d8b1db5-eb51-4ed8-a6ad-540bc89c5bdd",
       "comment": "",
       "command": "click",
@@ -481,17 +495,24 @@
       ],
       "value": ""
     }, {
-      "id": "376bfa0b-1e27-4351-ae69-1264f3a51bd4",
+      "id": "606ce803-08db-4bfd-a40a-e43a499929dc",
       "comment": "",
       "command": "chooseOkOnNextConfirmation",
       "target": "",
       "targets": [],
       "value": ""
     }, {
-      "id": "f32cce80-6af7-42c9-a550-021f4bdf01b3",
+      "id": "ced188b4-e729-4944-81ab-6e752524f5de",
       "comment": "",
-      "command": "assertAlert",
-      "target": "Resposta enviada.",
+      "command": "pause",
+      "target": "2000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cb6b97bd-d1f5-413a-a857-fd20d715b96b",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -500,6 +521,66 @@
       "command": "webdriverChooseOkOnVisibleConfirmation",
       "target": "",
       "targets": [],
+      "value": ""
+    }, {
+      "id": "8d1dbffd-ba74-4b7e-aa14-de51822f4d59",
+      "comment": "",
+      "command": "selectFrame",
+      "target": "relative=parent",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "26b4581d-a5e2-4165-afb8-87b0aa02014e",
+      "comment": "",
+      "command": "selectFrame",
+      "target": "index=1",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e73fa8d9-20b2-450f-94b3-f84a9810234f",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//label[contains(.,'Resposta ao Protocolo Digital')]",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "a9d313b0-df3b-46cb-862e-4ef4bf00ffff",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "xpath=//b[contains(.,'Anexos')]",
+      "targets": [
+        ["css=b:nth-child(18)", "css:finder"],
+        ["xpath=//div[@id='conteudo']/b[5]", "xpath:idRelative"],
+        ["xpath=//b[5]", "xpath:position"],
+        ["xpath=//b[contains(.,'Anexos')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab71f049-1c83-4b6c-b630-0e839322f1cf",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "xpath=//a[contains(text(),'Despacho')]",
+      "targets": [
+        ["linkText=Despacho_0000035.html", "linkText"],
+        ["css=.ancoraVisualizacaoDocumento", "css:finder"],
+        ["xpath=//a[contains(text(),'Despacho_0000035.html')]", "xpath:link"],
+        ["xpath=//div[@id='conteudo']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'controlador.php?acao=documento_download_anexo&id_anexo=7&infra_sistema=100000100&infra_unidade_atual=110000001&infra_hash=767ff2392a7105252a4e8cdec9f4972f511fcd15e9160246e2c80a186867f714')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Despacho_0000035.html')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8e563436-0a31-45fc-8e56-c85b2002e32f",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "xpath=//label[contains(.,'Resposta ao Protocolo Digital')]",
+      "targets": [
+        ["css=label", "css:finder"],
+        ["xpath=//div[@id='titulo']/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Resposta ao Protocolo Digital - 0000024')]", "xpath:innerText"]
+      ],
       "value": ""
     }]
   }, {
@@ -1571,12 +1652,33 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "953125fd-54c5-4011-ae34-b18be97782b7",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=selCargoFuncao",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "4cb5c485-62c3-4f10-b095-d713abeb97e2",
+      "comment": "",
+      "command": "click",
+      "target": "id=selCargoFuncao",
+      "targets": [
+        ["id=selCargoFuncao", "id"],
+        ["name=selCargoFuncao", "name"],
+        ["css=#selCargoFuncao", "css:finder"],
+        ["xpath=//select[@id='selCargoFuncao']", "xpath:attributes"],
+        ["xpath=//div[@id='divCargoFuncao']/select", "xpath:idRelative"],
+        ["xpath=//div[5]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
       "id": "e6e70531-0d3e-460f-b9be-322e24e59244",
       "comment": "",
       "command": "select",
       "target": "id=selCargoFuncao",
       "targets": [],
-      "value": "label=Fiscal de Contrato - Administrativo"
+      "value": "label=Corregedor"
     }, {
       "id": "1fd57aae-6690-411b-b3d8-782bc6c83e21",
       "comment": "",
@@ -2004,12 +2106,19 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "efadebc0-1013-4a71-ab1a-a24abf7899c1",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=selCargoFuncao",
+      "targets": [],
+      "value": "30000"
+    }, {
       "id": "b1b2cd5b-c72f-4e3f-9394-482fb4440b01",
       "comment": "",
       "command": "select",
       "target": "id=selCargoFuncao",
       "targets": [],
-      "value": "label=Fiscal de Contrato - Administrativo"
+      "value": "label=Corregedor"
     }, {
       "id": "a1ae8275-be48-49b9-ba6e-e2ec10379b53",
       "comment": "",

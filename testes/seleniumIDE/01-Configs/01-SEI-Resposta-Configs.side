@@ -172,6 +172,13 @@
       ],
       "value": ""
     }, {
+      "id": "014a1893-51c7-494e-9384-50c47d4423bd",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "fb6f7168-0502-4a2c-9ab6-0a4db9756062",
       "comment": "",
       "command": "click",
@@ -186,17 +193,10 @@
       ],
       "value": ""
     }, {
-      "id": "014a1893-51c7-494e-9384-50c47d4423bd",
+      "id": "78e2e724-3208-464d-b882-079b272094f1",
       "comment": "",
-      "command": "chooseOkOnNextConfirmation",
-      "target": "",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "bd5f62bb-9fcb-4128-a19a-51cfdbc8bac6",
-      "comment": "",
-      "command": "assertAlert",
-      "target": "Mapeamento cadastrado com sucesso.",
+      "command": "pause",
+      "target": "2000",
       "targets": [],
       "value": ""
     }, {
@@ -206,6 +206,77 @@
       "target": "",
       "targets": [],
       "value": ""
+    }, {
+      "id": "4d256c94-df95-4b9c-b8ce-5c1acc71bf52",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "id=selTipoProcesso",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "6bd3ed2c-70bc-4545-8533-8ef494f28295",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "//*[@id=\"main-menu\"]/li[1]/a",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "82ba3b1a-2199-49b9-a02e-c4cd36ed7106",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"main-menu\"]/li[1]/a",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2f325f6f-5e7e-4d76-99d4-03b5c9a13134",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "//*[@id=\"main-menu\"]/li[1]/ul/li[11]/a",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "0629abd6-3ba0-48e0-b098-0229d0916e94",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"main-menu\"]/li[1]/ul/li[11]/a",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c76ffdc7-ed1a-46b1-8498-93ec11a77288",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "//*[@id=\"main-menu\"]/li[1]/ul/li[11]/ul/li/a",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "aa87c399-45c0-4d11-8d38-5201af75f16c",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"main-menu\"]/li[1]/ul/li[11]/ul/li/a",
+      "targets": [
+        ["linkText=Parâmetros de Configuração", "linkText"],
+        ["css=li:nth-child(11) > ul a", "css:finder"],
+        ["xpath=//a[contains(text(),'Parâmetros de Configuração')]", "xpath:link"],
+        ["xpath=//ul[@id='main-menu']/li/ul/li[11]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'controlador.php?acao=md_resposta_configuracao&infra_sistema=100000100&infra_unidade_atual=110000002&infra_hash=d68249015373ff110e39a54038316570a7f26d348356b90fab7e6ece31b9e814')]", "xpath:href"],
+        ["xpath=//li[11]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Parâmetros de Configuração')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2124993d-54c3-4ac6-bfc9-071cbce6decf",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "id=selTipoProcesso",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "affef130-091e-4f77-88b1-aa2bec5e5ebb",
+      "comment": "",
+      "command": "verifySelectedLabel",
+      "target": "id=selTipoDocumento",
+      "targets": [],
+      "value": "Resposta ao Protocolo Digital"
     }]
   }, {
     "id": "e7824756-5a01-4ff5-93f4-237a433d07f9",

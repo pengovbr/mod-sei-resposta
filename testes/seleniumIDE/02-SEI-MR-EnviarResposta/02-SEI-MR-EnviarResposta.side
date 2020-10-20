@@ -2173,7 +2173,7 @@
   }],
   "suites": [{
     "id": "61368320-64d2-495a-b1ee-0a78235cb322",
-    "name": "02-SEI-GD-CadArquivaProc",
+    "name": "02-SEI-MR-EnviarResposta",
     "persistSession": false,
     "parallel": false,
     "timeout": 300,

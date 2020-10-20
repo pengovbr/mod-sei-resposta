@@ -145,29 +145,28 @@ class MdRespostaVersaoRN extends InfraRN {
 
             //Criando a tabela de pacotes nos três bancos
             BancoSEI::getInstance()->executarSql("CREATE TABLE md_resposta_envio ( 
-                id_resposta bigint(20) NOT NULL,
-                id_procedimento bigint(20) NOT NULL,
-                id_documento bigint(20) NOT NULL,
-                mensagem varchar(5000) NOT NULL,
-                sin_conclusiva char(1) NOT NULL,
-                dth_resposta datetime NOT NULL,
-                PRIMARY KEY (id_resposta),
-                UNIQUE KEY ak_resposta (id_documento,id_procedimento),
-                UNIQUE KEY id_documento_UNIQUE (id_documento)
-                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+                id_resposta ".$objInfraMetaBD->tipoNumeroGrande()." NOT NULL,
+                id_procedimento ".$objInfraMetaBD->tipoNumeroGrande()." NOT NULL,
+                id_documento ".$objInfraMetaBD->tipoNumeroGrande()." NOT NULL,
+                mensagem ".$objInfraMetaBD->tipoTextoGrande()." NOT NULL,
+                sin_conclusiva ".$objInfraMetaBD->tipoTextoFixo(1)." NOT NULL,
+                dth_resposta ".$objInfraMetaBD->tipoDataHora()." NOT NULL)");
+
+            $objInfraMetaBD->adicionarChavePrimaria('md_resposta_envio','pk_id_md_resposta_envio',array('id_resposta'));
 
             BancoSEI::getInstance()->executarSql("CREATE TABLE md_resposta_parametro (
-                nome varchar(100) NOT NULL,
-                valor mediumtext,
-                PRIMARY KEY (nome)
-                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+                nome ".$objInfraMetaBD->tipoTextoVariavel(100)." NOT NULL,
+                valor ".$objInfraMetaBD->tipoTextoGrande()." NOT NULL)");
+
+            $objInfraMetaBD->adicionarChavePrimaria('md_resposta_parametro','pk_nome_md_resposta_parametro',array('nome'));
 
             BancoSEI::getInstance()->executarSql("CREATE TABLE md_resposta_rel_documento (
-                id_resposta bigint(20) NOT NULL,
-                id_documento bigint(20) NOT NULL,
-                PRIMARY KEY (id_resposta,id_documento),
-                CONSTRAINT fk_md_resposta_rel_documento_resposta_envio FOREIGN KEY (id_resposta) REFERENCES md_resposta_envio (id_resposta)
-                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+                id_resposta ".$objInfraMetaBD->tipoNumeroGrande()." NOT NULL,
+                id_documento ".$objInfraMetaBD->tipoNumeroGrande()." NOT NULL)");
+
+            $objInfraMetaBD->adicionarChavePrimaria('md_resposta_rel_documento','pk_id_resposta_documento',array('id_resposta', 'id_documento'));
+            $objInfraMetaBD->adicionarChaveEstrangeira('fk_md_resposta_doc_resposta','md_resposta_rel_documento',array('id_resposta'),'md_resposta_envio',array('id_resposta'));
+
 
             if (BancoSEI::getInstance() instanceof InfraMySql){
                 BancoSEI::getInstance()->executarSql('create table seq_md_resposta_envio (id bigint not null primary key AUTO_INCREMENT, campo char(1) null) AUTO_INCREMENT = 1');

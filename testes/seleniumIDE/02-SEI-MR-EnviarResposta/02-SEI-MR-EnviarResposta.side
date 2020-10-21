@@ -523,7 +523,54 @@
       "targets": [],
       "value": ""
     }, {
-      "id": "8d1dbffd-ba74-4b7e-aa14-de51822f4d59",
+      "id": "65747908-aaa5-4376-b03a-9bb2a5f9b0e4",
+      "comment": "",
+      "command": "selectFrame",
+      "target": "relative=parent",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4b186109-1af9-49a0-9436-fdc571fbe710",
+      "comment": "",
+      "command": "selectFrame",
+      "target": "index=0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f6d3f531-2abb-48d6-af39-2eb8092d54cf",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//span[contains(.,'Resposta ao Protocolo Digital')]",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "8dbaf6a6-175b-4df1-9be4-99a468e59dc1",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "xpath=//span[contains(.,'Resposta ao Protocolo Digital')]",
+      "targets": [
+        ["css=label", "css:finder"],
+        ["xpath=//div[@id='titulo']/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Resposta ao Protocolo Digital - 0000024')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "50b47a1f-b561-47fd-987d-0e79cd54b21a",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//span[contains(.,'Resposta ao Protocolo Digital')]",
+      "targets": [
+        ["name=btnEnviar", "name"],
+        ["css=.infraButton:nth-child(2)", "css:finder"],
+        ["xpath=//button[@name='btnEnviar']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraBarraComandosInferior']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Enviar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bc4f6d65-7187-4551-9ecb-640c58f196b5",
       "comment": "",
       "command": "selectFrame",
       "target": "relative=parent",
@@ -540,6 +587,27 @@
       "id": "e73fa8d9-20b2-450f-94b3-f84a9810234f",
       "comment": "",
       "command": "waitForElementPresent",
+      "target": "id=ifrArvoreHtml",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "b86ae13f-3df8-4bce-a7ab-b35e8eff63b8",
+      "comment": "",
+      "command": "echo",
+      "target": "o index abaixo deve ser zero para rodar corretamente no python. Caso deseje rodar pelo IDE use 1",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "de2564aa-c768-4287-a678-2eaf7e7968fd",
+      "comment": "",
+      "command": "selectFrame",
+      "target": "index=0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0bf6ec3e-edae-4136-a77f-b58c829bb6b4",
+      "comment": "",
+      "command": "waitForElementVisible",
       "target": "xpath=//label[contains(.,'Resposta ao Protocolo Digital')]",
       "targets": [],
       "value": "30000"

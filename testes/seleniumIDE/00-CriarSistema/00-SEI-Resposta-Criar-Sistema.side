@@ -2,7 +2,7 @@
   "id": "3cd41667-7ac1-4a12-84f2-26a1e096d202",
   "version": "2.0",
   "name": "00-SEI-Resposta-Criar-Sistema",
-  "url": "http://sei.resposta.nuvem.gov.br",
+  "url": "http://sei.resposta.nuvem.gov.br/",
   "tests": [{
     "id": "6a600a99-7f84-42a9-b3ac-d3f049ce1947",
     "name": "CriarSistema",
@@ -81,8 +81,13 @@
       "id": "2be50b1b-de75-4f90-aa62-167cd17b99a9",
       "comment": "",
       "command": "click",
-      "target": "//*[@id=\"main-menu\"]/li[1]/ul/li[16]/a",
-      "targets": [],
+      "target": "xpath=//*[text()=\"Sistemas\"]",
+      "targets": [
+        ["css=li:nth-child(16) > .has-submenu", "css:finder"],
+        ["xpath=//ul[@id='main-menu']/li/ul/li[16]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[29]", "xpath:href"],
+        ["xpath=//li[16]/a", "xpath:position"]
+      ],
       "value": ""
     }, {
       "id": "098c02b0-6064-4aa8-95df-f7a62b0f3adf",
@@ -411,14 +416,14 @@
       "id": "5bc0f1cb-5e8a-44da-a5ae-dde1cfe9c967",
       "comment": "",
       "command": "click",
-      "target": "//*[@id=\"main-menu\"]/li[1]/ul/li[19]/a",
+      "target": "xpath=//*[text()=\"Tipos de Documento\"]",
       "targets": [],
       "value": ""
     }, {
       "id": "525c0919-dcd3-462e-a808-37f837d62570",
       "comment": "",
       "command": "click",
-      "target": "//*[@id=\"main-menu\"]/li[1]/ul/li[19]/ul/li[1]/a",
+      "target": "linkText=Novo",
       "targets": [
         ["linkText=Novo", "linkText"],
         ["css=.sm-nowrap > li:nth-child(1) > a", "css:finder"],

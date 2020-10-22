@@ -19,13 +19,13 @@ class Test00SEIRespostaCriarSistema():
     self.driver.quit()
   
   def test_criarSistema(self):
-    self.driver.get("http://sei.resposta.nuvem.gov.br/sip/login.php?sigla_orgao_sistema=ME&sigla_sistema=SEI")
+    self.driver.get("http://sei.resposta.nuvem.gov.br//sip/login.php?sigla_orgao_sistema=ME&sigla_sistema=SEI")
     self.driver.find_element(By.ID, "txtUsuario").send_keys("teste")
     self.driver.find_element(By.ID, "pwdSenha").click()
     self.driver.find_element(By.ID, "pwdSenha").send_keys("teste")
     self.driver.find_element(By.ID, "sbmLogin").click()
     self.driver.find_element(By.XPATH, "//*[@id=\"main-menu\"]/li[1]/a").click()
-    self.driver.find_element(By.XPATH, "//*[@id=\"main-menu\"]/li[1]/ul/li[16]/a").click()
+    self.driver.find_element(By.XPATH, "//*[text()=\"Sistemas\"]").click()
     self.driver.find_element(By.LINK_TEXT, "Novo").click()
     dropdown = self.driver.find_element(By.ID, "selOrgao")
     dropdown.find_element(By.XPATH, "//option[. = 'ME']").click()
@@ -48,14 +48,14 @@ class Test00SEIRespostaCriarSistema():
     self.driver.find_element(By.ID, "btnFechar").click()
   
   def test_criarTipoDocumento(self):
-    self.driver.get("http://sei.resposta.nuvem.gov.br/sip/login.php?sigla_orgao_sistema=ME&sigla_sistema=SEI")
+    self.driver.get("http://sei.resposta.nuvem.gov.br//sip/login.php?sigla_orgao_sistema=ME&sigla_sistema=SEI")
     self.driver.find_element(By.ID, "txtUsuario").send_keys("teste")
     self.driver.find_element(By.ID, "pwdSenha").click()
     self.driver.find_element(By.ID, "pwdSenha").send_keys("teste")
     self.driver.find_element(By.ID, "sbmLogin").click()
     self.driver.find_element(By.XPATH, "//*[@id=\"main-menu\"]/li[1]/a").click()
-    self.driver.find_element(By.XPATH, "//*[@id=\"main-menu\"]/li[1]/ul/li[19]/a").click()
-    self.driver.find_element(By.XPATH, "//*[@id=\"main-menu\"]/li[1]/ul/li[19]/ul/li[1]/a").click()
+    self.driver.find_element(By.XPATH, "//*[text()=\"Tipos de Documento\"]").click()
+    self.driver.find_element(By.LINK_TEXT, "Novo").click()
     dropdown = self.driver.find_element(By.ID, "selGrupoSerie")
     dropdown.find_element(By.XPATH, "//option[. = 'Internos (com modelo)']").click()
     self.driver.find_element(By.ID, "selGrupoSerie").click()

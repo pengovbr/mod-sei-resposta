@@ -402,14 +402,14 @@
       "id": "37326214-d4d5-43e2-bfbe-6ba8478c3ce6",
       "comment": "",
       "command": "waitForElementVisible",
-      "target": "css=.botaoSEI:nth-child(23) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [],
       "value": "30000"
     }, {
       "id": "25ac00d1-bc3a-4316-aa20-6a8f41b2ab4f",
       "comment": "",
       "command": "click",
-      "target": "css=.botaoSEI:nth-child(23) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [
         ["css=.botaoSEI:nth-child(23) > .infraCorBarraSistema", "css:finder"],
         ["xpath=//img[@alt='Enviar Resposta']", "xpath:img"],
@@ -807,14 +807,14 @@
       "id": "8c308735-25a2-433a-b076-5292ad3a074f",
       "comment": "",
       "command": "waitForElementVisible",
-      "target": "css=.botaoSEI:nth-child(22) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [],
       "value": "30000"
     }, {
       "id": "ddd4e7d5-8311-4e6b-a7ce-378d4585d24d",
       "comment": "",
       "command": "click",
-      "target": "css=.botaoSEI:nth-child(22) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [
         ["css=.botaoSEI:nth-child(23) > .infraCorBarraSistema", "css:finder"],
         ["xpath=//img[@alt='Enviar Resposta']", "xpath:img"],
@@ -1014,14 +1014,14 @@
       "id": "1b049197-cc88-4780-8db7-6950ed79a5f5",
       "comment": "",
       "command": "waitForElementVisible",
-      "target": "css=.botaoSEI:nth-child(22) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [],
       "value": "30000"
     }, {
       "id": "59ae8256-38da-4b04-bc0f-fd4513e9f191",
       "comment": "",
       "command": "click",
-      "target": "css=.botaoSEI:nth-child(22) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [
         ["css=.botaoSEI:nth-child(23) > .infraCorBarraSistema", "css:finder"],
         ["xpath=//img[@alt='Enviar Resposta']", "xpath:img"],
@@ -1367,14 +1367,14 @@
       "id": "babc21ac-6003-4690-9738-fadd0574ea5e",
       "comment": "",
       "command": "waitForElementVisible",
-      "target": "css=.botaoSEI:nth-child(23) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [],
       "value": "30000"
     }, {
       "id": "cf73a84f-59f9-49f8-a416-df3a67b3229c",
       "comment": "",
       "command": "click",
-      "target": "css=.botaoSEI:nth-child(23) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [
         ["css=.botaoSEI:nth-child(23) > .infraCorBarraSistema", "css:finder"],
         ["xpath=//img[@alt='Enviar Resposta']", "xpath:img"],
@@ -1821,14 +1821,14 @@
       "id": "16d36097-9b88-4fe8-b2aa-e4d1b61dab67",
       "comment": "",
       "command": "waitForElementVisible",
-      "target": "css=.botaoSEI:nth-child(23) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [],
       "value": "30000"
     }, {
       "id": "0dc09dea-0828-4e76-ae21-5b334f8f7469",
       "comment": "",
       "command": "click",
-      "target": "css=.botaoSEI:nth-child(23) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [
         ["css=.botaoSEI:nth-child(23) > .infraCorBarraSistema", "css:finder"],
         ["xpath=//img[@alt='Enviar Resposta']", "xpath:img"],
@@ -2261,14 +2261,14 @@
       "id": "5f612573-fd75-48aa-ae6b-be52a64f4652",
       "comment": "",
       "command": "waitForElementVisible",
-      "target": "css=.botaoSEI:nth-child(23) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [],
       "value": "30000"
     }, {
       "id": "ccdc2a3c-fe0c-4095-9f26-c1b7f2c11aed",
       "comment": "",
       "command": "click",
-      "target": "css=.botaoSEI:nth-child(23) > .infraCorBarraSistema",
+      "target": "xpath=//img[@alt='Enviar Resposta']",
       "targets": [
         ["css=.botaoSEI:nth-child(23) > .infraCorBarraSistema", "css:finder"],
         ["xpath=//img[@alt='Enviar Resposta']", "xpath:img"],

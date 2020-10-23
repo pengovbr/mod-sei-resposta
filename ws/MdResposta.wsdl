@@ -52,7 +52,7 @@
               </xsd:annotation>
             </xsd:element>
 
-            <xsd:element name="IdResposta" type="xsd:string" minOccurs="0">
+            <xsd:element name="IdResposta" type="xsd:string" minOccurs="0" maxOccurs="100">
               <xsd:annotation>
                 <xsd:documentation>
                   Informe o identificador da resposta a ser consultada no SEI.

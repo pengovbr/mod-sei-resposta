@@ -31,8 +31,20 @@ Ao enviar resposta, a Plataforma Gov.br, são obrigatórios os campos **processo
 O módulo disponibiliza um webservice a respeito das resposta enviadas. Para consultar as respostas geradas, deve-se acessar o serviço, informando para tanto as seguintes informações:
 
 ```php
-    <wsdl:part name="SiglaSistema" type="xsd:string" minOccurs="1" />
-    <wsdl:part name="IdentificacaoServico" type="xsd:string" minOccurs="1"/>
-    <wsdl:part name="IdProcedimento" type="xsd:string" minOccurs="1"/>
-    <wsdl:part name="IdResposta" type="xsd:string" minOccurs="0"/>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string"></SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string"></IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int"></IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string"></NumProcedimento>
+         </NumProcedimentos>
+         <!--0 to 100 repetitions:-->
+         <IdResposta xsi:type="xsd:string"></IdResposta>
+      </seim:RespostaRequest>
 ```

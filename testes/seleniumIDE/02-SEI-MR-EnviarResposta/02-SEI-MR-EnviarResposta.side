@@ -5,7 +5,7 @@
   "url": "http://sei.resposta.nuvem.gov.br",
   "tests": [{
     "id": "abe81a93-0818-49b5-9c9b-9ce2e78f7d05",
-    "name": "05-EnviarResposta",
+    "name": "00-EnviarResposta",
     "commands": [{
       "id": "10d112b8-fb1e-47d2-978d-4f9396429324",
       "comment": "",
@@ -653,7 +653,7 @@
     }]
   }, {
     "id": "ef6f6936-1e56-41d8-8396-886cbb159fa5",
-    "name": "00-EnviarResposta-Validacao-Mensagem",
+    "name": "01-EnviarResposta-Validacao-Mensagem",
     "commands": [{
       "id": "e9524def-02a6-4cb6-93d3-a08c93eb3ea1",
       "comment": "",
@@ -860,7 +860,7 @@
     }]
   }, {
     "id": "a16be54d-3e10-4897-98e4-a91f16311dc7",
-    "name": "01-EnviarResposta-Validacao-Doc",
+    "name": "02-EnviarResposta-Validacao-Doc",
     "commands": [{
       "id": "f8300540-62b2-4e16-840c-ee8e87ce5508",
       "comment": "",
@@ -1095,7 +1095,7 @@
     }]
   }, {
     "id": "5fb6e7c9-7cfa-4a0b-901a-c4fa60adb4c3",
-    "name": "02-EnviarResposta-Validacao-DocNAssinado",
+    "name": "03-EnviarResposta-Validacao-DocNAssinado",
     "commands": [{
       "id": "c5fe12d7-600b-4bca-b997-0f210e1dbadb",
       "comment": "",
@@ -1448,7 +1448,7 @@
     }]
   }, {
     "id": "405c8926-a525-4b5b-9d11-638d7fbd2555",
-    "name": "03-EnviarResposta-Validacao-DocAssinado",
+    "name": "04-EnviarResposta-Validacao-DocAssinado",
     "commands": [{
       "id": "ca200de4-1ffd-4882-916e-8259c200d9e9",
       "comment": "",
@@ -1902,7 +1902,7 @@
     }]
   }, {
     "id": "f39f4693-4e95-410d-8ecc-7101663b0d59",
-    "name": "04-EnviarResposta-Validacao-Conclusivo",
+    "name": "05-EnviarResposta-Validacao-Conclusivo",
     "commands": [{
       "id": "7b713514-7ddc-47fb-abfe-a3b9fc23557c",
       "comment": "",
@@ -2354,7 +2354,7 @@
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["ef6f6936-1e56-41d8-8396-886cbb159fa5", "a16be54d-3e10-4897-98e4-a91f16311dc7", "5fb6e7c9-7cfa-4a0b-901a-c4fa60adb4c3", "405c8926-a525-4b5b-9d11-638d7fbd2555", "f39f4693-4e95-410d-8ecc-7101663b0d59", "abe81a93-0818-49b5-9c9b-9ce2e78f7d05"]
+    "tests": ["abe81a93-0818-49b5-9c9b-9ce2e78f7d05", "ef6f6936-1e56-41d8-8396-886cbb159fa5", "a16be54d-3e10-4897-98e4-a91f16311dc7", "5fb6e7c9-7cfa-4a0b-901a-c4fa60adb4c3", "405c8926-a525-4b5b-9d11-638d7fbd2555", "f39f4693-4e95-410d-8ecc-7101663b0d59"]
   }],
   "urls": ["http://seigd.nuvem.gov.br/sei", "http://seigd.intra.planejamento/sei", "http://seigd.intra.planejamento/", "http://localhost/sei", "http://sei.resposta.nuvem.gov.br/sei", "http://sei.resposta.nuvem.gov.br/"],
   "plugins": []

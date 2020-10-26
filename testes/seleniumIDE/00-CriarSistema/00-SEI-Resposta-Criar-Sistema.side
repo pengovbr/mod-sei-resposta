@@ -199,7 +199,7 @@
       "id": "edac3f6a-71fb-4c64-8a5e-152d4bd1b6ff",
       "comment": "",
       "command": "click",
-      "target": "//*[@id=\"main-menu\"]/li[1]/ul/li[16]/a",
+      "target": "xpath=//*[text()=\"Sistemas\"]",
       "targets": [],
       "value": ""
     }, {
@@ -613,6 +613,264 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "41c462ee-715c-4e78-bf56-2bc5cb9c1774",
+    "name": "CriarTipoProcesso",
+    "commands": [{
+      "id": "4f031ec6-7dc1-46a4-a59f-02228bf64987",
+      "comment": "",
+      "command": "open",
+      "target": "/sip/login.php?sigla_orgao_sistema=ME&sigla_sistema=SEI",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "166eb32b-3991-4652-a223-0acf6f26b5e0",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsuario",
+      "targets": [
+        ["id=txtUsuario", "id"],
+        ["name=txtUsuario", "name"],
+        ["css=#txtUsuario", "css:finder"],
+        ["xpath=//input[@id='txtUsuario']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "317a148b-e964-4c61-8ed1-d36b4e277de8",
+      "comment": "",
+      "command": "click",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "52cc161a-d258-4193-adce-fd41d440ed1d",
+      "comment": "",
+      "command": "type",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "74d60f20-09f1-414d-b497-1791602ca046",
+      "comment": "",
+      "command": "click",
+      "target": "id=sbmLogin",
+      "targets": [
+        ["id=sbmLogin", "id"],
+        ["name=sbmLogin", "name"],
+        ["css=#sbmLogin", "css:finder"],
+        ["xpath=//button[@id='sbmLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='divBotoes']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Acessar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c281feaa-3da5-4be1-9856-c7e8c5cf2187",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"main-menu\"]/li[1]/a",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e2f5b1bc-bf07-4d98-81ba-0073edbfb0aa",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//*[text()=\"Tipos de Processo\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9297eb47-8976-45fa-9bda-5fb60e008fac",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Novo",
+      "targets": [
+        ["linkText=Novo", "linkText"],
+        ["css=.sm-nowrap > li:nth-child(1) > a", "css:finder"],
+        ["xpath=(//a[contains(text(),'Novo')])[14]", "xpath:link"],
+        ["xpath=//ul[@id='main-menu']/li/ul/li[19]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'controlador.php?acao=serie_cadastrar&infra_sistema=100000100&infra_unidade_atual=110000001&infra_hash=adb4fa95f1b19ce01b6b08d3dc309101d46e14567293d57d26edfbf65c5649cd')]", "xpath:href"],
+        ["xpath=//li[19]/ul/li/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2e5c8dab-f303-47f6-94d5-7c6835e4e771",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtNome",
+      "targets": [
+        ["id=txtNome", "id"],
+        ["name=txtNome", "name"],
+        ["css=#txtNome", "css:finder"],
+        ["xpath=//input[@id='txtNome']", "xpath:attributes"],
+        ["xpath=//div[@id='divNome']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4afb0ac9-4c44-4ced-8e21-40c9200123ff",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtNome",
+      "targets": [
+        ["id=txtNome", "id"],
+        ["name=txtNome", "name"],
+        ["css=#txtNome", "css:finder"],
+        ["xpath=//input[@id='txtNome']", "xpath:attributes"],
+        ["xpath=//div[@id='divNome']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Protocolização de documentos para o Protocolo Central do ME"
+    }, {
+      "id": "772bb729-9401-4a73-9bb8-8f6321a5482f",
+      "comment": "",
+      "command": "click",
+      "target": "id=txaDescricao",
+      "targets": [
+        ["id=txaDescricao", "id"],
+        ["name=txaDescricao", "name"],
+        ["css=#txaDescricao", "css:finder"],
+        ["xpath=//textarea[@id='txaDescricao']", "xpath:attributes"],
+        ["xpath=//div[@id='divDescricao']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7dc8a6be-20ce-4bb8-ac74-7343f7c7d595",
+      "comment": "",
+      "command": "type",
+      "target": "id=txaDescricao",
+      "targets": [
+        ["id=txaDescricao", "id"],
+        ["name=txaDescricao", "name"],
+        ["css=#txaDescricao", "css:finder"],
+        ["xpath=//textarea[@id='txaDescricao']", "xpath:attributes"],
+        ["xpath=//div[@id='divDescricao']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Protocolização de documentos para o Protocolo Central do ME"
+    }, {
+      "id": "94fb2f3c-1c4e-4147-9143-84629ba2dbfa",
+      "comment": "",
+      "command": "click",
+      "target": "id=chkSinRestritoPermitido",
+      "targets": [
+        ["id=chkSinRestritoPermitido", "id"],
+        ["name=chkSinRestritoPermitido", "name"],
+        ["css=#chkSinRestritoPermitido", "css:finder"],
+        ["xpath=//input[@id='chkSinRestritoPermitido']", "xpath:attributes"],
+        ["xpath=//div[@id='divSinRestritoPermitido']/input", "xpath:idRelative"],
+        ["xpath=//fieldset/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9b80b9d5-3dc1-4bad-8747-807da3d2290c",
+      "comment": "",
+      "command": "click",
+      "target": "id=chkSinPublicoPermitido",
+      "targets": [
+        ["id=chkSinPublicoPermitido", "id"],
+        ["name=chkSinPublicoPermitido", "name"],
+        ["css=#chkSinPublicoPermitido", "css:finder"],
+        ["xpath=//input[@id='chkSinPublicoPermitido']", "xpath:attributes"],
+        ["xpath=//div[@id='divSinPublicoPermitido']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8212bda5-839a-4559-ae3b-37cfd69cc029",
+      "comment": "",
+      "command": "click",
+      "target": "id=optPublicoSugestao",
+      "targets": [
+        ["id=optPublicoSugestao", "id"],
+        ["css=#optPublicoSugestao", "css:finder"],
+        ["xpath=//input[@id='optPublicoSugestao']", "xpath:attributes"],
+        ["xpath=//div[@id='divOptPublicoSugestao']/input", "xpath:idRelative"],
+        ["xpath=//fieldset[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5da254c0-4b83-4eff-894d-0be06f11fc64",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtAssunto",
+      "targets": [
+        ["id=txtAssunto", "id"],
+        ["name=txtAssunto", "name"],
+        ["css=#txtAssunto", "css:finder"],
+        ["xpath=//input[@id='txtAssunto']", "xpath:attributes"],
+        ["xpath=//div[@id='divAssuntos']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fada9cef-ea66-4f1a-a767-e313e4b09130",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtAssunto",
+      "targets": [],
+      "value": "modernização"
+    }, {
+      "id": "3bfa65a9-2f65-46a3-8d05-6f8aae21733d",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "css=#divInfraAjaxtxtAssunto li:nth-child(1) > a",
+      "targets": [
+        ["css=#divInfraAjaxtxtAssunto li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'001 - MODERNIZAÇÃO E REFORMA ADMINISTRATIVA (inclusive Projetos, Estudos e Normas)')]", "xpath:link"],
+        ["xpath=//div[@id='divInfraAjaxtxtAssunto']/ul/li/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[39]", "xpath:href"],
+        ["xpath=//div[3]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'001 - MODERNIZAÇÃO E REFORMA ADMINISTRATIVA (inclusive Projetos, Estudos e Normas)')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "914d711e-0a8e-47f0-ae4c-5e913b8903ed",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=#selAssuntos > option",
+      "targets": [
+        ["css=#selAssuntos > option", "css:finder"],
+        ["xpath=//option[@value='2']", "xpath:attributes"],
+        ["xpath=//select[@id='selAssuntos']/option", "xpath:idRelative"],
+        ["xpath=//div[4]/select/option", "xpath:position"],
+        ["xpath=//option[contains(.,'001 - MODERNIZAÇÃO E REFORMA ADMINISTRATIVA (inclusive Projetos, Estudos e Normas)')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e87bceb5-f436-4b10-97c6-0d3dc836e1ea",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d5e38304-fd75-47ab-a9f4-15c9c7489c23",
+      "comment": "",
+      "command": "click",
+      "target": "name=sbmCadastrarTipoProcedimento",
+      "targets": [],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "31142019-0388-4c23-a33f-45d54ef162cf",
@@ -620,7 +878,7 @@
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["6a600a99-7f84-42a9-b3ac-d3f049ce1947", "fbb414df-747e-499f-ab09-e8956fca2e6b"]
+    "tests": ["6a600a99-7f84-42a9-b3ac-d3f049ce1947", "fbb414df-747e-499f-ab09-e8956fca2e6b", "41c462ee-715c-4e78-bf56-2bc5cb9c1774"]
   }],
   "urls": ["http://localhost/sei", "http://sei.resposta.nuvem.gov.br/sei/", "http://sei.resposta.nuvem.gov.br/"],
   "plugins": []

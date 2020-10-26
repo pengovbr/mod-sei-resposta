@@ -69,7 +69,7 @@ class Test01SEIRespostaConfigs():
     dropdown = self.driver.find_element(By.ID, "selSistema")
     dropdown.find_element(By.XPATH, "//option[. = 'PD_GOV_BR']").click()
     dropdown = self.driver.find_element(By.ID, "selTipoProcesso")
-    dropdown.find_element(By.XPATH, "//option[. = 'Acesso à Informação: Demanda do e-SIC']").click()
+    dropdown.find_element(By.XPATH, "//option[. = 'Protocolização de documentos para o Protocolo Central do ME']").click()
     self.driver.find_element(By.NAME, "sbmSalvar").click()
     assert self.driver.switch_to.alert.text == "Selecione o Tipo de Documento."
     self.driver.switch_to.alert.accept()
@@ -90,7 +90,7 @@ class Test01SEIRespostaConfigs():
     dropdown = self.driver.find_element(By.ID, "selSistema")
     dropdown.find_element(By.XPATH, "//option[. = 'PD_GOV_BR']").click()
     dropdown = self.driver.find_element(By.ID, "selTipoProcesso")
-    dropdown.find_element(By.XPATH, "//option[. = 'Acesso à Informação: Demanda do e-SIC']").click()
+    dropdown.find_element(By.XPATH, "//option[. = 'Protocolização de documentos para o Protocolo Central do ME']").click()
     dropdown = self.driver.find_element(By.ID, "selTipoDocumento")
     dropdown.find_element(By.XPATH, "//option[. = 'Resposta ao Protocolo Digital']").click()
     self.driver.find_element(By.ID, "selTipoDocumento").click()

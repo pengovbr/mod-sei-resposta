@@ -86,10 +86,17 @@
       ],
       "value": ""
     }, {
+      "id": "65e58ee2-0edd-4ad7-8e24-2bf7699e8831",
+      "comment": "",
+      "command": "click",
+      "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "38d8590a-a53c-4e8c-bc61-685907d3f99f",
       "comment": "",
       "command": "click",
-      "target": "linkText=Acesso à Informação: Demanda do e-SIC",
+      "target": "linkText=Protocolização de documentos para o Protocolo Central do ME",
       "targets": [
         ["linkText=Acesso à Informação: Demanda do e-SIC", "linkText"],
         ["css=.infraTrSelecionada .ancoraOpcao", "css:finder"],
@@ -734,10 +741,17 @@
       ],
       "value": ""
     }, {
+      "id": "4b5e3602-4e33-4517-8f51-aff33df6c557",
+      "comment": "",
+      "command": "click",
+      "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "89c63d16-5389-451f-b0ea-166a87d1a549",
       "comment": "",
       "command": "click",
-      "target": "linkText=Acesso à Informação: Demanda do e-SIC",
+      "target": "linkText=Protocolização de documentos para o Protocolo Central do ME",
       "targets": [
         ["linkText=Acesso à Informação: Demanda do e-SIC", "linkText"],
         ["css=.infraTrSelecionada .ancoraOpcao", "css:finder"],
@@ -941,10 +955,17 @@
       ],
       "value": ""
     }, {
+      "id": "007f17c2-1291-481c-ad2b-88c614c0b151",
+      "comment": "",
+      "command": "click",
+      "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "8c59daed-1dcb-44a5-8d52-ba9482faf283",
       "comment": "",
       "command": "click",
-      "target": "linkText=Acesso à Informação: Demanda do e-SIC",
+      "target": "linkText=Protocolização de documentos para o Protocolo Central do ME",
       "targets": [
         ["linkText=Acesso à Informação: Demanda do e-SIC", "linkText"],
         ["css=.infraTrSelecionada .ancoraOpcao", "css:finder"],
@@ -1176,10 +1197,17 @@
       ],
       "value": ""
     }, {
+      "id": "13fc51ee-b435-489b-b1e6-c0709148c6d5",
+      "comment": "",
+      "command": "click",
+      "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "67d630f1-b682-4a1c-899c-8b060d722642",
       "comment": "",
       "command": "click",
-      "target": "linkText=Acesso à Informação: Demanda do e-SIC",
+      "target": "linkText=Protocolização de documentos para o Protocolo Central do ME",
       "targets": [
         ["linkText=Acesso à Informação: Demanda do e-SIC", "linkText"],
         ["css=.infraTrSelecionada .ancoraOpcao", "css:finder"],
@@ -1529,10 +1557,17 @@
       ],
       "value": ""
     }, {
+      "id": "0ddd8818-20c0-41ff-a7c5-e59ff7b634f4",
+      "comment": "",
+      "command": "click",
+      "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "f69e43ad-374d-4be0-b6f9-8e9cdd99c04f",
       "comment": "",
       "command": "click",
-      "target": "linkText=Acesso à Informação: Demanda do e-SIC",
+      "target": "linkText=Protocolização de documentos para o Protocolo Central do ME",
       "targets": [
         ["linkText=Acesso à Informação: Demanda do e-SIC", "linkText"],
         ["css=.infraTrSelecionada .ancoraOpcao", "css:finder"],
@@ -1983,10 +2018,17 @@
       ],
       "value": ""
     }, {
+      "id": "ac0688e7-c1a7-4f7d-adf8-f474eeb0d600",
+      "comment": "",
+      "command": "click",
+      "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "867f7923-8844-43cf-a787-4bc8c5685cc2",
       "comment": "",
       "command": "click",
-      "target": "linkText=Acesso à Informação: Demanda do e-SIC",
+      "target": "linkText=Protocolização de documentos para o Protocolo Central do ME",
       "targets": [
         ["linkText=Acesso à Informação: Demanda do e-SIC", "linkText"],
         ["css=.infraTrSelecionada .ancoraOpcao", "css:finder"],

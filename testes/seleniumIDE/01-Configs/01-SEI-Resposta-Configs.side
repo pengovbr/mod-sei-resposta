@@ -148,7 +148,7 @@
       "command": "select",
       "target": "id=selTipoProcesso",
       "targets": [],
-      "value": "label=Acesso à Informação: Demanda do e-SIC"
+      "value": "label=Protocolização de documentos para o Protocolo Central do ME"
     }, {
       "id": "41b9d0a4-0b25-42b9-9f09-4196b9e8df4e",
       "comment": "",
@@ -774,7 +774,7 @@
       "command": "select",
       "target": "id=selTipoProcesso",
       "targets": [],
-      "value": "label=Acesso à Informação: Demanda do e-SIC"
+      "value": "label=Protocolização de documentos para o Protocolo Central do ME"
     }, {
       "id": "3c079c3e-a09b-4b95-9c1e-d4d8f7b55d3d",
       "comment": "",

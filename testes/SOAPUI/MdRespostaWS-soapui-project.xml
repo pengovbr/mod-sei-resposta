@@ -324,7 +324,7 @@
             <NumProcedimento xsi:type="xsd:string">99990000001202068</NumProcedimento>
          </NumProcedimentos>
          <!--Optional:-->
-         <IdResposta xsi:type="xsd:string">3</IdResposta>
+         <IdResposta xsi:type="xsd:string">1</IdResposta>
       </seim:RespostaRequest>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e11ff2a0-6e35-4a19-8be4-8b0ddf4edd2d" name="SOAP Response"/><con:assertion type="Response SLA Assertion" id="0ad6e207-2f21-44d4-b915-d76bb9c0481d" name="Response SLA"><con:configuration><SLA>150</SLA></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e11ff2a0-6e35-4a19-8be4-8b0ddf4edd2d" name="SOAP Response"/><con:assertion type="Response SLA Assertion" id="0ad6e207-2f21-44d4-b915-d76bb9c0481d" name="Response SLA"><con:configuration><SLA>10000</SLA></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

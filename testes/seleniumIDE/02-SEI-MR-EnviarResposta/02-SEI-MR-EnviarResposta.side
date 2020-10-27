@@ -86,10 +86,31 @@
       ],
       "value": ""
     }, {
+      "id": "f507b19e-977f-4171-9f27-401af689c8be",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//a[contains(text(), 'Protocolização de documentos para o Protocolo Central do ME')]",
+      "targets": [],
+      "value": "error"
+    }, {
+      "id": "da7fe07e-86a2-46d2-9b7d-8c0369fcea06",
+      "comment": "",
+      "command": "if",
+      "target": "${error}==0",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "65e58ee2-0edd-4ad7-8e24-2bf7699e8831",
       "comment": "",
       "command": "click",
       "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2b21a487-16c1-4d98-8a73-5c81b7639ec5",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -209,6 +230,13 @@
         ["xpath=//div[15]/fieldset/div[3]/input", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "f870a1b1-7e11-48c7-a6ed-07aab76d5ab4",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=#divInfraBarraComandosInferior > #btnSalvar",
+      "targets": [],
+      "value": "30000"
     }, {
       "id": "0fa1963a-e886-4131-9710-b931b894ae32",
       "comment": "",

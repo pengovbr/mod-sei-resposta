@@ -32,7 +32,9 @@ class Test02SEIMREnviarResposta():
     self.driver.find_element(By.ID, "pwdSenha").send_keys("teste")
     self.driver.find_element(By.ID, "sbmLogin").click()
     self.driver.find_element(By.LINK_TEXT, "Iniciar Processo").click()
-    self.driver.find_element(By.ID, "imgExibirTiposProcedimento").click()
+    self.vars["error"] = len(self.driver.find_elements(By.XPATH, "//a[contains(text(), \'Protocolização de documentos para o Protocolo Central do ME\')]"))
+    if self.driver.execute_script("return (arguments[0]==0)", self.vars["error"]):
+      self.driver.find_element(By.ID, "imgExibirTiposProcedimento").click()
     self.driver.find_element(By.LINK_TEXT, "Protocolização de documentos para o Protocolo Central do ME").click()
     self.driver.find_element(By.ID, "txtDescricao").send_keys("teste arquivo")
     self.driver.find_element(By.ID, "optPublico").click()
@@ -43,6 +45,7 @@ class Test02SEIMREnviarResposta():
     self.driver.find_element(By.CSS_SELECTOR, ".botaoSEI:nth-child(1) > .infraCorBarraSistema").click()
     self.driver.find_element(By.LINK_TEXT, "Despacho").click()
     self.driver.find_element(By.ID, "optPublico").click()
+    WebDriverWait(self.driver, 30000).until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "#divInfraBarraComandosInferior > #btnSalvar")))
     self.vars["window_handles"] = self.driver.window_handles
     self.driver.find_element(By.CSS_SELECTOR, "#divInfraBarraComandosInferior > #btnSalvar").click()
     self.vars["win5785"] = self.wait_for_window(2000)

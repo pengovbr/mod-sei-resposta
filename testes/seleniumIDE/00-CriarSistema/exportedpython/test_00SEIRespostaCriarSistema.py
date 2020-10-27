@@ -93,6 +93,7 @@ class Test00SEIRespostaCriarSistema():
     self.driver.find_element(By.ID, "optPublicoSugestao").click()
     self.driver.find_element(By.ID, "txtAssunto").click()
     self.driver.find_element(By.ID, "txtAssunto").send_keys("modernização")
+    WebDriverWait(self.driver, 30000).until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "#divInfraAjaxtxtAssunto li:nth-child(1) > a")))
     element = self.driver.find_element(By.CSS_SELECTOR, "#divInfraAjaxtxtAssunto li:nth-child(1) > a")
     actions = ActionChains(self.driver)
     actions.move_to_element(element).click_and_hold().perform()

@@ -827,6 +827,13 @@
       "targets": [],
       "value": "modernização"
     }, {
+      "id": "488fd8e2-ddbc-4c78-b024-0d0485bc064d",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=#divInfraAjaxtxtAssunto li:nth-child(1) > a",
+      "targets": [],
+      "value": "30000"
+    }, {
       "id": "3bfa65a9-2f65-46a3-8d05-6f8aae21733d",
       "comment": "",
       "command": "mouseDown",

@@ -12,6 +12,9 @@ class MdRespostaWS extends InfraWS {
 	public function __call($func, $params) {
 		try{
 
+			// Dorme por 03 segundos
+			sleep(3);
+
 			SessaoSEI::getInstance(false);
 
 			if (!method_exists($this, $func.'Monitorado')) {

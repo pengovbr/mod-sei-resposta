@@ -8,7 +8,7 @@ Para rodar os testes em Selenium IDE:
 ### Pre-requisitos
 - Instale o Selenium IDE [V3.17.0](https://www.seleniumhq.org/selenium-ide/) ou superior
 - Conhecimento de uso básico/moderado do Selenium IDE
-- SEI com o módulo de Gestão Documental instalado
+- SEI com o módulo de Resposta instalado
 
 ### Para Rodar os Testes
 - Baixe o projeto deste git (vou chamar de `<projeto>`)

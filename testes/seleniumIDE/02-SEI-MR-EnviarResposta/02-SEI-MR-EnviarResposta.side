@@ -769,10 +769,31 @@
       ],
       "value": ""
     }, {
+      "id": "bdcd3e31-ea49-42bb-93af-1ec37e2ab14d",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//a[contains(text(), 'Protocolização de documentos para o Protocolo Central do ME')]",
+      "targets": [],
+      "value": "error"
+    }, {
+      "id": "95a5b46b-7848-420b-803b-86df30115e72",
+      "comment": "",
+      "command": "if",
+      "target": "${error}==0",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "4b5e3602-4e33-4517-8f51-aff33df6c557",
       "comment": "",
       "command": "click",
       "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "70f0489d-ae25-4531-80c6-4073d55bac2d",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -983,10 +1004,31 @@
       ],
       "value": ""
     }, {
+      "id": "844e1863-78c0-4ad1-8b65-74fe65b61650",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//a[contains(text(), 'Protocolização de documentos para o Protocolo Central do ME')]",
+      "targets": [],
+      "value": "error"
+    }, {
+      "id": "342534a1-e329-4a5e-9c44-c03457309b6f",
+      "comment": "",
+      "command": "if",
+      "target": "${error}==0",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "007f17c2-1291-481c-ad2b-88c614c0b151",
       "comment": "",
       "command": "click",
       "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a92df5a6-28f4-4fac-b6ac-b5fc43f55270",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -1225,10 +1267,31 @@
       ],
       "value": ""
     }, {
+      "id": "669fe97d-9ad1-472d-bf50-ade3f713f66e",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//a[contains(text(), 'Protocolização de documentos para o Protocolo Central do ME')]",
+      "targets": [],
+      "value": "error"
+    }, {
+      "id": "a9b6156a-e33c-45e6-a7b4-1d5c137eab80",
+      "comment": "",
+      "command": "if",
+      "target": "${error}==0",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "13fc51ee-b435-489b-b1e6-c0709148c6d5",
       "comment": "",
       "command": "click",
       "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "462382b7-7a52-49b6-b152-795d9dea57fe",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -1585,10 +1648,31 @@
       ],
       "value": ""
     }, {
+      "id": "429f5887-ef84-4503-8534-ba585d721263",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//a[contains(text(), 'Protocolização de documentos para o Protocolo Central do ME')]",
+      "targets": [],
+      "value": "error"
+    }, {
+      "id": "be9d1049-0e61-444b-b382-2a46eae6a474",
+      "comment": "",
+      "command": "if",
+      "target": "${error}==0",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "0ddd8818-20c0-41ff-a7c5-e59ff7b634f4",
       "comment": "",
       "command": "click",
       "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9015a02a-a891-459d-ad64-a978bbcee38d",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -2046,10 +2130,31 @@
       ],
       "value": ""
     }, {
+      "id": "93a49492-3a93-4fde-98f7-39ac9ff7b0ca",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//a[contains(text(), 'Protocolização de documentos para o Protocolo Central do ME')]",
+      "targets": [],
+      "value": "error"
+    }, {
+      "id": "d9827619-a7e1-4358-9f1b-5b4247c33fca",
+      "comment": "",
+      "command": "if",
+      "target": "${error}==0",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "ac0688e7-c1a7-4f7d-adf8-f474eeb0d600",
       "comment": "",
       "command": "click",
       "target": "id=imgExibirTiposProcedimento",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3b79f045-908b-4425-805a-4bec3eb04474",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {

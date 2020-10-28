@@ -10,6 +10,9 @@ A utilização deste módulo adicionará nova funcionalidade ao SEI, permitindo:
 
 Esta seção tem por objetivo demonstrar a funcionalidade que será disponibilizada pelo módulo de resposta do SEI à plataforma Gov.br.
 
+### Pré-requisitos
+- SEI com acesso externo liberado
+
 ### Informações Obrigatórias para Envio da Resposta
 
 Para permitir a interoperabilidade entre o SEI e a plataforma Gov.br, definiu-se um padrão de dados para intercâmbio. Este padrão define atributos que são obrigatórios e/ou opcionais.

@@ -156,16 +156,16 @@ class MdRespostaWS extends InfraWS {
 
 			if (count($arrObjMdRespostaDTO)){
 	
-				$IdResposta = "";
+				$IdRespostaRetorno = "";
 				$arrResposta = new ArrayObject();
 				
 				foreach($arrObjMdRespostaDTO as $objMdRespostaDTO ){
-					if($IdResposta != $objMdRespostaDTO->getNumIdResposta()){
-						$IdResposta = $objMdRespostaDTO->getNumIdResposta();
+					if($IdRespostaRetorno != $objMdRespostaDTO->getNumIdResposta()){
+						$IdRespostaRetorno = $objMdRespostaDTO->getNumIdResposta();
 
 						$arrDocumentos = new ArrayObject();
 						foreach($arrObjMdRespostaDTO as $objDocumentos){
-							if($IdResposta == $objDocumentos->getNumIdResposta()){
+							if($IdRespostaRetorno == $objDocumentos->getNumIdResposta()){
 								$soapVar = new SoapVar($objDocumentos->getDblIdDocumentoAnexo(), XSD_INT, NULL, NULL, 'IdDocumento');
 								$arrDocumentos->append($soapVar);
 							}
@@ -179,7 +179,7 @@ class MdRespostaWS extends InfraWS {
 							'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
 							'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
 							'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
-							'IdDocumentos' => $arrDocumentos
+							'IdDocumentos' => (object) $arrDocumentos
 						);
 
 						$soapVarResposta = new SoapVar($Resposta, NULL, NULL, NULL, 'Resposta');

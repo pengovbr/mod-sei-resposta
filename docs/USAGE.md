@@ -33,6 +33,8 @@ Ao enviar resposta, a Plataforma Gov.br, são obrigatórios os campos **processo
 
 O módulo disponibiliza um webservice a respeito das resposta enviadas. Para consultar as respostas geradas, deve-se acessar o serviço, informando para tanto as seguintes informações:
 
+O wsdl do servi�o pode ser acessado em: ```<SERVIDOR>/sei/modulos/mod-sei-resposta/ws/MdResposta.wsdl```
+
 ```php
       <seim:RespostaRequest>
          <SiglaSistema xsi:type="xsd:string"></SiglaSistema>

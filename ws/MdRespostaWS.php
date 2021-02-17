@@ -181,7 +181,7 @@ class MdRespostaWS extends InfraWS {
 							'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
 							'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
 							'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
-							'ProtocoloDocumentos' => (object) $arrDocumentos
+							'ProtocoloDocumentosAnexados' => (object) $arrDocumentos
 						);
 
 						$soapVarResposta = new SoapVar($Resposta, NULL, NULL, NULL, 'Resposta');

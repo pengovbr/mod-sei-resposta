@@ -94,7 +94,7 @@
             </xsd:annotation>
           </xsd:element>
 
-          <xsd:element name="IdDocumento" type="xsd:int" minOccurs="1">
+          <xsd:element name="ProtocoloDocumento" type="xsd:string" minOccurs="1">
             <xsd:annotation>
               <xsd:documentation>
                 Identificador da resposta devolvida do Web Service.
@@ -126,7 +126,7 @@
             </xsd:annotation>
           </xsd:element>
 
-          <xsd:element name="IdDocumentos" type="tns:IdDocumentos" minOccurs="1">
+          <xsd:element name="ProtocoloDocumentosAnexados" type="tns:ProtocoloDocumentosAnexados" minOccurs="1">
             <xsd:annotation>
               <xsd:documentation>
                 Identificador dos documentos devolvidos do Web Service.
@@ -157,9 +157,9 @@
         </xsd:sequence>
       </xsd:complexType>
 
-      <xsd:complexType name="IdDocumentos">
+      <xsd:complexType name="ProtocoloDocumentosAnexados">
         <xsd:sequence>
-          <xsd:element name="IdDocumento" type="xsd:int" minOccurs="0" maxOccurs="unbounded" />
+          <xsd:element name="ProtocoloDocumento" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
       </xsd:complexType>
 

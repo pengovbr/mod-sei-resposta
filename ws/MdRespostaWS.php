@@ -144,6 +144,8 @@ class MdRespostaWS extends InfraWS {
 			$objMdRespostaDTO->retStrSinConclusiva();
 			$objMdRespostaDTO->retDthDthResposta();
 			$objMdRespostaDTO->retDblIdDocumentoAnexo(); 
+			$objMdRespostaDTO->retStrProtocoloFormatadoAnexos(); 
+			$objMdRespostaDTO->retStrProtocoloFormatadoResposta(); 
 			
 			$objMdRespostaDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
 			
@@ -166,7 +168,7 @@ class MdRespostaWS extends InfraWS {
 						$arrDocumentos = new ArrayObject();
 						foreach($arrObjMdRespostaDTO as $objDocumentos){
 							if($IdRespostaRetorno == $objDocumentos->getNumIdResposta()){
-								$soapVar = new SoapVar($objDocumentos->getDblIdDocumentoAnexo(), XSD_INT, NULL, NULL, 'IdDocumento');
+								$soapVar = new SoapVar($objDocumentos->getStrProtocoloFormatadoAnexos(), XSD_STRING, NULL, NULL, 'ProtocoloDocumento');
 								$arrDocumentos->append($soapVar);
 							}
 						}
@@ -175,11 +177,11 @@ class MdRespostaWS extends InfraWS {
 							'IdResposta' => (int) $objMdRespostaDTO->getNumIdResposta(),
 							'IdProcedimento' => (int) $objMdRespostaDTO->getDblIdProcedimento(),
 							'NumProtocolo' => (string) $arrObjProcedimentoDTOIndexado[$objMdRespostaDTO->getDblIdProcedimento()]->getStrProtocoloProcedimentoFormatado(),
-							'IdDocumento' => (int) $objMdRespostaDTO->getDblIdDocumento(),
+							'ProtocoloDocumento' => (string) $objMdRespostaDTO->getStrProtocoloFormatadoResposta(),
 							'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
 							'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
 							'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
-							'IdDocumentos' => (object) $arrDocumentos
+							'ProtocoloDocumentosAnexados' => (object) $arrDocumentos
 						);
 
 						$soapVarResposta = new SoapVar($Resposta, NULL, NULL, NULL, 'Resposta');

@@ -41,6 +41,8 @@ class MdRespostaIntegracao extends SeiIntegracao{
     $objPaginaSEI = PaginaSEI::getInstance();
     $strDiretorioImagens = self::getDiretorio();
 
+    $bolFlagBloqueado = false;
+
     $strParametros = '';
   
     if (isset($_GET['id_procedimento'])){
@@ -53,6 +55,18 @@ class MdRespostaIntegracao extends SeiIntegracao{
 
     $objMdRespostaParametroRN = new MdRespostaParametroRN();
     $objMdRespostaTipoProcessoDTO = $objMdRespostaParametroRN->consultar($objMdRespostaParametroDTO);
+
+    $objProcedimentoDTO = new ProcedimentoDTO();
+    $objProcedimentoDTO->retStrStaEstadoProtocolo();
+    $objProcedimentoDTO->setDblIdProcedimento($_GET['id_procedimento']);
+
+    $objProcedimentoRN = new ProcedimentoRN();
+    $objProcedimentoDTO = $objProcedimentoRN->consultarRN0201($objProcedimentoDTO);    
+
+    $bolProcessoEstadoNormal = !in_array($objProcedimentoDTO->getStrStaEstadoProtocolo(), array(
+      ProtocoloRN::$TE_PROCEDIMENTO_SOBRESTADO,
+      ProtocoloRN::$TE_PROCEDIMENTO_BLOQUEADO
+    ));
 
     $liberarAcesso = false;
     if(is_object($objMdRespostaTipoProcessoDTO)){
@@ -67,7 +81,8 @@ class MdRespostaIntegracao extends SeiIntegracao{
     if (SessaoSEI::getInstance()->verificarPermissao('md_resposta_enviar') 
       && $objProcedimentoAPI->getSinAberto()=='S' 
       && $objProcedimentoAPI->getCodigoAcesso() > 0
-      && $liberarAcesso) {
+      && $liberarAcesso
+      && $bolProcessoEstadoNormal) {
       $numTabBotao = $objPaginaSEI->getProxTabBarraComandosSuperior();
       $strLinkBotaoResposta  = '<a href="'.SessaoSEI::getInstance()->assinarLink('controlador.php?acao=md_resposta_enviar&acao_origem=arvore_visualizar&acao_retorno=arvore_visualizar&id_procedimento='.$_GET['id_procedimento'].'&arvore=1').'" tabindex="'.$numTabBotao.'" class="botaoSEI">';
       $strLinkBotaoResposta .= '<img class="infraCorBarraSistema" tabindex="'.$numTabBotao.'" src="'.$strDiretorioImagens.'/imagens/enviar_resposta.png" alt="Enviar Resposta" title="Enviar Resposta" />';

@@ -165,7 +165,7 @@ function validarFormParametrosCadastro() {
     return false;
   }
 
-  if (document.getElementById("selTipoProcesso").value == "") {
+  if (!infraSelectSelecionado('selTipoProcesso')) {
     alert('Selecione o Tipo de Processo.');
     document.getElementById('selTipoProcesso').focus();
     return false;
@@ -197,7 +197,7 @@ PaginaSEI::getInstance()->abrirAreaDados('30em');
   <label id="lblTipoProcesso" for="selTipoProcesso" accesskey="p" class="infraLabelObrigatorio">Tipo de <span class="infraTeclaAtalho">P</span>rocesso:</label>
   <?
   echo '<select id="selTipoProcesso" name="selTipoProcesso[]" multiple="multiple" size="5" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="'.PaginaSEI::getInstance()->getProxTabDados().'">';
-  echo InfraINT::montarSelectArrInfraDTO('null', 'Todos', $strParametroProcesso, $arrObjTipoProcedimentoDTO, 'IdTipoProcedimento', 'Nome');
+  echo InfraINT::montarSelectArrInfraDTO('null', '', $strParametroProcesso, $arrObjTipoProcedimentoDTO, 'IdTipoProcedimento', 'Nome');
   echo '<select>';  
   ?>
   

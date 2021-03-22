@@ -155,7 +155,7 @@ try {
   }
 
 	$arrComandos[] = '<button type="button" onclick="submeterFormulario();" accesskey="E" name="btnEnviar" value="Enviar" class="infraButton"><span class="infraTeclaAtalho">E</span>nviar</button>';
-	$arrComandos[] = '<button type="button" accesskey="C" id="btnCancelar" name="btnCancelar" value="Cancelar" onclick="window.close();" class="infraButton"><span class="infraTeclaAtalho">C</span>ancelar</button>';
+	$arrComandos[] = '<button type="button" accesskey="C" id="btnCancelar" name="btnCancelar" value="Cancelar" onclick="history.go(-1);" class="infraButton"><span class="infraTeclaAtalho">C</span>ancelar</button>';
 
   $strItensSelProcedimentos = ProcedimentoINT::conjuntoCompletoFormatadoRI0903($arrProtocolos);
 
@@ -178,7 +178,7 @@ PaginaSEI::getInstance()->abrirStyle();
 #lblMensagem {position:absolute;left:0%;top:5%;}
 #txaMensagem {position:absolute;left:0%;top:13%;width:95%;}
 
-#divAnexos {<?=$strDisplayAnexos?>}
+#fldSinConclusiva {position:relative;top:65%;width:93%;}
 
 .remover {display:none;color:blue;float:right;font-size:0.8em;}
 .select2-highlighted a {display: inline}
@@ -230,7 +230,7 @@ function validarEnvio() {
     return false;
   }
 
-  if (!document.getElementById('optSim').checked && !document.getElementById('optNao').checked){
+  if (!document.getElementById('optDefinitiva').checked && !document.getElementById('optParcial').checked && !document.getElementById('optSemResposta').checked){
     alert('Selecione o Tipo de resposta.');
     return false;
   }
@@ -252,6 +252,22 @@ function submeterFormulario(){
   }
 }
 
+function descricaoResposta(obj){
+
+  document.getElementById('divDescrciaoResposta').style.display='inline';
+  switch (obj.value) {
+    case 'R':
+      document.getElementById('divDescrciaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários.';
+      break;
+    case 'A':
+      document.getElementById('divDescrciaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários. *O solicitante terá até 10 dias contados da ciência para responder.';
+      break;
+    case 'C':
+      document.getElementById('divDescrciaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários. A solicitação será concluída no Portal de Serviços, tendo em vista não caber resposta.';
+      break;
+  }
+}
+
 //</script>
 <?
 PaginaSEI::getInstance()->fecharJavaScript();
@@ -268,11 +284,9 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
   </div>
 
   <div id="divMensagem" class="infraAreaDados" style="height:30em;">
-  
-  <label id="lblMensagem" for="txaMensagem" accesskey="" class="infraLabelObrigatorio">Mensagem:</label>
-  <textarea id="txaMensagem" name="txaMensagem" maxlength="5000" rows="<?=PaginaSEI::getInstance()->isBolNavegadorFirefox()?'15':'16'?>" class="infraText" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" onselect="infraPosicionarCursor(this);" onclick="infraPosicionarCursor(this);" onkeyup="infraPosicionarCursor(this);"><?=PaginaSEI::tratarHTML($objMdRespostaEnvioDTO->getStrMensagem())?></textarea>
-	<input type="hidden" id="hdnFlagEnvio" name="hdnFlagEnvio" value="1" />
-
+    <label id="lblMensagem" for="txaMensagem" accesskey="" class="infraLabelObrigatorio">Mensagem:</label>
+    <textarea id="txaMensagem" name="txaMensagem" maxlength="5000" rows="<?=PaginaSEI::getInstance()->isBolNavegadorFirefox()?'15':'16'?>" class="infraText" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" onselect="infraPosicionarCursor(this);" onclick="infraPosicionarCursor(this);" onkeyup="infraPosicionarCursor(this);"><?=PaginaSEI::tratarHTML($objMdRespostaEnvioDTO->getStrMensagem())?></textarea>
+    <input type="hidden" id="hdnFlagEnvio" name="hdnFlagEnvio" value="1" />
   </div>
 
   <div id="divDocumentosProcesso" style="margin-top:.7em;">
@@ -281,13 +295,25 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
      ?>
   </div>
 
-  <div id="divSinConclusiva" style="margin-top:.7em;">
-  <label id="lblConclusiva" accesskey="" class="infraLabelObrigatorio">Resposta Conclusiva?</label>
-    <input type="radio" id="optSim" name="rdoSinConclusiva" class="infraRadio" value="S" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" />
-    <label id="lblSim" for="lblSim" class="infraLabelRadio">Sim</label>
-    <input type="radio" id="optNao" name="rdoSinConclusiva" class="infraRadio" value="N" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" />
-    <label id="lblNao" for="lblNao" class="infraLabelRadio">Não</label>
-  </div>
+  <fieldset id="fldSinConclusiva" class="infraFieldset" style="margin-top:3em; height:5em">
+    	<legend class="infraLegend">&nbsp;Resposta ao Gov.br&nbsp;</legend>
+    	
+      <div id="divOptDefinitiva" class="infraDivRadio" style="position:absolute;left:5%;"> 
+        <input type="radio" name="rdoSinConclusiva" id="optDefinitiva" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_RESPOSTA?>" class="infraRadio"/>
+        <span id="spnDefinitiva"><label id="lblDefinitiva" for="optDefinitiva" class="infraLabelRadio" >Enviar resposta</label></span>
+      </div>
+    
+      <div id="divOptParcial" class="infraDivRadio" style="position:absolute;left:40%;">	  
+        <input type="radio" name="rdoSinConclusiva" id="optParcial" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_AJUSTE?>" class="infraRadio"/>
+        <span id="spnParcial"><label id="lblParcial" for="optParcial" class="infraLabelRadio" >Enviar para ajuste/complementação</label></span>
+      </div>
+      
+      <div id="divOptSemResposta" class="infraDivRadio" style="position:absolute;left:80%;">
+        <input type="radio" name="rdoSinConclusiva" id="optSemResposta" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_CONCLUSAO?>" class="infraRadio"/>
+        <span id="spnSemResposta"><label id="lblSemResposta" for="optSemResposta" class="infraLabelRadio" >Enviar para conclusão</label></span>
+      </div>
+  	  <div id="divDescrciaoResposta" style="position:relative;left:5%;top:65%; display:none"></div>
+  </fieldset> 
 
 </form>
 <? 

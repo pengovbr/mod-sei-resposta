@@ -169,11 +169,11 @@ class MdRespostaVersaoRN extends InfraRN {
 
 
             if (BancoSEI::getInstance() instanceof InfraMySql){
-                BancoSEI::getInstance()->executarSql('create table seq_md_resposta_envio (id bigint not null primary key AUTO_INCREMENT, campo char(1) null) AUTO_INCREMENT = 1');
+                BancoSEI::getInstance()->executarSql('create table md_seq_resposta_envio (id bigint not null primary key AUTO_INCREMENT, campo char(1) null) AUTO_INCREMENT = 1');
             } else if (BancoSEI::getInstance() instanceof InfraSqlServer){
-                BancoSEI::getInstance()->executarSql('create table seq_md_resposta_envio (id bigint identity(1,1), campo char(1) null)');
+                BancoSEI::getInstance()->executarSql('create table md_seq_resposta_envio (id bigint identity(1,1), campo char(1) null)');
             } else if (BancoSEI::getInstance() instanceof InfraOracle){
-                BancoSEI::getInstance()->criarSequencialNativa('seq_md_resposta_envio', 1);
+                BancoSEI::getInstance()->criarSequencialNativa('md_seq_resposta_envio', 1);
             }
 
             BancoSEI::getInstance()->executarSql('insert into infra_parametro(nome,valor) values(\'MR_VERSAO\', \''.$this->versaoAtualDesteModulo.'\')');   

@@ -8,6 +8,10 @@ class MdRespostaEnvioDTO extends InfraDTO {
   	 return 'md_resposta_envio';
   }
 
+  public function getStrNomeSequenciaNativa() {
+    return 'md_seq_resposta_envio';
+  }
+
   public function montar() {
     $this->adicionarAtributoTabela(InfraDTO::$PREFIXO_NUM, 'IdResposta', 'id_resposta');
     $this->adicionarAtributoTabela(InfraDTO::$PREFIXO_DBL, 'IdProtocolo', 'id_procedimento');

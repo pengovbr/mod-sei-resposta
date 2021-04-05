@@ -7,7 +7,7 @@ class MdRespostaEnvioRN extends InfraRN {
   //SC = SinConclusiva
   public static $EV_RESPOSTA = 'R';
   public static $EV_AJUSTE = 'A';
-  public static $EV_CONCLUSAO = 'C';
+  //public static $EV_CONCLUSAO = 'C';
   
   public function __construct(){
     parent::__construct();

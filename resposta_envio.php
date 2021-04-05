@@ -298,20 +298,20 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
   <fieldset id="fldSinConclusiva" class="infraFieldset" style="margin-top:3em; height:5em">
     	<legend class="infraLegend">&nbsp;Resposta ao Gov.br&nbsp;</legend>
     	
-      <div id="divOptDefinitiva" class="infraDivRadio" style="position:absolute;left:5%;"> 
+      <div id="divOptDefinitiva" class="infraDivRadio" style="position:absolute;left:20%;"> 
         <input type="radio" name="rdoSinConclusiva" id="optDefinitiva" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_RESPOSTA?>" class="infraRadio"/>
         <span id="spnDefinitiva"><label id="lblDefinitiva" for="optDefinitiva" class="infraLabelRadio" >Enviar resposta</label></span>
       </div>
     
-      <div id="divOptParcial" class="infraDivRadio" style="position:absolute;left:40%;">	  
+      <div id="divOptParcial" class="infraDivRadio" style="position:absolute;left:60%;">	  
         <input type="radio" name="rdoSinConclusiva" id="optParcial" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_AJUSTE?>" class="infraRadio"/>
         <span id="spnParcial"><label id="lblParcial" for="optParcial" class="infraLabelRadio" >Enviar para ajuste/complementação</label></span>
       </div>
       
-      <div id="divOptSemResposta" class="infraDivRadio" style="position:absolute;left:80%;">
-        <input type="radio" name="rdoSinConclusiva" id="optSemResposta" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_CONCLUSAO?>" class="infraRadio"/>
+      <!--div id="divOptSemResposta" class="infraDivRadio" style="position:absolute;left:80%;">
+        <input type="radio" name="rdoSinConclusiva" id="optSemResposta" onclick="descricaoResposta(this)" value="<MdRespostaEnvioRN::$EV_CONCLUSAO?>" class="infraRadio"/>
         <span id="spnSemResposta"><label id="lblSemResposta" for="optSemResposta" class="infraLabelRadio" >Enviar para conclusão</label></span>
-      </div>
+      </div-->
   	  <div id="divDescrciaoResposta" style="position:relative;left:5%;top:65%; display:none"></div>
   </fieldset> 
 

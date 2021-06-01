@@ -1,0 +1,105 @@
+#lblProcedimentos {
+    position:absolute;
+    left:0%;
+    top:0%;
+}
+
+#selProcedimentos {
+    position:absolute;
+    left:0%;
+    top:45%;
+    width:95.5%;
+}
+
+#lblMensagem {
+    position:absolute;
+    left:0%;
+    top:5%;
+}
+
+#txaMensagem {
+    position:absolute;
+    left:0%;
+    top:13%;
+    width:95%;
+}
+
+#fldSinConclusiva {
+    position:relative;
+    top:65%;
+    width:93%;
+    margin-top:3em; 
+    height:5em;
+}
+
+/*#divOptDefinitiva{
+    position:absolute;
+    left:20%;
+}
+
+#divOptParcial{
+    position:absolute;
+    left:60%;
+}
+
+#divDescricaoResposta{
+    position:relative;
+    left:5%;
+    top:65%;
+    display:none
+}*/
+
+#divProcedimentos{
+    height:4em;
+}
+
+#divMensagem{
+    height:30em;
+}
+
+#divDocumentosProcesso{
+    margin-top:.7em;
+}
+
+.remover {display:none;
+    color:blue;
+    float:right;
+    font-size:0.8em;
+}
+
+.select2-highlighted a {
+    display: inline;
+}
+
+#divDescricaoResposta{
+    position: absolute;
+    top: auto;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    width: 100%;
+}
+
+#divOptParcial{
+    position:relative;
+    border-width:2px;
+    left:60%;
+    float: left;
+}
+
+#divOptDefinitiva{
+    position: relative;
+    border-width:2px;
+    left:20%;
+    float: left;
+}
+
+.group:before,
+.group:after {
+    content: "";
+    display: table;
+} 
+
+.group:after {
+    clear: both;
+}

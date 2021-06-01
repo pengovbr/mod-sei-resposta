@@ -11,7 +11,7 @@ class MdRespostaIntegracao extends SeiIntegracao{
   }
 
   public function getVersao() {
-    return '0.0.1';
+    return '1.0.0';
   }
 
   public function getInstituicao(){
@@ -41,14 +41,6 @@ class MdRespostaIntegracao extends SeiIntegracao{
     $objPaginaSEI = PaginaSEI::getInstance();
     $strDiretorioImagens = self::getDiretorio();
 
-    $bolFlagBloqueado = false;
-
-    $strParametros = '';
-  
-    if (isset($_GET['id_procedimento'])){
-      $strParametros .= "&id_procedimento=".$_GET['id_procedimento'];
-    }
-
     $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
     $objMdRespostaParametroDTO -> retStrValor();
     $objMdRespostaParametroDTO -> setStrNome('PARAM_TIPO_PROCESSO');
@@ -68,12 +60,22 @@ class MdRespostaIntegracao extends SeiIntegracao{
       ProtocoloRN::$TE_PROCEDIMENTO_BLOQUEADO
     ));
 
+    $objMdRespostaDTO = new MdRespostaDTO();
+    $objMdRespostaDTO->retNumIdResposta();
+    $objMdRespostaDTO->setStrSinConclusiva(MdRespostaEnvioRN::$EV_RESPOSTA);
+    $objMdRespostaDTO->setDblIdProcedimento($_GET['id_procedimento']);
+  
+    $objMdRespostaRN = new MdRespostaRN();
+    $objMdResposta = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
+
     $liberarAcesso = false;
-    if(is_object($objMdRespostaTipoProcessoDTO)){
-      $arrTipoProcesso = unserialize($objMdRespostaTipoProcessoDTO->getStrValor());
-      foreach($arrTipoProcesso as $valor){
-        if($objProcedimentoAPI->getIdTipoProcedimento() == $valor){
-          $liberarAcesso=true;
+    if(!isset($objMdResposta[0])){
+      if(is_object($objMdRespostaTipoProcessoDTO)){
+        $arrTipoProcesso = unserialize($objMdRespostaTipoProcessoDTO->getStrValor());
+        foreach($arrTipoProcesso as $valor){
+          if($objProcedimentoAPI->getIdTipoProcedimento() == $valor){
+            $liberarAcesso=true;
+          }
         }
       }
     }
@@ -85,7 +87,7 @@ class MdRespostaIntegracao extends SeiIntegracao{
       && $bolProcessoEstadoNormal) {
       $numTabBotao = $objPaginaSEI->getProxTabBarraComandosSuperior();
       $strLinkBotaoResposta  = '<a href="'.SessaoSEI::getInstance()->assinarLink('controlador.php?acao=md_resposta_enviar&acao_origem=arvore_visualizar&acao_retorno=arvore_visualizar&id_procedimento='.$_GET['id_procedimento'].'&arvore=1').'" tabindex="'.$numTabBotao.'" class="botaoSEI">';
-      $strLinkBotaoResposta .= '<img class="infraCorBarraSistema" tabindex="'.$numTabBotao.'" src="'.$strDiretorioImagens.'/imagens/enviar_resposta.png" alt="Enviar Resposta" title="Enviar Resposta" />';
+      $strLinkBotaoResposta .= '<img class="infraCorBarraSistema" tabindex="'.$numTabBotao.'" src="'.$strDiretorioImagens.'/imagens/'.MdRespostaINT::getCaminhoIcone("enviar_resposta_sei3.png").'" alt="Enviar Resposta" title="Enviar Resposta" />';
       $strLinkBotaoResposta .= '</a>';
 
       $arrBotoes[] = $strLinkBotaoResposta;

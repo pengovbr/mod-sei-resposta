@@ -171,7 +171,17 @@ PaginaSEI::getInstance()->montarTitle(PaginaSEI::getInstance()->getStrNomeSistem
 PaginaSEI::getInstance()->montarStyle();
 PaginaSEI::getInstance()->abrirStyle();
 ?>
-<link rel="stylesheet" href="<?php print MdRespostaIntegracao::getDiretorio(); ?>/css/<?php print MdRespostaINT::getCssCompatibilidadeSEI4("md_resposta_sei3.css"); ?>" type="text/css" />
+
+#lblProcedimentos {position:absolute;left:0%;top:0%;}
+#selProcedimentos {position:absolute;left:0%;top:45%;width:95.5%;}
+
+#lblMensagem {position:absolute;left:0%;top:5%;}
+#txaMensagem {position:absolute;left:0%;top:13%;width:95%;}
+
+#fldSinConclusiva {position:relative;top:65%;width:93%;}
+
+.remover {display:none;color:blue;float:right;font-size:0.8em;}
+.select2-highlighted a {display: inline}
 <?
 PaginaSEI::getInstance()->fecharStyle();
 PaginaSEI::getInstance()->adicionarStyle('js/select2/select2.css');
@@ -220,7 +230,7 @@ function validarEnvio() {
     return false;
   }
 
-  if (!document.getElementById('optDefinitiva').checked && !document.getElementById('optParcial').checked){
+  if (!document.getElementById('optDefinitiva').checked && !document.getElementById('optParcial').checked && !document.getElementById('optSemResposta').checked){
     alert('Selecione o Tipo de resposta.');
     return false;
   }
@@ -229,40 +239,31 @@ function validarEnvio() {
 }
 
 function submeterFormulario(){	
-  if (validarEnvio()){
-
-    transmitir=true;
-
-    if(document.getElementById('optDefinitiva').checked ){
-      if (!confirm("Confirma o envio da resposta? \nEssa ação  não poderá ser desfeita.")) {
-        transmitir=false;
-      }
-    }
-
-    if(transmitir){
-      infraExibirAviso(false);
-      var arrBotoesEnviar = document.getElementsByName('btnEnviar');
-      for(var i=0; i < arrBotoesEnviar.length; i++){
-        arrBotoesEnviar[i].disabled = true;
-      } 
-      
-      document.getElementById('frmResposta').submit();
-    }
-
-    return transmitir;
-
+	if (validarEnvio()){
+	
+	  infraExibirAviso(false);
+	  
+    var arrBotoesEnviar = document.getElementsByName('btnEnviar');
+    for(var i=0; i < arrBotoesEnviar.length; i++){
+       arrBotoesEnviar[i].disabled = true;
+    } 
+	    
+    document.getElementById('frmResposta').submit();
   }
 }
 
 function descricaoResposta(obj){
 
-  document.getElementById('divDescricaoResposta').style.display='inline';
+  document.getElementById('divDescrciaoResposta').style.display='inline';
   switch (obj.value) {
     case 'R':
-      document.getElementById('divDescricaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários.';
+      document.getElementById('divDescrciaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários.';
       break;
     case 'A':
-      document.getElementById('divDescricaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários. *O solicitante terá até 10 dias contados da ciência para responder.';
+      document.getElementById('divDescrciaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários. *O solicitante terá até 10 dias contados da ciência para responder.';
+      break;
+    case 'C':
+      document.getElementById('divDescrciaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários. A solicitação será concluída no Portal de Serviços, tendo em vista não caber resposta.';
       break;
   }
 }
@@ -273,52 +274,50 @@ PaginaSEI::getInstance()->fecharJavaScript();
 PaginaSEI::getInstance()->fecharHead();
 PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
 ?>
-
-<link rel="stylesheet" href="<?php print MdRespostaIntegracao::getDiretorio(); ?>/css/<?php print MdRespostaINT::getCssCompatibilidadeSEI4("md_resposta_sei3.css"); ?>" type="text/css" />
-
 <form id="frmResposta" method="post" action="<?=SessaoSEI::getInstance()->assinarLink('controlador.php?acao='.$_GET['acao'].'&acao_origem='.$_GET['acao'].$strParametros)?>" style="display:inline;">
-  <?
-  PaginaSEI::getInstance()->montarBarraComandosSuperior($arrComandos);
-  ?>
-  <div id="divProcedimentos" class="infraAreaDados">
+
+  <div id="divProcedimentos" class="infraAreaDados" style="height:4em;">
 	 	<label id="lblProcedimentos" for="selProcedimentos" class="infraLabelObrigatorio">Processos:</label>
 	  <select id="selProcedimentos" name="selProcedimentos" disabled="disabled" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>">
 	  <?=$strItensSelProcedimentos?>
     </select>
   </div>
-  <br/>
-  <div id="divMensagem" class="infraAreaDados">
+
+  <div id="divMensagem" class="infraAreaDados" style="height:30em;">
     <label id="lblMensagem" for="txaMensagem" accesskey="" class="infraLabelObrigatorio">Mensagem:</label>
     <textarea id="txaMensagem" name="txaMensagem" maxlength="5000" rows="<?=PaginaSEI::getInstance()->isBolNavegadorFirefox()?'15':'16'?>" class="infraText" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" onselect="infraPosicionarCursor(this);" onclick="infraPosicionarCursor(this);" onkeyup="infraPosicionarCursor(this);"><?=PaginaSEI::tratarHTML($objMdRespostaEnvioDTO->getStrMensagem())?></textarea>
     <input type="hidden" id="hdnFlagEnvio" name="hdnFlagEnvio" value="1" />
   </div>
-  <br/>
-  <div id="divDocumentosProcesso">
+
+  <div id="divDocumentosProcesso" style="margin-top:.7em;">
      <?
      PaginaSEI::getInstance()->montarAreaTabela($strResultadoDocumentos,$numDocumentos);
      ?>
   </div>
-  <br/>
-  
-  <fieldset id="fldSinConclusiva" class="infraFieldset" style="height:6em">
-    	<legend class="infraLegend">&nbsp;<?=MdRespostaEnvioRN::$TX_TITULO?>&nbsp;</legend>
-    	<div class="group">
-        <div id="divOptDefinitiva" class="infraDivRadio"> 
-          <input type="radio" name="rdoSinConclusiva" id="optDefinitiva" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_RESPOSTA?>" class="infraRadio"/>
-          <span id="spnDefinitiva"><label id="lblDefinitiva" for="optDefinitiva" class="infraLabelRadio" ><?=MdRespostaEnvioRN::$TX_RESPOSTA?></label></span>
-        </div>
-      
-        <div id="divOptParcial" class="infraDivRadio">	  
-          <input type="radio" name="rdoSinConclusiva" id="optParcial" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_AJUSTE?>" class="infraRadio"/>
-          <span id="spnParcial"><label id="lblParcial" for="optParcial" class="infraLabelRadio" ><?=MdRespostaEnvioRN::$TX_AJUSTE?></label></span>
-        </div>
+
+  <fieldset id="fldSinConclusiva" class="infraFieldset" style="margin-top:3em; height:5em">
+    	<legend class="infraLegend">&nbsp;Resposta ao Gov.br&nbsp;</legend>
+    	
+      <div id="divOptDefinitiva" class="infraDivRadio" style="position:absolute;left:20%;"> 
+        <input type="radio" name="rdoSinConclusiva" id="optDefinitiva" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_RESPOSTA?>" class="infraRadio"/>
+        <span id="spnDefinitiva"><label id="lblDefinitiva" for="optDefinitiva" class="infraLabelRadio" >Enviar resposta</label></span>
       </div>
-  	  
-      <div id="divDescricaoResposta"></div>
+    
+      <div id="divOptParcial" class="infraDivRadio" style="position:absolute;left:60%;">	  
+        <input type="radio" name="rdoSinConclusiva" id="optParcial" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_AJUSTE?>" class="infraRadio"/>
+        <span id="spnParcial"><label id="lblParcial" for="optParcial" class="infraLabelRadio" >Enviar para ajuste/complementação</label></span>
+      </div>
+      
+      <!--div id="divOptSemResposta" class="infraDivRadio" style="position:absolute;left:80%;">
+        <input type="radio" name="rdoSinConclusiva" id="optSemResposta" onclick="descricaoResposta(this)" value="<MdRespostaEnvioRN::$EV_CONCLUSAO?>" class="infraRadio"/>
+        <span id="spnSemResposta"><label id="lblSemResposta" for="optSemResposta" class="infraLabelRadio" >Enviar para conclusão</label></span>
+      </div-->
+  	  <div id="divDescrciaoResposta" style="position:relative;left:5%;top:65%; display:none"></div>
   </fieldset> 
 
 </form>
-<?
+<? 
+PaginaSEI::getInstance()->montarBarraComandosInferior($arrComandos,true);
 PaginaSEI::getInstance()->montarAreaDebug();
 PaginaSEI::getInstance()->fecharBody();
 PaginaSEI::getInstance()->fecharHtml();

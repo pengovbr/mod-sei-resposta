@@ -1,0 +1,749 @@
+{
+  "id": "3cd41667-7ac1-4a12-84f2-26a1e096d202",
+  "version": "2.0",
+  "name": "01-SEI-Resposta-Configs",
+  "url": "http://sei4.resposta.nuvem.gov.br/",
+  "tests": [{
+    "id": "6a600a99-7f84-42a9-b3ac-d3f049ce1947",
+    "name": "03-Config-Confirmacao",
+    "commands": [{
+      "id": "2e7bed5d-120c-492e-ad02-1d9d2d45bd9c",
+      "comment": "",
+      "command": "open",
+      "target": "/sip/login.php?sigla_orgao_sistema=ABC&sigla_sistema=SEI",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c1d5de75-728b-4c83-b0bc-47981ca2050a",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsuario",
+      "targets": [
+        ["id=txtUsuario", "id"],
+        ["name=txtUsuario", "name"],
+        ["css=#txtUsuario", "css:finder"],
+        ["xpath=//input[@id='txtUsuario']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "24aa6a52-c9b6-46ce-bbb1-00734b288323",
+      "comment": "",
+      "command": "click",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "819d9b49-f226-4671-a3fb-9d5f15ff6527",
+      "comment": "",
+      "command": "type",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "2c3cc90a-a91c-4f1b-9b59-c6af092af69e",
+      "comment": "",
+      "command": "click",
+      "target": "id=Acessar",
+      "targets": [
+        ["id=sbmLogin", "id"],
+        ["name=sbmLogin", "name"],
+        ["css=#sbmLogin", "css:finder"],
+        ["xpath=//button[@id='sbmLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='divBotoes']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Acessar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c5aed679-f0de-465c-ae8f-ba15018ea99e",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//*[text()=\"Administração\"]",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "08cce5d3-a87e-43a1-8cc3-17ab7a4407b3",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//*[text()=\"Administração\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "156ebdcc-0c73-4fb0-9749-0dc2f6e14556",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//*[text()=\"Módulo de Resposta - Gov.br\"]",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "818eb135-7816-484a-a48b-865cc30c2f66",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//*[text()=\"Módulo de Resposta - Gov.br\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b6d5670f-e4bb-403b-9b6a-72a50c5377b7",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "linkText=Parâmetros de Configuração",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "7bc7caa9-9613-4a21-a8ec-c33787ae3b8e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Parâmetros de Configuração",
+      "targets": [
+        ["linkText=Parâmetros de Configuração", "linkText"],
+        ["css=li:nth-child(11) > ul a", "css:finder"],
+        ["xpath=//a[contains(text(),'Parâmetros de Configuração')]", "xpath:link"],
+        ["xpath=//ul[@id='main-menu']/li/ul/li[11]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'controlador.php?acao=md_resposta_configuracao&infra_sistema=100000100&infra_unidade_atual=110000002&infra_hash=d68249015373ff110e39a54038316570a7f26d348356b90fab7e6ece31b9e814')]", "xpath:href"],
+        ["xpath=//li[11]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Parâmetros de Configuração')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6ac0ab48-067b-445b-8e5d-ce893b2d387f",
+      "comment": "",
+      "command": "click",
+      "target": "id=selSistema",
+      "targets": [
+        ["id=selSistema", "id"],
+        ["name=selSistema", "name"],
+        ["css=#selSistema", "css:finder"],
+        ["xpath=//select[@id='selSistema']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/select", "xpath:idRelative"],
+        ["xpath=//div[2]/select", "xpath:position"],
+        ["xpath=//select[contains(.,' \nINTERNET\nINTRANET\nPD\nPD1\nSEI\nSIP')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "84c3ded7-f8cd-4913-904e-8e4fbed3a93c",
+      "comment": "",
+      "command": "select",
+      "target": "id=selSistema",
+      "targets": [],
+      "value": "label=PD_GOV_BR"
+    }, {
+      "id": "9c40c1db-2de1-41b3-9328-e01b2c44cf4c",
+      "comment": "",
+      "command": "select",
+      "target": "id=selTipoProcesso",
+      "targets": [],
+      "value": "label=Protocolização de documentos para o Protocolo Central do ME"
+    }, {
+      "id": "41b9d0a4-0b25-42b9-9f09-4196b9e8df4e",
+      "comment": "",
+      "command": "select",
+      "target": "id=selTipoDocumento",
+      "targets": [],
+      "value": "label=Resposta ao Protocolo Digital"
+    }, {
+      "id": "89138061-8cb9-4238-8869-27f0d2cf30d1",
+      "comment": "",
+      "command": "click",
+      "target": "id=selTipoDocumento",
+      "targets": [
+        ["id=selTipoDocumento", "id"],
+        ["name=selTipoDocumento", "name"],
+        ["css=#selTipoDocumento", "css:finder"],
+        ["xpath=//select[@id='selTipoDocumento']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/select[3]", "xpath:idRelative"],
+        ["xpath=//select[3]", "xpath:position"],
+        ["xpath=//select[contains(.,' \nComunicado\nInforme\nBalancete\nBalanço\nBoletim\nComprovante\nConta\nCorrespondência\nCroqui\nDacon\nDecisão\nDefesa\nDegravacão\nDemonstração\nDenúncia\nAbaixo-Assinado\nAlvará\nEscrituração\nEstatuto\nExtrato\nÁudio\nVídeo\nLaudo\nLicença\nLivro\nMemória\nNorma\nNotificação\nProcuração\nReclamação\nRegistro\nRelatório\nRequerimento\nRequisição\nAta\nMandado\nVolume\nConteúdo de Mídia\nPlano\nAtestado\nProntuário\nResultado\nDiploma\nMaterial\nHistórico\nCarta\nCertificado\nFatura\nProposta\nCarteira\nCPF\nRG\nTermo\nAgenda\nAnotação\nBoleto\nCredencial\nFolha\nLista\nProjeto\nRelação\nPublicação\nPlanilha\nConvenção\nAcordo\nPedido\nEsclarecimento\nImpugnação\nIntenção\nRecurso\nContrarrazões\nManual\nApartado\nAnais\nAnteprojeto\nApólice\nApostila\nAuto\nBilhete\nCartaz\nCédula\nCheque\nContracheque\nConvite\nCrachá\nCronograma\nCurrículo\nDecreto\nDeliberação\nDemonstrativo\nDepoimento\nDiário\nDissertação\nDossiê\nEmbargos\nEmenda\nEscala\nEscritura\nFicha\nFluxograma\nFormulário\nGuia\nInventário\nLei\nManifesto\nMapa\nMedida Provisória\nMemorial\nMoção\nOrganograma\nOrientação\nPanfleto\nPassaporte\nPauta\nPetição\nPlanta\nPrecatório\nPrograma\nProspecto\nProtocolo\nProva\nQuestionário\nReceita\nRecibo\nRegimento\nRegulamento\nRelease\nRepresentação\nResumo\nRoteiro\nSentença\nSinopse\nSolicitação\nTabela\nTelegrama\nTese\nTestamento\nTítulo\nConsulta\nDebênture\nDiretriz\nFolder\nGrade Curricular\nIndicação\nInstrução\nMinuta\nOfício-Circular\nOrçamento\nOrdem\nPronunciamento\nCartão\nCNPJ\nCalendário\nMatéria\nMovimentação\nAlegações\nAnexo\nDocumento\nExposição\nFolheto\nListagem\nSumário\nAutorização\nCanhoto\nConfirmação\nCotação\nInscrição\nVoucher\nApresentação\nDiagnóstico\nExame\nPágina\nEstratégia\nCNH\nProcesso\nEstudo\nDespacho Decisório\nNota Técnica\nParecer (AGU)\nFormulário de Ouvidoria\nTermo de Encerramento de Trâmite Físico\nAtestado de Capacidade Técnica\nAviso de Audiência Pública\nTermo de Referência\nProjeto Básico\nDocumento de Oficialização da Demanda (DOD)\nIndicação de Integrante Técnico\nInstituição da Equipe de Planej. da Contratação\nEstudo Técnico Preliminar da Contratação\nAnálise de Riscos\nPlano de Inserção\nOrdem de Serviço ou de Fornecimento de Bens\nPlano de Fiscalização\nTermo de Comprom. Manutenção de Sigilo em Contrato\nTermo de Ciência de Manutenção de Sigilo\nTermo de Recebimento Provisório\nTermo de Recebimento Definitivo\nTermo de Encerramento de Contrato\nAta de Reunião\nRegistro de Reunião\nAcordo de Cooperação Técnica\nMinuta de Portaria\nMinuta de Resolução\nRelatório de Concessão de Suprimento de Fundos\nPlano de Gerenciamento de Projeto (PGP)\nTermo de Abertura de Projeto (TAP)\nBoletim de Concessão de Diárias\nMinuta de Projeto Básico\nTermo Aditivo\nMinuta de Termo Aditivo\nTermo de Apostilamento\nTermo de Rescisão Amigável\nMinuta de Termo de Rescisão Amigável\nTermo de Rescisão Unilateral\nMinuta de Termo de Rescisão Unilateral\nMinuta de Convênio\nMinuta de Acordo de Cooperação Técnica\nMinuta de Contrato\nMinuta de Edital\nProposta de Concessão de Suprimento de Fundos\nSolicitação de Despesas por Suprimento de Fundos\nPrestação de Contas de Suprimento de Fundos\nAta de Registro de Preços\nMinuta de Ata de Registro de Preços\nReconhecimento e Ratificação de Inexigibilidade\nReconhecimento e Ratificação de Dispensa\nAbertura de Procedimento Licitatório\nRelatório de Viagem a Serviço\nResolução\nSúmula\nAto\nDespacho\nResposta ao Protocolo Digital\nAnálise\nAcórdão\nPortaria\nOfício\nMemorando\nMemorando-Circular\nReferendo\nCota\nE-mail\nContrato\nEdital\nCertidão\nDeclaração\nNota\nInformação\nDespacho (AGU)\nVoto\nAviso\nExposição de Motivos\nMensagem\nParecer\nConvênio')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "014a1893-51c7-494e-9384-50c47d4423bd",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fb6f7168-0502-4a2c-9ab6-0a4db9756062",
+      "comment": "",
+      "command": "click",
+      "target": "name=sbmSalvar",
+      "targets": [
+        ["name=sbmSalvar", "name"],
+        ["css=.infraButton:nth-child(1)", "css:finder"],
+        ["xpath=//button[@name='sbmSalvar']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraBarraComandosSuperior']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Salvar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "78e2e724-3208-464d-b882-079b272094f1",
+      "comment": "",
+      "command": "pause",
+      "target": "2000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ee05558c-9edd-4d7f-822f-813e174406ae",
+      "comment": "",
+      "command": "webdriverChooseOkOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "e7824756-5a01-4ff5-93f4-237a433d07f9",
+    "name": "00-Config-Validacao-Sistema",
+    "commands": [{
+      "id": "10278164-7bed-47f7-af72-e0e290e21cba",
+      "comment": "",
+      "command": "open",
+      "target": "/sip/login.php?sigla_orgao_sistema=ABC&sigla_sistema=SEI",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "eb0e6dad-979f-44d1-9c7f-a252c4662166",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsuario",
+      "targets": [
+        ["id=txtUsuario", "id"],
+        ["name=txtUsuario", "name"],
+        ["css=#txtUsuario", "css:finder"],
+        ["xpath=//input[@id='txtUsuario']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "9e90719a-05f7-477c-8232-fc6315517179",
+      "comment": "",
+      "command": "click",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8d9a6ab1-0e8d-4817-8876-f6d5abf99528",
+      "comment": "",
+      "command": "type",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "fdf9aec3-d6f1-4dd5-94d5-c6c4fb293ec4",
+      "comment": "",
+      "command": "click",
+      "target": "id=Acessar",
+      "targets": [
+        ["id=sbmLogin", "id"],
+        ["name=sbmLogin", "name"],
+        ["css=#sbmLogin", "css:finder"],
+        ["xpath=//button[@id='sbmLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='divBotoes']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Acessar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "57af0733-3fd2-40fd-a8b9-0a1ba476ef44",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//*[text()=\"Administração\"]",
+      "targets": [
+        ["css=li:nth-child(2) span:nth-child(2)", "css:finder"],
+        ["xpath=//ul[@id='infraMenu']/li[2]/a/span", "xpath:idRelative"],
+        ["xpath=//li[2]/a/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Administração')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "cb2470c5-c03c-4bb9-a984-a965c5b82ab0",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//*[text()=\"Administração\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b869b99f-8627-4eb4-8998-f91eaadcbb6a",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//*[text()=\"Módulo de Resposta - Gov.br\"]",
+      "targets": [
+        ["css=li:nth-child(11) > .has-submenu", "css:finder"],
+        ["xpath=//ul[@id='main-menu']/li/ul/li[11]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[16]", "xpath:href"],
+        ["xpath=//li[11]/a", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "e3311ede-2691-4d02-927f-59d5df51b00e",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//*[text()=\"Módulo de Resposta - Gov.br\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8347925b-2a59-459b-9251-d22b0fc5595e",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "linkText=Parâmetros de Configuração",
+      "targets": [
+        ["linkText=Parâmetros de Configuração", "linkText"],
+        ["css=li:nth-child(11) > ul a", "css:finder"],
+        ["xpath=//a[contains(text(),'Parâmetros de Configuração')]", "xpath:link"],
+        ["xpath=//ul[@id='main-menu']/li/ul/li[11]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'controlador.php?acao=md_resposta_configuracao&infra_sistema=100000100&infra_unidade_atual=110000002&infra_hash=e7d23cdd32c3425c13ebdb8985a684112617484064af69c89358c51bf71d4534')]", "xpath:href"],
+        ["xpath=//li[11]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Parâmetros de Configuração')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "98c8eb51-d15d-488c-9cac-b7c0f5b7ca5d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Parâmetros de Configuração",
+      "targets": [
+        ["linkText=Parâmetros de Configuração", "linkText"],
+        ["css=li:nth-child(11) > ul a", "css:finder"],
+        ["xpath=//a[contains(text(),'Parâmetros de Configuração')]", "xpath:link"],
+        ["xpath=//ul[@id='main-menu']/li/ul/li[11]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'controlador.php?acao=md_resposta_configuracao&infra_sistema=100000100&infra_unidade_atual=110000002&infra_hash=d68249015373ff110e39a54038316570a7f26d348356b90fab7e6ece31b9e814')]", "xpath:href"],
+        ["xpath=//li[11]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Parâmetros de Configuração')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "72d7b230-63dc-43f7-a07a-e4bb7b917db1",
+      "comment": "",
+      "command": "click",
+      "target": "name=sbmSalvar",
+      "targets": [
+        ["name=sbmSalvar", "name"],
+        ["css=.infraButton:nth-child(1)", "css:finder"],
+        ["xpath=//button[@name='sbmSalvar']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraBarraComandosSuperior']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Salvar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7118dabc-1b27-40dc-bab5-a465d1aa8d4b",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ef26bd06-ec5b-40a3-bb53-909900206408",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Selecione o Sistema.",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ae678b8e-0949-4502-a8eb-fc37bbec9eb0",
+      "comment": "",
+      "command": "webdriverChooseOkOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "d523ee7a-5b4b-4a6a-8a3a-f6c339630df4",
+    "name": "01-Config-Validacao-Processo",
+    "commands": [{
+      "id": "ab244440-63fd-4133-b0ca-b0d2e2677831",
+      "comment": "",
+      "command": "open",
+      "target": "/sip/login.php?sigla_orgao_sistema=ABC&sigla_sistema=SEI",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7752425c-5b7a-4683-904c-773f1de6cf19",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsuario",
+      "targets": [
+        ["id=txtUsuario", "id"],
+        ["name=txtUsuario", "name"],
+        ["css=#txtUsuario", "css:finder"],
+        ["xpath=//input[@id='txtUsuario']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "b70dda07-b94b-4cf0-8939-bf850d29cf2f",
+      "comment": "",
+      "command": "click",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6721d815-ed02-4996-a01b-5475b656b507",
+      "comment": "",
+      "command": "type",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "ca2f58e6-6160-424f-bf1e-47dea7afc451",
+      "comment": "",
+      "command": "click",
+      "target": "id=Acessar",
+      "targets": [
+        ["id=sbmLogin", "id"],
+        ["name=sbmLogin", "name"],
+        ["css=#sbmLogin", "css:finder"],
+        ["xpath=//button[@id='sbmLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='divBotoes']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Acessar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c45a8259-e3c6-4812-a743-314979fd2d3e",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//*[text()=\"Administração\"]",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "0f1c42e5-3cd4-47d5-aef7-5d1862d2dae9",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//*[text()=\"Administração\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "54059342-ad7d-483a-9f53-f72cd3bea3e0",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//*[text()=\"Módulo de Resposta - Gov.br\"]",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "823c85ad-d2dd-4577-9dc0-bdf855776ebb",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//*[text()=\"Módulo de Resposta - Gov.br\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "49e33cff-fc97-46c0-900e-e91b157c0bc8",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "linkText=Parâmetros de Configuração",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "ebbccb31-9ece-4bcc-a1e1-c0d64c9e4ac9",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Parâmetros de Configuração",
+      "targets": [
+        ["linkText=Parâmetros de Configuração", "linkText"],
+        ["css=li:nth-child(11) > ul a", "css:finder"],
+        ["xpath=//a[contains(text(),'Parâmetros de Configuração')]", "xpath:link"],
+        ["xpath=//ul[@id='main-menu']/li/ul/li[11]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'controlador.php?acao=md_resposta_configuracao&infra_sistema=100000100&infra_unidade_atual=110000002&infra_hash=d68249015373ff110e39a54038316570a7f26d348356b90fab7e6ece31b9e814')]", "xpath:href"],
+        ["xpath=//li[11]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Parâmetros de Configuração')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "079d15cd-37c4-4acb-89f2-d5f0892bee2b",
+      "comment": "",
+      "command": "click",
+      "target": "id=selSistema",
+      "targets": [
+        ["id=selSistema", "id"],
+        ["name=selSistema", "name"],
+        ["css=#selSistema", "css:finder"],
+        ["xpath=//select[@id='selSistema']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/select", "xpath:idRelative"],
+        ["xpath=//div[2]/select", "xpath:position"],
+        ["xpath=//select[contains(.,' \nINTERNET\nINTRANET\nPD\nPD1\nSEI\nSIP')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3ea1158a-5a6e-41ed-add2-760380090acd",
+      "comment": "",
+      "command": "select",
+      "target": "id=selSistema",
+      "targets": [],
+      "value": "label=PD_GOV_BR"
+    }, {
+      "id": "35a8a095-6801-4013-97ad-8460866ff248",
+      "comment": "",
+      "command": "click",
+      "target": "name=sbmSalvar",
+      "targets": [
+        ["name=sbmSalvar", "name"],
+        ["css=.infraButton:nth-child(1)", "css:finder"],
+        ["xpath=//button[@name='sbmSalvar']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraBarraComandosSuperior']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Salvar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "44e43941-9ceb-4e4d-8177-26e68a68802a",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fe1a5476-4876-4930-aed3-31f3842b0575",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Selecione o Tipo de Processo.",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "505e71b2-3b47-4118-bdf8-3f1cea0da6c3",
+      "comment": "",
+      "command": "webdriverChooseOkOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "b52ef067-fecf-4e7d-ad30-ba3ff4c2a8c6",
+    "name": "02-Config-Validacao-Documento",
+    "commands": [{
+      "id": "c7addf0f-c945-4dad-9788-507cdbeb6f61",
+      "comment": "",
+      "command": "open",
+      "target": "/sip/login.php?sigla_orgao_sistema=ABC&sigla_sistema=SEI",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "572f7209-2b02-4fdd-9fae-04bd7cb720d3",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsuario",
+      "targets": [
+        ["id=txtUsuario", "id"],
+        ["name=txtUsuario", "name"],
+        ["css=#txtUsuario", "css:finder"],
+        ["xpath=//input[@id='txtUsuario']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "6b9a34cd-81f4-4098-be94-c30477297b8e",
+      "comment": "",
+      "command": "click",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "75904036-ebdf-4972-9d9e-584a1df4dbae",
+      "comment": "",
+      "command": "type",
+      "target": "id=pwdSenha",
+      "targets": [
+        ["id=pwdSenha", "id"],
+        ["name=pwdSenha", "name"],
+        ["css=#pwdSenha", "css:finder"],
+        ["xpath=//input[@id='pwdSenha']", "xpath:attributes"],
+        ["xpath=//div[@id='divUsuario']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "teste"
+    }, {
+      "id": "85e0b767-5355-43e5-b7f1-da500e30f5ce",
+      "comment": "",
+      "command": "click",
+      "target": "id=Acessar",
+      "targets": [
+        ["id=sbmLogin", "id"],
+        ["name=sbmLogin", "name"],
+        ["css=#sbmLogin", "css:finder"],
+        ["xpath=//button[@id='sbmLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='divBotoes']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Acessar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "344b653b-d1b5-4755-a23f-58d628227383",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//*[text()=\"Administração\"]",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "f12a5f7d-31f4-43a4-8c85-275f79b12529",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//*[text()=\"Administração\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fdb91a33-c719-4464-98e8-d314bb3d48b3",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//*[text()=\"Módulo de Resposta - Gov.br\"]",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "1d96edbf-f9d1-461f-929e-8eaa17ee37d9",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//*[text()=\"Módulo de Resposta - Gov.br\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f1777b55-dad6-4084-a6da-4a0f88d9f865",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "linkText=Parâmetros de Configuração",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "439ab202-ebab-46ab-8f01-2d3733b55a79",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Parâmetros de Configuração",
+      "targets": [
+        ["linkText=Parâmetros de Configuração", "linkText"],
+        ["css=li:nth-child(11) > ul a", "css:finder"],
+        ["xpath=//a[contains(text(),'Parâmetros de Configuração')]", "xpath:link"],
+        ["xpath=//ul[@id='main-menu']/li/ul/li[11]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'controlador.php?acao=md_resposta_configuracao&infra_sistema=100000100&infra_unidade_atual=110000002&infra_hash=d68249015373ff110e39a54038316570a7f26d348356b90fab7e6ece31b9e814')]", "xpath:href"],
+        ["xpath=//li[11]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Parâmetros de Configuração')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0d0eef72-d9f3-46fd-97f7-c8af1cd7cae6",
+      "comment": "",
+      "command": "click",
+      "target": "id=selSistema",
+      "targets": [
+        ["id=selSistema", "id"],
+        ["name=selSistema", "name"],
+        ["css=#selSistema", "css:finder"],
+        ["xpath=//select[@id='selSistema']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraAreaDados']/select", "xpath:idRelative"],
+        ["xpath=//div[2]/select", "xpath:position"],
+        ["xpath=//select[contains(.,' \nINTERNET\nINTRANET\nPD\nPD1\nSEI\nSIP')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bc6dc630-d065-4937-9aaa-77c5e31a118d",
+      "comment": "",
+      "command": "select",
+      "target": "id=selSistema",
+      "targets": [],
+      "value": "label=PD_GOV_BR"
+    }, {
+      "id": "39639699-c0d1-4495-8038-0eb419024322",
+      "comment": "",
+      "command": "select",
+      "target": "id=selTipoProcesso",
+      "targets": [],
+      "value": "label=Protocolização de documentos para o Protocolo Central do ME"
+    }, {
+      "id": "3c079c3e-a09b-4b95-9c1e-d4d8f7b55d3d",
+      "comment": "",
+      "command": "click",
+      "target": "name=sbmSalvar",
+      "targets": [
+        ["name=sbmSalvar", "name"],
+        ["css=.infraButton:nth-child(1)", "css:finder"],
+        ["xpath=//button[@name='sbmSalvar']", "xpath:attributes"],
+        ["xpath=//div[@id='divInfraBarraComandosSuperior']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Salvar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0f0a6364-4942-4816-8bc2-15327f01746a",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5aee5642-f3ed-44eb-b5b1-1aeb019c9e90",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Selecione o Tipo de Documento.",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "123a505e-883b-4711-bbbf-7f6371f377fc",
+      "comment": "",
+      "command": "webdriverChooseOkOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "31142019-0388-4c23-a33f-45d54ef162cf",
+    "name": "01-SEI-Resposta-Configs",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["e7824756-5a01-4ff5-93f4-237a433d07f9", "d523ee7a-5b4b-4a6a-8a3a-f6c339630df4", "b52ef067-fecf-4e7d-ad30-ba3ff4c2a8c6", "6a600a99-7f84-42a9-b3ac-d3f049ce1947"]
+  }],
+  "urls": ["http://localhost/sei", "http://sei.resposta.nuvem.gov.br/sei", "http://sei.resposta.nuvem.gov.br/", "http://org1-http:8000/"],
+  "plugins": []
+}

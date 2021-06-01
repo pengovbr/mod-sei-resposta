@@ -25,8 +25,8 @@ class MdRespostaWS extends InfraWS {
 
 			$SiglaSistema = $params[0]->SiglaSistema;
 			$IdentificacaoServico = $params[0]->IdentificacaoServico;
-			$arrIdProcedimento = $params[0]->IdProcedimentos->IdProcedimento;
-			$arrNumProcedimento = $params[0]->NumProcedimentos->NumProcedimento;
+			$arrIdProcedimento = (array) $params[0]->IdProcedimentos->IdProcedimento;
+			$arrNumProcedimento = (array) $params[0]->NumProcedimentos->NumProcedimento;			
 			$IdResposta = $params[0]->IdResposta;
 					
 			$objServicoDTO = self::obterServico($SiglaSistema, $IdentificacaoServico);
@@ -238,7 +238,7 @@ class MdRespostaWS extends InfraWS {
 		
 	}
 
-	private function validarArrayProcedimento($arrIdProcedimento = "", $arrNumProcedimento = ""){
+	private function validarArrayProcedimento($arrIdProcedimento, $arrNumProcedimento){
 			
 		if (count($arrIdProcedimento) > 100) {
 			throw new InfraException('Número de repetições do atributo [IdProcedimento] superior ao permitido.');

@@ -15,16 +15,13 @@ class MdRespostaRN extends InfraRN {
 	protected function listarRespostaConectado(MdRespostaDTO $objMdRespostaDTO){
 		try {
 	
-			//Valida Permissao
-			SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_listar',__METHOD__,$objMdRespostaDTO);
-	
 			$objMdRespostaBD = new MdRespostaBD($this->getObjInfraIBanco());
 			$arrObjMdRespostaDTO = $objMdRespostaBD->listar($objMdRespostaDTO);
 	
 			return $arrObjMdRespostaDTO;
 
 		}catch(Exception $e){
-			throw new InfraException('Erro consultando Resposta.',$e);
+			throw new InfraException('Erro listando respostas.',$e);
 		}
 	}
 }

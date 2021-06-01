@@ -7,6 +7,11 @@ class MdRespostaEnvioRN extends InfraRN {
   //SC = SinConclusiva
   public static $EV_RESPOSTA = 'R';
   public static $EV_AJUSTE = 'A';
+
+  public static $TX_RESPOSTA = 'Enviar resposta';
+  public static $TX_AJUSTE = 'Enviar para ajuste/complementação';  
+
+  public static $TX_TITULO = 'Resposta ao Gov.br';
   //public static $EV_CONCLUSAO = 'C';
   
   public function __construct(){
@@ -30,6 +35,7 @@ class MdRespostaEnvioRN extends InfraRN {
       $this->validarStrMensagem($objMdRespostaEnvioDTO, $objInfraException);
       $this->validarArrIdDocumentosProcesso($objMdRespostaEnvioDTO, $objInfraException);
       $this->validarStrSinConclusiva($objMdRespostaEnvioDTO, $objInfraException);
+      $this->validarRespostaEnviada($objMdRespostaEnvioDTO, $objInfraException);
 
       $objInfraException->lancarValidacoes();      
 
@@ -69,9 +75,9 @@ class MdRespostaEnvioRN extends InfraRN {
       $strMensagem = $objMdRespostaEnvioDTO->getStrMensagem();
       $dthDataAtual = $objMdRespostaEnvioDTO->getDthDthResposta();
 
-      $strSinConclusiva = 'Não';
-      if($objMdRespostaEnvioDTO->getStrSinConclusiva() == 'S'){
-        $strSinConclusiva = 'Sim';
+      $strSinConclusiva = self::$TX_AJUSTE;
+      if($objMdRespostaEnvioDTO->getStrSinConclusiva() == self::$EV_RESPOSTA){
+        $strSinConclusiva = self::$TX_RESPOSTA;
       }
 
       $this->prepararAnexos($objMdRespostaEnvioDTO);
@@ -104,7 +110,7 @@ class MdRespostaEnvioRN extends InfraRN {
       $strXML .= '<atributo nome="Data" titulo="Data de Envio">'.InfraString::formatarXML($dthDataAtual).'</atributo>'."\n";
       $strXML .= '<atributo nome="Processo" titulo="Processo">'.$objProcedimentoDTO->getStrProtocoloProcedimentoFormatado().'</atributo>'."\n";
       $strXML .= '<atributo nome="Mensagem" titulo="Mensagem">'.InfraString::formatarXML($strMensagem).'</atributo>'."\n";
-      $strXML .= '<atributo nome="RespostaConclusiva" titulo="Resposta Conclusiva?">'.InfraString::formatarXML($strSinConclusiva).'</atributo>'."\n";
+      $strXML .= '<atributo nome="RespostaConclusiva" titulo="'.self::$TX_TITULO.':">'.InfraString::formatarXML($strSinConclusiva).'</atributo>'."\n";
 
     	$objDocumentoDTO->setStrConteudo(null);
     	$objDocumentoDTO->setDblIdDocumentoEdoc(null);
@@ -368,8 +374,24 @@ class MdRespostaEnvioRN extends InfraRN {
 
   private function validarStrSinConclusiva(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException){
   	if (InfraString::isBolVazia($objMdRespostaEnvioDTO->getStrSinConclusiva())){
-	      $objInfraException->adicionarValidacao('Resposta conclusiva não selecionada.');
+	      $objInfraException->adicionarValidacao('Resposta não selecionada.');
 	  }
-  }  
+  }
+
+  private function validarRespostaEnviada(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException){
+    $objMdRespostaDTO = new MdRespostaDTO();
+    $objMdRespostaDTO->retNumIdResposta();
+    $objMdRespostaDTO->setStrSinConclusiva(self::$EV_RESPOSTA);
+    $objMdRespostaDTO->setDblIdProcedimento($objMdRespostaEnvioDTO->getDblIdProtocolo());
+  
+    $objMdRespostaRN = new MdRespostaRN();
+    $objMdResposta = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
+
+    if(isset($objMdResposta[0])){
+      $objInfraException->adicionarValidacao('Resposta definitiva já enviada.');
+    }
+
+  }
+
 }
 ?>

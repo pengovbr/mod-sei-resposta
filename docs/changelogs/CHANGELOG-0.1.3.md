@@ -1,4 +1,4 @@
-# NOTAS DE VERSÃO MOD-SEI-RESPOSTA (versão 0.1.3)
+# NOTAS DE VERSÃO MOD-SEI-RESPOSTA (versão 0.1.3-beta)
 
 Este documento descreve as principais mudanças aplicadas nesta versão do módulo de integração do SEI com Platafoma Gov.br.
 

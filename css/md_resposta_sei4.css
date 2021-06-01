@@ -1,0 +1,74 @@
+#lblProcedimentos {
+    position:relative;
+    left:0%;
+    top:0%;
+}
+
+#selProcedimentos {
+    position:relative;
+    left:0%;
+    top:45%;
+    width:95.5%;
+}
+
+#lblMensagem {
+    position:relative;
+    left:0%;
+    top:5%;
+}
+
+#txaMensagem {
+    position:relative;
+    left:0%;
+    top:13%;
+    width:95%;
+}
+
+#fldSinConclusiva {
+    width:95%;
+}
+
+.remover {
+    display:none;
+    color:blue;
+    float:right;
+    font-size:0.8em;
+}
+
+.select2-highlighted a {
+    display: inline;
+}
+
+#divDescricaoResposta{
+    position: absolute;
+    top: auto;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    width: 100%;
+}
+
+#divOptParcial{
+    position:relative;
+    border-width:2px;
+    left:60%;
+    float: left;
+}
+
+#divOptDefinitiva{
+    position: relative;
+    border-width:2px;
+    width:20px;
+    left:20%;
+    float: left;
+}
+
+.group:before,
+.group:after {
+    content: "";
+    display: table;
+} 
+
+.group:after {
+    clear: both;
+}

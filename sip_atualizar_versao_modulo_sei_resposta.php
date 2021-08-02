@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/../web/Sip.php';
 
 class ModuloRespostaVersaoSipRN extends InfraRN {
 
-    const PARAMETRO_VERSAO = '1.0.0';
+    const PARAMETRO_VERSAO = '1.0.1';
     const PARAMETRO_MODULO = 'MOD_RESPOSTA_VERSAO';
 
     private $arrRecurso = array();
@@ -73,6 +73,7 @@ class ModuloRespostaVersaoSipRN extends InfraRN {
             switch ($strVersaoModuloPen) {
                 //case '' - Nenhuma versão instalada
                 case '': $this->instalarV100();
+                case '1.1.0': $this->instalarV110();
                     break;
 
                 default:
@@ -412,6 +413,12 @@ class ModuloRespostaVersaoSipRN extends InfraRN {
         $objInfraParametroBD = new InfraParametroBD(BancoSip::getInstance());
         $objInfraParametroBD->cadastrar($objInfraParametroDTO);
     }
+
+    /* Contêm atualizações da versao 1.1.0 do modulo */
+    protected function instalarV110()
+    {
+        $this->atualizarNumeroVersao("1.1.0");
+    }    
 }
 
 try {

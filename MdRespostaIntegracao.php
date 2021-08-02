@@ -11,7 +11,7 @@ class MdRespostaIntegracao extends SeiIntegracao{
   }
 
   public function getVersao() {
-    return '1.0.0';
+    return '1.1.0';
   }
 
   public function getInstituicao(){

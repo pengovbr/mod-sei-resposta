@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/../web/SEI.php';
 
 class ModuloRespostaAtualizarSeiRN extends MdRespostaVersaoRN {
 
-    const PARAMETRO_VERSAO = '1.0.0';
+    const PARAMETRO_VERSAO = '1.0.1';
     const PARAMETRO_MODULO = 'MOD_RESPOSTA_VERSAO';
 
     private $objMetaBD = null;
@@ -42,9 +42,10 @@ class ModuloRespostaAtualizarSeiRN extends MdRespostaVersaoRN {
 
             // Aplicação de scripts de atualização de forma incremental
             // Ausência de [break;] proposital para realizar a atualização incremental de versões
-            $strVersaoModuloPen = $objInfraParametro->getValor(self::PARAMETRO_MODULO, false);
-            switch ($strVersaoModuloPen) {
+            $strVersaoModulo = $objInfraParametro->getValor(self::PARAMETRO_MODULO, false);
+            switch ($strVersaoModulo) {
                 case '': $this->instalarV100(); // Nenhuma versão instalada
+                case '1.1.0': $this->instalarV110();
                     break;
                 default:
                 $this->finalizar('VERSAO DO MÓDULO JÁ CONSTA COMO ATUALIZADA');
@@ -58,48 +59,6 @@ class ModuloRespostaAtualizarSeiRN extends MdRespostaVersaoRN {
             InfraDebug::getInstance()->setBolEcho(false);
             throw new InfraException("Erro atualizando VERSAO: $e", $e);
         }
-    }
-
-    /**
-     * Cria um novo parâmetro
-     * @return int Código do Parametro gerado
-     */
-    protected function criarParametro($strNome, $strValor, $strDescricao) {
-        $objDTO = new PenParametroDTO();
-        $objDTO->setStrNome($strNome);
-        $objDTO->setStrValor($strValor);
-        $objDTO->setStrDescricao($strDescricao);
-        $objDTO->retStrNome();
-
-        $objBD = new PenParametroBD(BancoSEI::getInstance());
-        $objDTOCadastrado = $objBD->cadastrar($objDTO);
-
-        return $objDTOCadastrado->getStrNome();
-    }
-
-    /**
-     * Remove parâmetro de configuração do módulo da base de dados
-     * @return int Código do Parametro gerado
-     */
-    protected function removerParametro($strNome) {
-        $objDTO = new PenParametroDTO();
-        $objDTO->setStrNome($strNome);
-        $objDTO->retStrNome();
-
-        $objBD = new PenParametroBD(BancoSEI::getInstance());
-        $objBD->excluir($objDTO);
-    }
-
-    /**
-     * Remove um parâmetro do infra_parametros
-     * @return string Nome do parâmetro
-     */
-    protected function deletaParametroInfra($strNome) {
-        $objDTO = new InfraParametroDTO();
-        $objDTO->setStrNome($strNome);
-
-        $objBD = new InfraParametroBD(BancoSEI::getInstance());
-        return $objBD->excluir($objDTO);
     }
 
     /**
@@ -242,6 +201,12 @@ class ModuloRespostaAtualizarSeiRN extends MdRespostaVersaoRN {
         $objInfraParametroBD->cadastrar($objInfraParametroDTO);
 
         $this->logar(' EXECUTADA A INSTALACAO DA VERSAO 1.0.0 DO MODULO RESPOSTA NO SEI COM SUCESSO');
+    }
+
+    /* Contêm atualizações da versao 1.1.0 do modulo */
+    protected function instalarV110()
+    {
+        $this->atualizarNumeroVersao("1.1.0");
     }
 
 }

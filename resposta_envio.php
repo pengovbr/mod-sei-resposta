@@ -31,7 +31,7 @@ try {
 
     case 'md_resposta_enviar':
       
-      $strTitulo = 'Enviar Resposta ao Protocolo Eletrônico';
+      $strTitulo = 'Enviar Resposta pelo Protocolo Digital';
       
       $arrProtocolos = array();
       $arrProtocolos[] = $_GET['id_procedimento'];     
@@ -40,7 +40,8 @@ try {
       $objMdRespostaEnvioDTO->setNumIdResposta(null);
 		  $objMdRespostaEnvioDTO->setStrMensagem($_POST['txaMensagem']);
       $objMdRespostaEnvioDTO->setDblIdProtocolo($_GET['id_procedimento']);
-      $objMdRespostaEnvioDTO->setStrSinConclusiva($_POST['rdoSinConclusiva']);
+      //$objMdRespostaEnvioDTO->setStrSinConclusiva($_POST['rdoSinConclusiva']);
+      $objMdRespostaEnvioDTO->setStrSinConclusiva(MdRespostaEnvioRN::$EV_RESPOSTA);
       $objMdRespostaEnvioDTO->setDthDthResposta(InfraData::getStrDataHoraAtual());
 		  
       $objProcedimentoDTO = new ProcedimentoDTO();
@@ -220,10 +221,10 @@ function validarEnvio() {
     return false;
   }
 
-  if (!document.getElementById('optDefinitiva').checked && !document.getElementById('optParcial').checked){
+  /*if (!document.getElementById('optDefinitiva').checked && !document.getElementById('optParcial').checked){
     alert('Selecione o Tipo de resposta.');
     return false;
-  }
+  }*/
     
   return true;
 }
@@ -233,11 +234,15 @@ function submeterFormulario(){
 
     transmitir=true;
 
-    if(document.getElementById('optDefinitiva').checked ){
-      if (!confirm("Confirma o envio da resposta? \nEssa ação  não poderá ser desfeita.")) {
+    /*if(document.getElementById('optDefinitiva').checked ){
+      if (!confirm("Confirma o envio da resposta? \nEssa ação não poderá ser desfeita.")) {
         transmitir=false;
       }
-    }
+    }*/
+
+    if (!confirm("Confirma o envio da resposta? \nEssa ação não poderá ser desfeita. \n\nOBS.: Após a verificação da resposta pelo solicitante no portal gov.br, será anexado automaticamente no processo o Termo de Ciência de Recebimento da Resposta.")) {
+        transmitir=false;
+    }    
 
     if(transmitir){
       infraExibirAviso(false);
@@ -281,7 +286,7 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
   PaginaSEI::getInstance()->montarBarraComandosSuperior($arrComandos);
   ?>
   <div id="divProcedimentos" class="infraAreaDados">
-	 	<label id="lblProcedimentos" for="selProcedimentos" class="infraLabelObrigatorio">Processos:</label>
+	 	<label id="lblProcedimentos" for="selProcedimentos" class="infraLabelObrigatorio">Processo:</label>
 	  <select id="selProcedimentos" name="selProcedimentos" disabled="disabled" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>">
 	  <?=$strItensSelProcedimentos?>
     </select>
@@ -289,7 +294,7 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
   <br/>
   <div id="divMensagem" class="infraAreaDados">
     <label id="lblMensagem" for="txaMensagem" accesskey="" class="infraLabelObrigatorio">Mensagem:</label>
-    <textarea id="txaMensagem" name="txaMensagem" maxlength="5000" rows="<?=PaginaSEI::getInstance()->isBolNavegadorFirefox()?'15':'16'?>" class="infraText" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" onselect="infraPosicionarCursor(this);" onclick="infraPosicionarCursor(this);" onkeyup="infraPosicionarCursor(this);"><?=PaginaSEI::tratarHTML($objMdRespostaEnvioDTO->getStrMensagem())?></textarea>
+    <textarea id="txaMensagem" name="txaMensagem" maxlength="1000" rows="<?=PaginaSEI::getInstance()->isBolNavegadorFirefox()?'15':'16'?>" class="infraText" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" onselect="infraPosicionarCursor(this);" onclick="infraPosicionarCursor(this);" onkeyup="infraPosicionarCursor(this);"><?=PaginaSEI::tratarHTML($objMdRespostaEnvioDTO->getStrMensagem())?></textarea>
     <input type="hidden" id="hdnFlagEnvio" name="hdnFlagEnvio" value="1" />
   </div>
   <br/>
@@ -300,7 +305,7 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
   </div>
   <br/>
   
-  <fieldset id="fldSinConclusiva" class="infraFieldset" style="height:6em">
+  <!--fieldset id="fldSinConclusiva" class="infraFieldset" style="height:6em">
     	<legend class="infraLegend">&nbsp;<?=MdRespostaEnvioRN::$TX_TITULO?>&nbsp;</legend>
     	<div class="group">
         <div id="divOptDefinitiva" class="infraDivRadio"> 
@@ -315,7 +320,7 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
       </div>
   	  
       <div id="divDescricaoResposta"></div>
-  </fieldset> 
+  </fieldset--> 
 
 </form>
 <?

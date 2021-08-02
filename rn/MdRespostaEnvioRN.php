@@ -31,13 +31,11 @@ class MdRespostaEnvioRN extends InfraRN {
       //Regras de Negocio
       $objInfraException = new InfraException();
 
-      $this->validarDblIdProtocolo($objMdRespostaEnvioDTO, $objInfraException);
-      $this->validarStrMensagem($objMdRespostaEnvioDTO, $objInfraException);
-      $this->validarArrIdDocumentosProcesso($objMdRespostaEnvioDTO, $objInfraException);
-      $this->validarStrSinConclusiva($objMdRespostaEnvioDTO, $objInfraException);
-      $this->validarRespostaEnviada($objMdRespostaEnvioDTO, $objInfraException);
+      $this->validarPreCondicoesResposta($objInfraException, $objMdRespostaEnvioDTO);
 
-      $objInfraException->lancarValidacoes();      
+      if($objInfraException->contemValidacoes()){
+        $objInfraException->lancarValidacoes();
+      }           
 
       $objDocumentoDTO = $this->gerarDocumento($objMdRespostaEnvioDTO);
 
@@ -61,8 +59,8 @@ class MdRespostaEnvioRN extends InfraRN {
 
       return $objDocumentoDTO;
 
-    }catch(Exception $e){
-      throw new InfraException('Erro no envio da resposta ao Protocolo Eletrônico.',$e);
+    } catch (\Exception $e) {
+      throw new InfraException('Erro no envio da resposta ao Protocolo Digital.',$e);
     }
   }
 
@@ -171,7 +169,7 @@ class MdRespostaEnvioRN extends InfraRN {
       return $objDocumentoDTO;
 
     }catch(Exception $e){
-      throw new InfraException('Erro na geração da resposta ao Protocolo Eletrônico.',$e);
+      throw new InfraException('Erro na geração da resposta ao Protocolo Digital.',$e);
     }
   }
 
@@ -354,31 +352,47 @@ class MdRespostaEnvioRN extends InfraRN {
     $objMdRespostaEnvioDTO->setArrAnexos($arrAnexosTemp);
   }
 
-  private function validarDblIdProtocolo(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException){
+  public function validarPreCondicoesResposta(InfraException $objInfraException, MdRespostaEnvioDTO $objMdRespostaEnvioDTO, $strAtributoValidacao = null)
+  {
+      $this->validarDblIdProtocolo($objMdRespostaEnvioDTO, $objInfraException, $strAtributoValidacao);
+      $this->validarStrMensagem($objMdRespostaEnvioDTO, $objInfraException, $strAtributoValidacao);
+      $this->validarTamanhoMensagem($objMdRespostaEnvioDTO, $objInfraException, $strAtributoValidacao);
+      $this->validarArrIdDocumentosProcesso($objMdRespostaEnvioDTO, $objInfraException, $strAtributoValidacao);
+      $this->validarStrSinConclusiva($objMdRespostaEnvioDTO, $objInfraException, $strAtributoValidacao);
+      $this->validarRespostaEnviada($objMdRespostaEnvioDTO, $objInfraException, $strAtributoValidacao);
+  }  
+
+  private function validarDblIdProtocolo(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
   	if (InfraString::isBolVazia($objMdRespostaEnvioDTO->getDblIdProtocolo())){
-	      $objInfraException->adicionarValidacao('Processo não selecionado.');
+	      $objInfraException->adicionarValidacao('Processo não selecionado.', $strAtributoValidacao);
 	  }
   }
   
-  private function validarStrMensagem(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException){
+  private function validarStrMensagem(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
   	if (InfraString::isBolVazia($objMdRespostaEnvioDTO->getStrMensagem())){
-	      $objInfraException->adicionarValidacao('Mensagem não Informada.');
+	      $objInfraException->adicionarValidacao('Mensagem não Informada.', $strAtributoValidacao);
 	  }
   }
 
-  private function validarArrIdDocumentosProcesso(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException){
+  private function validarTamanhoMensagem(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
+  	if (strlen($objMdRespostaEnvioDTO->getStrMensagem()) > 1000){
+	      $objInfraException->adicionarValidacao('Mensagem com tamanho superior ao permitido.', $strAtributoValidacao);
+	  }
+  }
+
+  private function validarArrIdDocumentosProcesso(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
   	if (count($objMdRespostaEnvioDTO->getArrIdDocumentosProcesso()) == 0){
-	      $objInfraException->adicionarValidacao('Nenhum documento selecionado.');
+	      $objInfraException->adicionarValidacao('Nenhum documento selecionado.', $strAtributoValidacao);
 	  }
   }  
 
-  private function validarStrSinConclusiva(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException){
+  private function validarStrSinConclusiva(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
   	if (InfraString::isBolVazia($objMdRespostaEnvioDTO->getStrSinConclusiva())){
-	      $objInfraException->adicionarValidacao('Resposta não selecionada.');
+	      $objInfraException->adicionarValidacao('Resposta não selecionada.', $strAtributoValidacao);
 	  }
   }
 
-  private function validarRespostaEnviada(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException){
+  private function validarRespostaEnviada(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
     $objMdRespostaDTO = new MdRespostaDTO();
     $objMdRespostaDTO->retNumIdResposta();
     $objMdRespostaDTO->setStrSinConclusiva(self::$EV_RESPOSTA);

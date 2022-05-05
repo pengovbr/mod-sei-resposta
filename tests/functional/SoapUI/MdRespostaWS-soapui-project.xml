@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="763e340f-50c7-4e14-bde8-9b955b3f7030" activeEnvironment="Default" name="MdRespostaWS" resourceRoot="" soapui-version="5.7.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="ac742c0c-3ea6-4ccf-bac0-6e609bde1ebb" wsaVersion="NONE" name="SeiMdRespostaSOAP" type="wsdl" bindingName="{SeiMdResposta}SeiMdRespostaSOAP" soapVersion="1_1" anonymous="optional" definition="http://sei.resposta.nuvem.gov.br/sei/modulos/mod-sei-resposta/ws/MdResposta.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://sei.resposta.nuvem.gov.br/sei/modulos/mod-sei-resposta/ws/MdResposta.wsdl"><con:part><con:url>http://sei.resposta.nuvem.gov.br/sei/modulos/mod-sei-resposta/ws/MdResposta.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="MdResposta" targetNamespace="SeiMdResposta" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="SeiMdResposta">
+  <wsdl:documentation>Este Web Service é voltado a obter as resposta do SEI para plataforma Gov.br.</wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema targetNamespace="SeiMdResposta">
+      <xsd:element name="RespostaRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="SiglaSistema" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Informe o nome do sistema habilitado para receber resposta do SEI.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IdentificacaoServico" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Informe a identificação do serviço habilitado para receber resposta do SEI.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IdProcedimentos" type="tns:IdProcedimentos" minOccurs="0" maxOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Informe o identificador dos processos a serem consultados no SEI.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="NumProcedimentos" type="tns:NumProcedimentos" minOccurs="0" maxOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Informe o número dos processos a serem consultados no SEI.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IdResposta" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Informe o identificador da resposta a ser consultada no SEI.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Resposta" minOccurs="1" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="IdResposta" type="xsd:int" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Identificador da resposta devolvido do Web Service.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IdProcedimento" type="xsd:int" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Identificador do processo devolvido do Web Service.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="NumProtocolo" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Número do processo devolvido do Web Service.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IdDocumento" type="xsd:int" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Identificador da resposta devolvida do Web Service.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Mensagem" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Mensagem da resposta devolvida do Web Service.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SinConclusiva" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Identificador se é conclusivo ou não devolvido do Web Service.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="DthResposta" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Data de envio da resposta devolvida do Web Service.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IdDocumentos" type="tns:IdDocumentos" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Identificador dos documentos devolvidos do Web Service.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="IdProcedimentos">
+        <xsd:sequence>
+          <xsd:element name="IdProcedimento" type="xsd:int" minOccurs="0" maxOccurs="100"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="NumProcedimentos">
+        <xsd:sequence>
+          <xsd:element name="NumProcedimento" type="xsd:string" minOccurs="0" maxOccurs="100"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="IdDocumentos">
+        <xsd:sequence>
+          <xsd:element name="IdDocumento" type="xsd:int" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="listarRespostaRequest">
+    <wsdl:part element="tns:RespostaRequest" name="listarRespostaRequest"/>
+  </wsdl:message>
+  <wsdl:message name="listarRespostaResponse">
+    <wsdl:part element="tns:Resposta[]" name="listarRespostaResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="SeiMdRespostaPortType">
+    <wsdl:operation name="listarResposta">
+      <wsdl:documentation>Consulta Resposta ao Protocolo Digital</wsdl:documentation>
+      <wsdl:input message="tns:listarRespostaRequest"/>
+      <wsdl:output message="tns:listarRespostaResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SeiMdRespostaSOAP" type="tns:SeiMdRespostaPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="listarResposta">
+      <soap:operation soapAction="SeiMdRespostaAction"/>
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SeiMdResposta">
+    <wsdl:port binding="tns:SeiMdRespostaSOAP" name="SeiMdRespostaSOAP">
+      <soap:address location="[servidor]/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>[servidor]/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php</con:endpoint></con:endpoints><con:operation id="855b51ac-669a-4e40-96c8-b2f8bf97a8a3" isOneWay="false" action="SeiMdRespostaAction" name="listarResposta" bindingOperationName="listarResposta" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="38ebe977-a2ca-4df8-8bdf-1b551f7ba553" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint/><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">PD_GOV_BR</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">SeiResposta</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int">1</IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string"></NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string"></IdResposta>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="SeiMdRespostaAction"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="f96f1b72-de80-4e7c-b324-f02a20d691af" name="SeiMdRespostaSOAP TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="d0a9f274-95e8-43b4-8c61-ba246d58ec4e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="SeiMdRespostaSOAP TestSuite" searchProperties="true"><con:settings/><con:testStep type="request" id="12ca8a59-5557-47a5-bac5-a99cca28474a" name="ViolationOfEncodingRules"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaSOAP</con:interface><con:operation>listarResposta</con:operation><con:request name="ViolationOfEncodingRules" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint/><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">?</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">?</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int">?</IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string">?</NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string">?</IdResposta>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Not SOAP Fault Assertion" id="82320440-704c-4c0a-b5f6-e1e363cb95d1" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="8c393842-03f4-4520-9973-2cc9861129f2" name="SistemaNaoEncontrado"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaSOAP</con:interface><con:operation>listarResposta</con:operation><con:request name="SistemaNaoEncontrado" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint/><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">?</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string"></IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int"></IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string"></NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string"></IdResposta>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="d187e20b-8b60-4a5e-be61-9835b24e82ff" name="SOAP Response"/><con:assertion type="Simple Contains" id="65ac3961-4d33-4072-8416-e609a36a2ba9" name="Contains"><con:configuration><token>Sistema [?] não encontrado.</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="0705f2ee-3fb7-406a-a8b4-eed3b1f9b51b" name="ServicoNaoEncontrado"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaSOAP</con:interface><con:operation>listarResposta</con:operation><con:request name="ServicoNaoEncontrado" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint/><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">PD_GOV_BR</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">?</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int"></IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string"></NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string"></IdResposta>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e11ff2a0-6e35-4a19-8be4-8b0ddf4edd2d" name="SOAP Response"/><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="Contains"><con:configuration><token>Serviço [?] do sistema [PD_GOV_BR] não encontrado.</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="2b87be82-dcb7-4638-a23b-d72d2b276e45" name="ProcedimentoNaoInformado"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaSOAP</con:interface><con:operation>listarResposta</con:operation><con:request name="ProcedimentoNaoInformado" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint/><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">PD_GOV_BR</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">SeiResposta</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int"></IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string"></NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string"></IdResposta>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e11ff2a0-6e35-4a19-8be4-8b0ddf4edd2d" name="SOAP Response"/><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="Contains"><con:configuration><token>Parâmetro do método [setDblIdProcedimento] não é um array.</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="3c39e372-ad95-46f5-ba40-eafa23d87744" name="RespIdProcedimentoSucess"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaSOAP</con:interface><con:operation>listarResposta</con:operation><con:request name="RespIdProcedimentoSucess" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint/><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">PD_GOV_BR</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">SeiResposta</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int">1</IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string"></NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string"></IdResposta>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e11ff2a0-6e35-4a19-8be4-8b0ddf4edd2d" name="SOAP Response"/><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsResposta"><con:configuration><token>Resposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsIdResposta"><con:configuration><token>IdResposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsIdProcedimento"><con:configuration><token>IdProcedimento</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsNumProtocolo"><con:configuration><token>NumProtocolo</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsProtocoloDocumento"><con:configuration><token>ProtocoloDocumento</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsMensagem"><con:configuration><token>Mensagem</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsSinConclusiva"><con:configuration><token>SinConclusiva</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsDthResposta"><con:configuration><token>DthResposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsProtocoloDocumentosAnexados"><con:configuration><token>ProtocoloDocumentosAnexados</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="99b64b03-3e39-45b9-8288-0224804981a7" name="RespNumProcedimentoSucess"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaSOAP</con:interface><con:operation>listarResposta</con:operation><con:request name="RespNumProcedimentoSucess" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint/><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">PD_GOV_BR</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">SeiResposta</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int"></IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string">99990000001202220</NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string"></IdResposta>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e11ff2a0-6e35-4a19-8be4-8b0ddf4edd2d" name="SOAP Response"/><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsResposta"><con:configuration><token>Resposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsIdResposta"><con:configuration><token>IdResposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsIdProcedimento"><con:configuration><token>IdProcedimento</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsNumProtocolo"><con:configuration><token>NumProtocolo</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsProtocoloDocumento"><con:configuration><token>ProtocoloDocumento</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsMensagem"><con:configuration><token>Mensagem</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsSinConclusiva"><con:configuration><token>SinConclusiva</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsDthResposta"><con:configuration><token>DthResposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsProtocoloDocumentosAnexados"><con:configuration><token>ProtocoloDocumentosAnexados</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="47ff80ef-200e-45c0-bfa9-c58bf183ea01" name="RespIdProcedimentoIdRespostaSucess"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaSOAP</con:interface><con:operation>listarResposta</con:operation><con:request name="RespIdProcedimentoIdRespostaSucess" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint/><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">PD_GOV_BR</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">SeiResposta</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int">1</IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string"></NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string">1</IdResposta>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e11ff2a0-6e35-4a19-8be4-8b0ddf4edd2d" name="SOAP Response"/><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsResposta"><con:configuration><token>Resposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsIdResposta"><con:configuration><token>IdResposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsIdProcedimento"><con:configuration><token>IdProcedimento</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsNumProtocolo"><con:configuration><token>NumProtocolo</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsProtocoloDocumento"><con:configuration><token>ProtocoloDocumento</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsMensagem"><con:configuration><token>Mensagem</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsSinConclusiva"><con:configuration><token>SinConclusiva</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsDthResposta"><con:configuration><token>DthResposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsProtocoloDocumentosAnexados"><con:configuration><token>ProtocoloDocumentosAnexados</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="3774fa75-be40-46d3-be16-e5d9f30654ff" name="RespNumProcedimentoIdRespostaSucess"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaSOAP</con:interface><con:operation>listarResposta</con:operation><con:request name="RespNumProcedimentoIdRespostaSucess" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint/><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">PD_GOV_BR</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">SeiResposta</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int"></IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string">99990000001202220</NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string">1</IdResposta>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e11ff2a0-6e35-4a19-8be4-8b0ddf4edd2d" name="SOAP Response"/><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsResposta"><con:configuration><token>Resposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsIdResposta"><con:configuration><token>IdResposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsIdProcedimento"><con:configuration><token>IdProcedimento</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsNumProtocolo"><con:configuration><token>NumProtocolo</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsProtocoloDocumento"><con:configuration><token>ProtocoloDocumento</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsMensagem"><con:configuration><token>Mensagem</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsSinConclusiva"><con:configuration><token>SinConclusiva</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsDthResposta"><con:configuration><token>DthResposta</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="ContainsProtocoloDocumento"><con:configuration><token>ProtocoloDocumento</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="f4f75aa8-bf1d-47f8-bbd8-44711cb3b315" name="SLA"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaSOAP</con:interface><con:operation>listarResposta</con:operation><con:request name="SLA" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@bind_address"/></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint/><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">PD_GOV_BR</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">SeiResposta</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int"></IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string">99990000001202220</NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string">1</IdResposta>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e11ff2a0-6e35-4a19-8be4-8b0ddf4edd2d" name="SOAP Response"/><con:assertion type="Response SLA Assertion" id="0ad6e207-2f21-44d4-b915-d76bb9c0481d" name="Response SLA"><con:configuration><SLA>10000</SLA></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

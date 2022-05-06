@@ -31,7 +31,7 @@ RED=\033[0;31m
 NC=\033[0m
 YELLOW=\033[1;33m
 
-MENSAGEM_AVISO_MODULO = $(RED)[ATENÇÃO]:$(NC)$(YELLOW) Necessário configurar a chave de configuração do módulo no arquivo de configuração do SEI (ConfiguracaoSEI.php) e prover o modulo na pasta correta $(NC)\n               $(YELLOW)'Modulos' => array('MdRespostaIntegracao' => 'resposta') $(NC)
+MENSAGEM_AVISO_MODULO = $(RED)[ATENÇÃO]:$(NC)$(YELLOW) Necessário configurar a chave de configuração do módulo no arquivo de configuração do SEI (ConfiguracaoSEI.php) e prover o modulo na pasta correta $(NC)\n               $(YELLOW)'Modulos' => array('MdRespostaIntegracao' => 'mod-sei-resposta') $(NC)
 MENSAGEM_AVISO_ENV = $(RED)[ATENÇÃO]:$(NC)$(YELLOW) Configurar parâmetros de autenticação do ambiente de testes do módulo de Resposta no arquivo .modulo.env $(NC)
 MENSAGEM_AVISO_FONTES = $(RED)[ATENÇÃO]:$(NC)$(YELLOW) Nao foi possivel localizar o fonte do Super. Verifique o valor SEI_PATH no arquivo .env $(NC)
 
@@ -40,11 +40,6 @@ CMD_CURL_SUPER_LOGIN = curl -s -L $(HOST_URL)/sei | grep "txtUsuario"
 define TESTS_MENSAGEM_ORIENTACAO
 Leia o arquivo README relacionado aos testes.
 O arquivo encontra-se nesse repositorio na pasta de testes funcionais.
-
-Existem orientacoes para o teste que estao definidas no README que se nao forem
-obedecidas o teste falhará.
-
-Entre elas, por ex, vc deve ter permissao de sudo para alterar datas por ex
 
 Pressione y para continuar [y/n]...
 endef
@@ -110,7 +105,7 @@ check-super-path:
 
 check-module-config:
 	@docker cp utils/verificar_modulo.php httpd:/
-	@docker compose exec -T httpd bash -c "php /verificar_modulo.php" ; ret=$$?; echo "$$ret"; if [ ! $$ret -eq 0 ]; then echo "$(MENSAGEM_AVISO_MODULO)\n"; exit 1; fi
+	@docker-compose exec -T httpd bash -c "php /verificar_modulo.php" ; ret=$$?; echo "$$ret"; if [ ! $$ret -eq 0 ]; then echo "$(MENSAGEM_AVISO_MODULO)\n"; exit 1; fi
 
 
 # acessa o super e verifica se esta respondendo a tela de login
@@ -136,15 +131,15 @@ prerequisites-modulo-instalar: check-super-path check-module-config check-super-
 
 
 install: prerequisites-modulo-instalar
-	docker compose exec -T -w /opt/sei/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SEI_MODULO)";
-	docker compose exec -T -w /opt/sip/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SIP_MODULO)";
+	docker-compose exec -T -w /opt/sei/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SEI_MODULO)";
+	docker-compose exec -T -w /opt/sip/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SIP_MODULO)";
 	@echo "==================================================================================================="
 	@echo ""
 	@echo "Fim da instalação do módulo"
 
 
 up: prerequisites-up
-	docker compose up -d
+	docker-compose up -d
 	make check-super-isalive
 
 
@@ -154,14 +149,14 @@ config:
 
 
 down: 
-	docker compose down
+	docker-compose down
 
 
 restart: down up
 
 
 destroy: 
-	docker compose down --volumes
+	docker-compose down --volumes
 
 
 # mensagens de orientacao para first time buccaneers
@@ -190,5 +185,8 @@ tests-functional: tests-functional-prerequisites check-super-isalive
 	@cd tests/functional && HOST_URL=$(HOST_URL) ./testes.sh
 
 
-tests-functional-full: tests-functional
+tests-functional-soap:
 	docker run -i --network=host --rm -v "$$PWD"/tests/functional/SoapUI:/opt/soapui/projects -v "$$PWD"/tests/functional/SoapUI/result:/opt/soapui/projects/testresult lukastosic/docker-soapui -e$(HOST_URL)/sei/modulos/$(MODULO_NOME)/ws/MdRespostaWS.php -s"SeiMdRespostaSOAP TestSuite" -r -j -f/opt/soapui/projects/testresult -I "/opt/soapui/projects/MdRespostaWS-soapui-project.xml"
+
+
+tests-functional-full: tests-functional tests-functional-soap

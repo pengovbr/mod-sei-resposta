@@ -54,7 +54,7 @@ class Test02SEIMREnviarResposta():
     WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "#divInfraBarraComandosInferior > #btnSalvar")))
     self.vars["window_handles"] = self.driver.window_handles
     self.driver.find_element(By.CSS_SELECTOR, "#divInfraBarraComandosInferior > #btnSalvar").click()
-    self.vars["win5785"] = self.wait_for_window(30000)
+    self.vars["win5785"] = self.wait_for_window(3000)
     self.vars["root"] = self.driver.current_window_handle
     self.driver.switch_to.window(self.vars["win5785"])
     self.driver.close()
@@ -71,7 +71,7 @@ class Test02SEIMREnviarResposta():
     self.driver.find_element(By.ID, "pwdSenha").click()
     self.driver.find_element(By.ID, "pwdSenha").send_keys("teste")
     self.driver.find_element(By.ID, "btnAssinar").click()
-    time.sleep(20)
+    time.sleep(5)
     self.driver.switch_to.default_content()
     self.driver.switch_to.frame(0)
     self.driver.find_element(By.XPATH, "//div[@id=\'topmenu\']/a[2]").click()
@@ -87,16 +87,16 @@ class Test02SEIMREnviarResposta():
     self.driver.switch_to.alert.accept()
     self.driver.switch_to.default_content()
     self.driver.switch_to.frame(0)
-    WebDriverWait(self.driver, 3000).until(expected_conditions.presence_of_element_located((By.XPATH, "//span[contains(.,\'Resposta ao Protocolo Digital\')]")))
+    WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.XPATH, "//span[contains(.,\'Resposta ao Protocolo Digital\')]")))
     elements = self.driver.find_elements(By.XPATH, "//span[contains(.,\'Resposta ao Protocolo Digital\')]")
     assert len(elements) > 0
     self.driver.find_element(By.XPATH, "//span[contains(.,\'Resposta ao Protocolo Digital\')]").click()
     self.driver.switch_to.default_content()
     self.driver.switch_to.frame(1)
-    WebDriverWait(self.driver, 3000).until(expected_conditions.presence_of_element_located((By.ID, "ifrArvoreHtml")))
+    WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.ID, "ifrArvoreHtml")))
     print("o index abaixo deve ser zero para rodar corretamente no python. Caso deseje rodar pelo IDE use 1")
     self.driver.switch_to.frame(0)
-    WebDriverWait(self.driver, 3000).until(expected_conditions.visibility_of_element_located((By.XPATH, "//label[contains(.,\'Resposta ao Protocolo Digital\')]")))
+    WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located((By.XPATH, "//label[contains(.,\'Resposta ao Protocolo Digital\')]")))
     elements = self.driver.find_elements(By.XPATH, "//b[contains(.,\'Anexos\')]")
     assert len(elements) > 0
     elements = self.driver.find_elements(By.XPATH, "//a[contains(text(),\'Despacho\')]")
@@ -172,7 +172,7 @@ class Test02SEIMREnviarResposta():
     self.driver.find_element(By.CSS_SELECTOR, "#divOptPublico .infraRadioLabel").click()
     self.vars["window_handles"] = self.driver.window_handles
     self.driver.find_element(By.CSS_SELECTOR, "#divInfraBarraComandosInferior > #btnSalvar").click()
-    self.vars["win5785"] = self.wait_for_window(30000)
+    self.vars["win5785"] = self.wait_for_window(3000)
     self.vars["root"] = self.driver.current_window_handle
     self.driver.switch_to.window(self.vars["win5785"])
     self.driver.close()
@@ -212,7 +212,7 @@ class Test02SEIMREnviarResposta():
     WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "#divInfraBarraComandosInferior > #btnSalvar")))
     self.vars["window_handles"] = self.driver.window_handles
     self.driver.find_element(By.CSS_SELECTOR, "#divInfraBarraComandosInferior > #btnSalvar").click()
-    self.vars["win5785"] = self.wait_for_window(30000)
+    self.vars["win5785"] = self.wait_for_window(3000)
     self.vars["root"] = self.driver.current_window_handle
     self.driver.switch_to.window(self.vars["win5785"])
     self.driver.close()

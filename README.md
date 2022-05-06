@@ -1,8 +1,8 @@
 # Módulo de Resposta à plataforma Gov.br
-O módulo é o responsável por integrar o SEI à plataforma Gov.br. Tem como objetivo proporcionar respostas tempestivas aos questionamentos executado diretamente por usuário externo, a fim de formar novo processo ou compor processo já existente dos cidadões.
+O módulo é o responsável por integrar o SUPER à plataforma Gov.br. Tem como objetivo proporcionar respostas tempestivas aos questionamentos executado diretamente por usuário externo, a fim de formar novo processo ou compor processo já existente dos cidadões.
 
 ## O REPOSITÓRIO
-Este repositório no GitHub é o local oficial onde será mantido todo o desenvolvimento do módulo de integração. Além do código-fonte, também pode ser encontrado o pacote de distribuição para instalação no SEI, questões ou problema em aberto e planejamento de novas versões.
+Este repositório no GitHub é o local oficial onde será mantido todo o desenvolvimento do módulo de integração. Além do código-fonte, também pode ser encontrado o pacote de distribuição para instalação no SUPER, questões ou problema em aberto e planejamento de novas versões.
 
 ## DOWNLOAD
 
@@ -20,9 +20,13 @@ As instruções de instalação e atualização do módulo, assim com o manual d
 * **[MANUAL DE ATUALIZAÇÃO](docs/UPGRADE.md)**
 * **[MANUAL DE UTILIZAÇÃO](docs/USAGE.md)**
 
+## TESTES
+
+Para rotinas de testes do módulo rode ``` make tests-functional-full ```, mas antes confira **[aqui as orientações iniciais](tests/functional/README.md)**
+
 ## PROJETOS RELACIONADOS
 
-O mod-sei-resposta trata-se de um módulo adicional ao SEI para adição de novas funcionalidades relacionada a interoperabilidade entre o SEI e o Protocolo Digital.
+O mod-sei-resposta trata-se de um módulo adicional ao SUPER para adição de novas funcionalidades relacionada a interoperabilidade entre o SUPER e o Protocolo Digital.
 
 
 ## CONTRIBUIÇÃO

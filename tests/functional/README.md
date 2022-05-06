@@ -2,39 +2,23 @@
 
 ## Orientações para rodar os testes manualmente
 
-Na pasta SeleniumIDE estão os testes.
-
-### Selenium IDE
-Para rodar os testes no Selenium IDE:
-
-#### Pré-requisitos
-- Instale o Selenium IDE [V3.17.0](https://www.seleniumhq.org/selenium-ide/) ou superior
-- Conhecimento de uso básico/moderado do Selenium IDE
-- SuperBr com o módulo de Resposta instalado
-
-#### Para Rodar os Testes
-- Baixe o projeto deste git (vou chamar de `<projeto>`)
-- Vá até a pasta `<projeto>/tests/functional/seleniumIDE`
-- Importe os arquivos *.side no Selenium IDE
-- Ajuste a url dos ambientes que deseja testar 
-- Execute os testes (isolados ou por suíte tests)
-
-### SoapUI
-Para rodar os testes no SoapUI:
+Existem 2 tipos de teste escritos para o módulo:
+- selenium: testa as funcionalidades do modulo após a instalação no Super
+- soap: testa as chamadas remotas via Soap do módulo
 
 #### Pré-requisitos
-- Instale o SoapUI [V5.6.0](https://www.soapui.org/downloads/soapui/) ou superior
-- Conhecimento de uso básico/moderado do SoapUI
+- Selenium Python
+- SoapUI https://www.soapui.org/downloads/soapui/
 - SuperBr com o módulo de Resposta instalado
 
-#### Para Rodar os Testes
-- Baixe o projeto deste git (vou chamar de `<projeto>`)
-- Vá até a pasta `<projeto>/tests/functional/SoapUI`
-- Importe o arquivo *.xml no SoapUI
-- Ajuste a url dos ambientes que deseja testar 
-- Execute os testes (isolados ou por TestStep)
+## Orientações para rodar os testes
 
-## Orientações para rodar os testes através do Makefile
+Após subir um ambiente do zero, obrigatoriamente deve-se executar na ordem os testes Selenium e depois o testes no SoapUI
+Caso vc use ferramentas próprias basta referenciar os testes na pasta tests do projeto
+
+Ou você pode rodar tudo usando o Makefile.
+
+- No arquivo .testselenium.env (criado apos rodar make config ou subir o ambiente), existem as opçoes de automação do teste. Ver algumas abaixo:
 
 - Os testes rodam em 3 modalidades:
 	- **Local:** precisa ter instalado localmente o pytest e também o driver seleniumcrhome na versão adequada. Nessa modalidade você pode visualizar o teste rodando em seu browser
@@ -46,4 +30,4 @@ Para rodar os testes no SoapUI:
 	- rode o ``` make up ``` e depois o ``` make install ``` 
 	- verifique as mensagens e resolva qualquer orientação
 	- tente acessar a pagina inicial do sistema pelo http://localhost:8000
-	- se tudo certo, basta rodar ``` make tests-functional-full ```
+	- se tudo certo, basta rodar ``` make tests-functional-full ``` (nesse caso vai rodar os testes em selenium e depois os testes em soap)

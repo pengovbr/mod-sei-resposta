@@ -1,6 +1,6 @@
-# NOTAS DE VERSÃO MOD-SEI-RESPOSTA (versão 1.1.0)
+# NOTAS DE VERSÃO MOD-SEI-RESPOSTA (versão 1.1.1)
 
-Este documento descreve as principais mudanças aplicadas nesta versão do módulo de integração do SEI com Platafoma Gov.br.
+Este documento descreve as principais mudanças aplicadas nesta versão do módulo de integração do SuperBr com Platafoma Gov.br.
 
 Para maiores informações sobre os procedimentos de instalação ou atualização, acesse os seguintes documentos localizados no pacote de distribuição mod-sei-resposta-VERSAO.zip:
 
@@ -10,13 +10,17 @@ Para maiores informações sobre os procedimentos de instalação ou atualizaç�
 
 Ajustes gerais e adaptaçao para o novo modelo de distribuição.
 
-#### [Issue #xx] Ajuste 1
+#### [Issue #39] Padronização dos arquivos do módulo
 
-Descricao do ajuste 1, se houver
+Atividades de organização da pasta do módulo
 
-#### [Issue #xx] Ajuste 2
-
-Descricao do ajuste 2
+ * Organização das pastas
+ * Atualização de documentação de README, instalação, atualização e utilização
+ * Elaboração do docker-composer específico para projeto
+ * Criação do Makefile
+ * Elaboração do GitAction
+ * Criação target de teste funcional no makefile (ocultando comandos em python)
+ * Realização de testes
 
 #### Criação de Jobs Jenkins
 

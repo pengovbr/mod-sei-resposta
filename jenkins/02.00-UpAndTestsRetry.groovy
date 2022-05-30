@@ -17,20 +17,32 @@ pipeline {
     parameters {
         string(
             name: 'generalParams',
-            defaultValue: 'VAR_SUPER_VERSAO=v4.0.3.1,VAR_RESPOSTA_VERSAO=master,database=mysql;VAR_SUPER_VERSAO=v4.0.3.1,VAR_RESPOSTA_VERSAO=master,database=sqlserver;VAR_SUPER_VERSAO=v4.0.3.1,VAR_RESPOSTA_VERSAO=master,database=oracle;',
+            defaultValue: 'VAR_SUPER_VERSAO=4.0.3.3,VAR_RESPOSTA_VERSAO=master,database=mysql;VAR_SUPER_VERSAO=4.0.3.3,VAR_RESPOSTA_VERSAO=master,database=sqlserver;VAR_SUPER_VERSAO=4.0.3.3,VAR_RESPOSTA_VERSAO=master,database=oracle;',
             description: 'Informe como no exemplo todas as versoes q deseja testar (separeted by ",", splited by ";")')
+    	  string(
+    	      name: 'urlGitSuper',
+    	      defaultValue:"github.com:supergovbr/super.git",
+    	      description: "Url do git onde encontra-se o Super")
+        string(
+            name: 'credentialGitSuper',
+            defaultValue:"gitcredsuper",
+            description: "Jenkins Credencial do git onde encontra-se o Super")
+	      string(
+	          name: 'branchGitSuper',
+	          defaultValue:"main",
+	          description: "Branch/Tag do git onde encontra-se o Super")
         string(
             name: 'urlGit',
-            defaultValue:"https://github.com/spbgovbr/mod-sei-resposta.git",
-            description: "Url do git onde se encontra o módulo")
+            defaultValue:"github.com:spbgovbr/mod-sei-resposta.git",
+            description: "Url do git onde encontra-se o módulo")
         string(
             name: 'credentialGit',
-            defaultValue:"githubcred",
-            description: "Jenkins Credencial do git onde se encontra o módulo")
+            defaultValue:"gitcredmoduloresposta",
+            description: "Jenkins Credencial do git onde encontra-se o módulo")
 	      string(
-	          name: 'sourceSuperLocation',
-	          defaultValue:"~/super/FonteSuper",
-	          description: "Localizacao do fonte do Super no servidor onde vai rodar o job")
+	          name: 'branchGit',
+	          defaultValue:"master",
+	          description: "Branch/Versao do git onde encontra-se módulo")
 	      string(
 	          name: 'qtdTentativas',
 	          defaultValue:"3",
@@ -52,7 +64,8 @@ pipeline {
                     GITURL = params.urlGit
 					          GITCRED = params.credentialGit
 					          GITBRANCH = params.branchGit
-                    SUPERLOCATION = params.sourceSuperLocation
+                    GITURLSUPER = params.urlGitSuper
+					          GITCREDSUPER = params.credentialGitSuper
                     QTDTENTATIVAS = params.qtdTentativas
                     
                     arrGeneral = GENERALPARAMS.split(';')
@@ -83,20 +96,26 @@ pipeline {
 
                         stage("Montando Ambiente Rodando Testes ${paramValue[0]} / ${paramValue[1]} / ${paramValue[2]}" ) {
 
-                            retry(QTDTENTATIVAS){
+                            warnError('Erro no build!'){
 
-                                build job: '01.00-UpAndTest.groovy',
-                                    parameters:
-                                        [
-                                            string(name: 'database', value: bd),
-                                            string(name: 'urlGit', value: GITURL),
-                                            string(name: 'credentialGit', value: GITCRED),
-                                            string(name: 'branchGit', value: mod_resposta_versao),
-                                            string(name: 'sourceSuperLocation', value: SUPERLOCATION)
-                                        ], wait: true
+                                retry(QTDTENTATIVAS){
+
+                                    build job: '01.00-UpAndTest.groovy',
+                                        parameters:
+                                            [
+                                                string(name: 'database', value: bd),
+                                                string(name: 'urlGit', value: GITURL),
+                                                string(name: 'credentialGit', value: GITCRED),
+                                                string(name: 'branchGit', value: mod_resposta_versao),
+                                                string(name: 'urlGitSuper', value: GITURLSUPER),
+                                                string(name: 'credentialGitSuper', value: GITCREDSUPER),
+                                                string(name: 'branchGitSuper', value: super_versao),
+                                                string(name: 'branchGit', value: mod_resposta_versao),
+                                            ], wait: true
+                                }
+
                             }
-
-
+                            
                         }
 
 

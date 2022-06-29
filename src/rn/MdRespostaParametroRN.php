@@ -114,9 +114,6 @@ class MdRespostaParametroRN extends InfraRN {
   {
     try {
       
-      //Valida Permissao
-      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao', __METHOD__, $objMdRespostaParametroDTO);
-      
       $objMdRespostaParametroBD = new MdRespostaParametroBD($this->getObjInfraIBanco());
       $ret = $objMdRespostaParametroBD->consultar($objMdRespostaParametroDTO);
       

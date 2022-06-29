@@ -3,7 +3,7 @@
 
 class MdRespostaIntegracao extends SeiIntegracao{
 
-  const VERSAO_MODULO = "1.1.1";
+  const VERSAO_MODULO = "1.1.2";
 
   public function getNome(){
     return 'Módulo de Resposta';

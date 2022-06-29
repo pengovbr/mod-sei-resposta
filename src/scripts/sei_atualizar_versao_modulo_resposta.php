@@ -4,7 +4,7 @@ require_once dirname(__FILE__) . '/../../web/SEI.php';
 
 class VersaoSeiRN extends InfraScriptVersao
 {
-    const PARAMETRO_VERSAO_MODULO = 'MOD_RESPOSTA_VERSAO';
+    const PARAMETRO_VERSAO_MODULO = 'VERSAO_MODULO_RESPOSTA';
     const NOME_MODULO = 'Módulo de Resposta';
 
     protected $objInfraBanco;
@@ -106,6 +106,10 @@ class VersaoSeiRN extends InfraScriptVersao
     {
     }
 
+    public function versao_1_1_2($strVersaoAtual)
+    {
+    }
+
 }
 
 try {
@@ -126,6 +130,7 @@ try {
             '1.0.1' => 'versao_1_0_1',
             '1.1.0' => 'versao_1_1_0',
             '1.1.1' => 'versao_1_1_1',
+            '1.1.2' => 'versao_1_1_2',
         )
     );
 

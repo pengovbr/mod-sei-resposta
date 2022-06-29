@@ -138,8 +138,8 @@ PaginaSEI::getInstance()->abrirStyle();
 #lblTipoProcesso {position:absolute;left:0%;top:16%;width:50%;}
 #selTipoProcesso {position:absolute;left:0%;top:22%;width:50%;}
 
-#lblTipoDocumento {position:absolute;left:0%;top:50%;width:50%;}
-#selTipoDocumento {position:absolute;left:0%;top:55%;width:50%;}
+#lblTipoDocumento {position:absolute;left:0%;top:55%;width:50%;}
+#selTipoDocumento {position:absolute;left:0%;top:60%;width:50%;}
 
 <?
 PaginaSEI::getInstance()->fecharStyle();

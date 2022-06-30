@@ -34,7 +34,7 @@ class Test00SEIRespostaCriarSistema():
     self.driver.find_element(By.XPATH, "//*[text()=\"Sistemas\"]").click()
     self.driver.find_element(By.LINK_TEXT, "Novo").click()
     dropdown = self.driver.find_element(By.ID, "selOrgao")
-    dropdown.find_element(By.XPATH, "//option[. = 'ABC']").click()
+    dropdown.find_element(By.XPATH, "//option[. = '"+os.environ["SELENIUMTEST_SISTEMA_ORGAO"]+"']").click()
     self.driver.find_element(By.ID, "selOrgao").click()
     self.driver.find_element(By.ID, "txtSigla").click()
     self.driver.find_element(By.ID, "txtSigla").send_keys("PD_GOV_BR")

@@ -202,6 +202,58 @@ class MdRespostaWS extends InfraWS {
 		}
   	}
 
+	protected function cadastrarProcessoSemRespostaMonitorado($objSOAP){
+		try{
+
+			$IdProcedimento = $objSOAP->IdProcedimento;
+
+			if (InfraString::isBolVazia($IdProcedimento)) {
+				throw new InfraException('Processo não informado.');
+			}
+
+			$objMdProcessoSemRespostaDTO = new MdProcessoSemRespostaDTO();
+			$objMdProcessoSemRespostaDTO->setDblIdProcedimento($IdProcedimento);
+
+			$objMdProcessoSemRespostaRN = new MdProcessoSemRespostaRN();
+			$objMdProcessoSemRespostaRN->cadastrarProcessoSemResposta($objMdProcessoSemRespostaDTO);
+
+			$mensagem = (object) array(
+				'mensagem' => (string) "Cadastro efetuado com sucesso."
+			);
+
+			return new SoapVar($mensagem, NULL, NULL, NULL);
+
+		}catch(Exception $e){
+			$this->processarExcecao($e);
+		}
+	}
+
+	protected function retirarProcessoSemRespostaMonitorado($objSOAP){
+		try{
+
+			$IdProcedimento = $objSOAP->IdProcedimento;
+
+			if (InfraString::isBolVazia($IdProcedimento)) {
+				throw new InfraException('Processo não informado.');
+			}
+
+			$objMdProcessoSemRespostaDTO = new MdProcessoSemRespostaDTO();
+			$objMdProcessoSemRespostaDTO->setDblIdProcedimento($IdProcedimento);
+
+			$objMdProcessoSemRespostaRN = new MdProcessoSemRespostaRN();
+			$objMdProcessoSemRespostaRN->retirarProcessoSemResposta($objMdProcessoSemRespostaDTO);
+
+			$mensagem = (object) array(
+				'mensagem' => (string) "Exclusão efetuada com sucesso."
+			);
+
+			return new SoapVar($mensagem, NULL, NULL, NULL);
+
+		}catch(Exception $e){
+			$this->processarExcecao($e);
+		}
+	}
+
 	private function obterServico($SiglaSistema, $IdentificacaoServico){
 			
 		$objUsuarioDTO = new UsuarioDTO();

@@ -110,6 +110,31 @@ class VersaoSeiRN extends InfraScriptVersao
     {
     }
 
+    public function versao_1_2_0($strVersaoAtual)
+    {
+        $this->objInfraBanco = BancoSEI::getInstance();
+        $this->objMetaBD = new InfraMetaBD($this->objInfraBanco);
+        $this->objInfraSequencia = new InfraSequencia($this->objInfraBanco);
+        $this->objInfraParametro = new InfraParametro($this->objInfraBanco);
+
+        try {
+
+            // Cria a tabela de processo sem resposta
+            $this->objInfraBanco->executarSql('CREATE TABLE md_resposta_processo (
+                id_procedimento ' . $this->objMetaBD->tipoNumeroGrande() . '  NOT NULL
+            )');
+            
+            $this->objMetaBD->adicionarChavePrimaria('md_resposta_processo', 'pk_md_resposta_processo', array('id_procedimento'));
+
+            if (BancoSEI::getInstance() instanceof InfraOracle) {
+                BancoSEI::getInstance()->executarSql('ALTER TABLE md_resposta_processo ADD CONSTRAINT fk_md_resposta_processo FOREIGN KEY (id_procedimento) REFERENCES procedimento(id_procedimento)');
+            }else{
+                $this->objMetaBD->adicionarChaveEstrangeira('fk_md_resposta_processo', 'md_resposta_processo', array('id_procedimento'), 'procedimento', array('id_procedimento'));
+            }
+        } catch (Exception $ex) {
+            throw new InfraException('Erro ao atualizar a versão 1.2.0 do módulo de resposta', $ex);
+        }
+    }
 }
 
 try {
@@ -131,6 +156,7 @@ try {
             '1.1.0' => 'versao_1_1_0',
             '1.1.1' => 'versao_1_1_1',
             '1.1.2' => 'versao_1_1_2',
+            '1.2.0' => 'versao_1_2_0',
         )
     );
 

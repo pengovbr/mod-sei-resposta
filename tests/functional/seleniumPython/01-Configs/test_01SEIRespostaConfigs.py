@@ -102,7 +102,7 @@ class Test01SEIRespostaConfigs():
     dropdown = self.driver.find_element(By.ID, "selTipoProcesso")
     dropdown.find_element(By.XPATH, "//option[. = 'Protocolização de documentos para o Protocolo Central do ME']").click()
     dropdown = self.driver.find_element(By.ID, "selTipoDocumento")
-    dropdown.find_element(By.XPATH, "//option[. = 'Resposta ao Protocolo Digital']").click()
+    dropdown.find_element(By.XPATH, "//option[. = 'Resposta pelo Protocolo Digital']").click()
     self.driver.find_element(By.ID, "selTipoDocumento").click()
     self.driver.find_element(By.NAME, "sbmSalvar").click()
     time.sleep(2)

@@ -3,7 +3,7 @@
 
 class MdRespostaIntegracao extends SeiIntegracao{
 
-  const VERSAO_MODULO = "1.1.2";
+  const VERSAO_MODULO = "1.2.0";
 
   public function getNome(){
     return 'Módulo de Resposta';
@@ -67,13 +67,22 @@ class MdRespostaIntegracao extends SeiIntegracao{
     $objMdRespostaRN = new MdRespostaRN();
     $objMdResposta = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
 
+    $objMdProcessoSemRespostaDTO = new MdProcessoSemRespostaDTO();
+    $objMdProcessoSemRespostaDTO->retDblIdProcedimento();
+    $objMdProcessoSemRespostaDTO->setDblIdProcedimento($_GET['id_procedimento']);
+  
+    $objMdProcessoSemRespostaRN = new MdProcessoSemRespostaRN();
+    $objMdProcessoSemRespostaDTO = $objMdProcessoSemRespostaRN->consultarProcessoSemResposta($objMdProcessoSemRespostaDTO);
+
     $liberarAcesso = false;
-    if(!isset($objMdResposta[0])){
-      if(is_object($objMdRespostaTipoProcessoDTO)){
-        $arrTipoProcesso = unserialize($objMdRespostaTipoProcessoDTO->getStrValor());
-        foreach($arrTipoProcesso as $valor){
-          if($objProcedimentoAPI->getIdTipoProcedimento() == $valor){
-            $liberarAcesso=true;
+    if (!isset($objMdProcessoSemRespostaDTO)) {
+      if(!isset($objMdResposta[0])){
+        if(is_object($objMdRespostaTipoProcessoDTO)){
+          $arrTipoProcesso = unserialize($objMdRespostaTipoProcessoDTO->getStrValor());
+          foreach($arrTipoProcesso as $valor){
+            if($objProcedimentoAPI->getIdTipoProcedimento() == $valor){
+              $liberarAcesso=true;
+            }
           }
         }
       }
@@ -99,6 +108,18 @@ class MdRespostaIntegracao extends SeiIntegracao{
     $arrConfig = ConfiguracaoSEI::getInstance()->getValor('SEI', 'Modulos');
     $strPastaModulo = $arrConfig['MdRespostaIntegracao'];
     return "modulos/".$strPastaModulo;
+  }
+
+  public function processarControladorWebServices($servico)
+  {
+      $strArq = null;
+      switch ($_GET['servico']) {
+        case 'MdRespostaWS':
+          $strArq =  dirname(__FILE__) . '/ws/MdResposta.wsdl';
+          break;
+      }
+
+      return $strArq;
   }
 
 }

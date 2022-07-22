@@ -148,8 +148,8 @@ Como o envio é realizado de forma automática, o sistema precisa atribuir um Ti
 Como o envio é realizado de forma automática, o sistema precisa atribuir um Tipo de Documento padrão. Com isto, sugerimos a criação de um tipo de documento específico para estes processos, permitindo a fácil identificação e reclassificação, caso necessário. Segue abaixo um exemplo de Tipo de Documento que pode ser criado para esta situação:
 
     Grupo: Internos (com modelo)
-    Nome: Resposta ao Protocolo Digital
-    Descrição: Indicado nos Parâmetros para o envio de Resposta ao Protocolo Digital
+    Nome: Resposta pelo Protocolo Digital
+    Descrição: Indicado nos Parâmetros para o envio de Resposta pelo Protocolo Digital
     Aplicabilidade: Documentos internos e externos
     Modelo: Geral_c-Num_c-Unid_s-Data_c-Int
     Tipo de Numeração: Sequencial Anual na Unidade

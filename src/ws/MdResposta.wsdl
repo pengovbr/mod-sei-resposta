@@ -13,7 +13,7 @@
     xmlns:tns="SeiMdResposta">
 
   <wsdl:documentation>
-    Este Web Service é voltado a obter as resposta do SEI para plataforma Gov.br.
+    Este Web Service é voltado a obter as resposta do Super para plataforma Gov.br.
   </wsdl:documentation>
   
   <wsdl:types>
@@ -26,7 +26,7 @@
             <xsd:element name="SiglaSistema" type="xsd:string" minOccurs="1">
               <xsd:annotation>
                 <xsd:documentation>
-                  Informe o nome do sistema habilitado para receber resposta do SEI.
+                  Informe o nome do sistema habilitado para receber resposta do Super.
                 </xsd:documentation>
               </xsd:annotation>
             </xsd:element>
@@ -34,7 +34,7 @@
             <xsd:element name="IdentificacaoServico" type="xsd:string" minOccurs="1">
               <xsd:annotation>
                 <xsd:documentation>
-                  Informe a identificação do serviço habilitado para receber resposta do SEI.
+                  Informe a identificação do serviço habilitado para receber resposta do Super.
                 </xsd:documentation>
               </xsd:annotation>
             </xsd:element>
@@ -42,7 +42,7 @@
             <xsd:element name="IdProcedimentos" type="tns:IdProcedimentos" minOccurs="0" maxOccurs="1">
               <xsd:annotation>
                 <xsd:documentation>
-                  Informe o identificador dos processos a serem consultados no SEI.
+                  Informe o identificador dos processos a serem consultados no Super.
                 </xsd:documentation>
               </xsd:annotation>
             </xsd:element>
@@ -50,7 +50,7 @@
             <xsd:element name="NumProcedimentos" type="tns:NumProcedimentos" minOccurs="0" maxOccurs="1">
               <xsd:annotation>
                 <xsd:documentation>
-                  Informe o número dos processos a serem consultados no SEI.
+                  Informe o número dos processos a serem consultados no Super.
                 </xsd:documentation>
               </xsd:annotation>
             </xsd:element>
@@ -58,7 +58,103 @@
             <xsd:element name="IdResposta" type="xsd:int" minOccurs="0" maxOccurs="1">
               <xsd:annotation>
                 <xsd:documentation>
-                  Informe o identificador da resposta a ser consultada no SEI.
+                  Informe o identificador da resposta a ser consultada no Super.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="cadastrarProcessoSemRespostaRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            
+            <xsd:element name="SiglaSistema" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe o nome do sistema habilitado para receber resposta do Super.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="IdentificacaoServico" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe a identificação do serviço habilitado para receber resposta do Super.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="IdProcedimento" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe o identificador do processo a que não terá resposta do Super.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="cadastrarProcessoSemRespostaResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+
+            <xsd:element name="mensagem" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Retorna mensagem de sucesso.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="retirarProcessoSemRespostaRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            
+            <xsd:element name="SiglaSistema" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe o nome do sistema habilitado para receber resposta do Super.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="IdentificacaoServico" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe a identificação do serviço habilitado para receber resposta do Super.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="IdProcedimento" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe o identificador do processo a que não terá resposta do Super.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="retirarProcessoSemRespostaResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+
+            <xsd:element name="mensagem" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Retorna mensagem de sucesso.
                 </xsd:documentation>
               </xsd:annotation>
             </xsd:element>
@@ -174,12 +270,40 @@
     <wsdl:part type="tns:ArrayOfResposta" name="listarRespostaResponse" />
   </wsdl:message>
 
+  <wsdl:message name="cadastrarProcessoSemRespostaRequest">
+    <wsdl:part element="tns:cadastrarProcessoSemRespostaRequest" name="cadastrarProcessoSemRespostaRequest" />
+  </wsdl:message>
+
+  <wsdl:message name="cadastrarProcessoSemRespostaResponse">
+    <wsdl:part element="tns:cadastrarProcessoSemRespostaResponse" name="cadastrarProcessoSemRespostaResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="retirarProcessoSemRespostaRequest">
+    <wsdl:part element="tns:retirarProcessoSemRespostaRequest" name="retirarProcessoSemRespostaRequest" />
+  </wsdl:message>
+
+  <wsdl:message name="retirarProcessoSemRespostaResponse">
+    <wsdl:part element="tns:retirarProcessoSemRespostaResponse" name="retirarProcessoSemRespostaResponse" />
+  </wsdl:message>
+
   <wsdl:portType name="SeiMdRespostaPortType">
 
     <wsdl:operation name="listarResposta">
-     <wsdl:documentation>Consulta Resposta ao Protocolo Digital</wsdl:documentation>
+     <wsdl:documentation>Consulta Resposta pelo Protocolo Digital</wsdl:documentation>
       <wsdl:input message="tns:listarRespostaRequest"/>
       <wsdl:output message="tns:listarRespostaResponse"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="cadastrarProcessoSemResposta">
+     <wsdl:documentation>Informa os processo que não terão resposta pelo Protocolo Digital</wsdl:documentation>
+      <wsdl:input message="tns:cadastrarProcessoSemRespostaRequest"/>
+      <wsdl:output message="tns:cadastrarProcessoSemRespostaResponse"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="retirarProcessoSemResposta">
+     <wsdl:documentation>Exclui os processo que não terão resposta pelo Protocolo Digital</wsdl:documentation>
+      <wsdl:input message="tns:retirarProcessoSemRespostaRequest"/>
+      <wsdl:output message="tns:retirarProcessoSemRespostaResponse"/>
     </wsdl:operation>
 
   </wsdl:portType>
@@ -197,11 +321,31 @@
       </wsdl:output>
     </wsdl:operation>
 
+    <wsdl:operation name="cadastrarProcessoSemResposta">
+      <soap:operation soapAction="SeiMdRespostaAction" />
+      <wsdl:input>
+        <soap:body namespace="SeiMdResposta" use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="SeiMdResposta" use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="retirarProcessoSemResposta">
+      <soap:operation soapAction="SeiMdRespostaAction" />
+      <wsdl:input>
+        <soap:body namespace="SeiMdResposta" use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="SeiMdResposta" use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:output>
+    </wsdl:operation>
+
   </wsdl:binding>
 
   <wsdl:service name="SeiMdRespostaService">
     <wsdl:port name="SeiMdRespostaPortService" binding="tns:SeiMdRespostaBinding">
-      <soap:address location="[servidor]/sei/modulos/resposta/ws/MdRespostaWS.php"/>
+      <soap:address location="[servidor]/modulos/mod-sei-resposta/ws/MdRespostaWS.php"/>
     </wsdl:port>
   </wsdl:service>
 

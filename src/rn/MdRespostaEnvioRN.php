@@ -7,12 +7,12 @@ class MdRespostaEnvioRN extends InfraRN {
   //SC = SinConclusiva
   public static $EV_RESPOSTA = 'R';
   public static $EV_AJUSTE = 'A';
+  public static $EV_CONCLUSAO = 'C';
 
   public static $TX_RESPOSTA = 'Enviar resposta';
   public static $TX_AJUSTE = 'Enviar para ajuste/complementação';  
 
-  public static $TX_TITULO = 'Resposta ao Gov.br';
-  //public static $EV_CONCLUSAO = 'C';
+  public static $TX_TITULO = 'Tipo de Resposta';
   
   public function __construct(){
     parent::__construct();
@@ -57,10 +57,19 @@ class MdRespostaEnvioRN extends InfraRN {
         }
       }
 
+      //bloqueia botão para não enviar outra resposta de ajuste/complementação até que tenha retorno da anterior 
+      if($objMdRespostaEnvioDTO->getStrSinConclusiva() == self::$EV_AJUSTE){
+        $objMdProcessoSemRespostaDTO = new MdProcessoSemRespostaDTO();
+        $objMdProcessoSemRespostaDTO->setDblIdProcedimento($objMdRespostaEnvioDTO->getDblIdProtocolo());
+
+        $objMdProcessoSemRespostaRN = new MdProcessoSemRespostaRN();
+        $objMdProcessoSemRespostaRN->cadastrarProcessoSemResposta($objMdProcessoSemRespostaDTO);
+      }
+
       return $objDocumentoDTO;
 
     } catch (\Exception $e) {
-      throw new InfraException('Erro no envio da resposta ao Protocolo Digital.',$e);
+      throw new InfraException('Erro no envio da resposta pelo Protocolo Digital.',$e);
     }
   }
 
@@ -78,7 +87,10 @@ class MdRespostaEnvioRN extends InfraRN {
         $strSinConclusiva = self::$TX_RESPOSTA;
       }
 
-      $this->prepararAnexos($objMdRespostaEnvioDTO);
+      $arrStrIds = $objMdRespostaEnvioDTO->getArrIdDocumentosProcesso();
+      if (InfraArray::contar($arrStrIds)) {
+        $this->prepararAnexos($objMdRespostaEnvioDTO);
+      }
 
       $objMdRespostaParametroRN = new MdRespostaParametroRN();
       
@@ -126,31 +138,35 @@ class MdRespostaEnvioRN extends InfraRN {
 
       $objProtocoloDTO->setArrObjParticipanteDTO(array());						
 			$objProtocoloDTO->setArrObjObservacaoDTO(array());
-	 		$objProtocoloDTO->setArrObjAnexoDTO($objMdRespostaEnvioDTO->getArrObjAnexoDTO());
+      if (InfraArray::contar($arrStrIds)) {
+	 		  $objProtocoloDTO->setArrObjAnexoDTO($objMdRespostaEnvioDTO->getArrObjAnexoDTO());
+      }
 	 		$objDocumentoDTO->setObjProtocoloDTO($objProtocoloDTO);
 
       $objDocumentoRN = new DocumentoRN();
 	 		$objDocumentoDTO = $objDocumentoRN->cadastrarRN0003($objDocumentoDTO);
 
 	 		//busca os anexos para gravar com o id possibilitando link na consulta
-	 		$objAnexoDTO = new AnexoDTO();
-	 		$objAnexoDTO->retNumIdAnexo();
-	 		$objAnexoDTO->retStrNome();
-	 		$objAnexoDTO->retNumTamanho();
-	 		$objAnexoDTO->setDblIdProtocolo($objDocumentoDTO->getDblIdDocumento());
-	 		
-	 		$objAnexoRN = new AnexoRN();
-	 		$arrObjAnexoDTOBanco = $objAnexoRN->listarRN0218($objAnexoDTO);
-	 		
-    	$strXML .= '<atributo nome="Anexos" titulo="Anexos">'."\n";
-      foreach($arrObjAnexoDTOBanco as $objAnexoDTO){
-        $strXML .= '<valores>'."\n";
-        $strXML .= '<valor id="'.$objAnexoDTO->getNumIdAnexo().'" tipo="ANEXO">';
-        $strXML .= InfraString::formatarXML($objAnexoDTO->getStrNome());
-        $strXML .= '</valor>'."\n";
-        $strXML .= '</valores>'."\n";
-      }
-      $strXML .= '</atributo>'."\n";        
+      if (InfraArray::contar($arrStrIds)) {
+        $objAnexoDTO = new AnexoDTO();
+        $objAnexoDTO->retNumIdAnexo();
+        $objAnexoDTO->retStrNome();
+        $objAnexoDTO->retNumTamanho();
+        $objAnexoDTO->setDblIdProtocolo($objDocumentoDTO->getDblIdDocumento());
+        
+        $objAnexoRN = new AnexoRN();
+        $arrObjAnexoDTOBanco = $objAnexoRN->listarRN0218($objAnexoDTO);
+        
+        $strXML .= '<atributo nome="Anexos" titulo="Anexos">'."\n";
+        foreach($arrObjAnexoDTOBanco as $objAnexoDTO){
+          $strXML .= '<valores>'."\n";
+          $strXML .= '<valor id="'.$objAnexoDTO->getNumIdAnexo().'" tipo="ANEXO">';
+          $strXML .= InfraString::formatarXML($objAnexoDTO->getStrNome());
+          $strXML .= '</valor>'."\n";
+          $strXML .= '</valores>'."\n";
+        }
+        $strXML .= '</atributo>'."\n";  
+      }      
       
     	$strXML .= '</documento>';
 
@@ -169,7 +185,7 @@ class MdRespostaEnvioRN extends InfraRN {
       return $objDocumentoDTO;
 
     }catch(Exception $e){
-      throw new InfraException('Erro na geração da resposta ao Protocolo Digital.',$e);
+      throw new InfraException('Erro na geração da resposta pelo Protocolo Digital.',$e);
     }
   }
 
@@ -381,7 +397,7 @@ class MdRespostaEnvioRN extends InfraRN {
   }
 
   private function validarArrIdDocumentosProcesso(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
-  	if (count($objMdRespostaEnvioDTO->getArrIdDocumentosProcesso()) == 0){
+  	if (count($objMdRespostaEnvioDTO->getArrIdDocumentosProcesso()) == 0 && $objMdRespostaEnvioDTO->getStrSinConclusiva() == self::$EV_RESPOSTA){
 	      $objInfraException->adicionarValidacao('Nenhum documento selecionado.', $strAtributoValidacao);
 	  }
   }  

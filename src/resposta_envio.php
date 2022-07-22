@@ -40,8 +40,8 @@ try {
       $objMdRespostaEnvioDTO->setNumIdResposta(null);
 		  $objMdRespostaEnvioDTO->setStrMensagem($_POST['txaMensagem']);
       $objMdRespostaEnvioDTO->setDblIdProtocolo($_GET['id_procedimento']);
-      //$objMdRespostaEnvioDTO->setStrSinConclusiva($_POST['rdoSinConclusiva']);
-      $objMdRespostaEnvioDTO->setStrSinConclusiva(MdRespostaEnvioRN::$EV_RESPOSTA);
+      $objMdRespostaEnvioDTO->setStrSinConclusiva($_POST['rdoSinConclusiva']);
+      // $objMdRespostaEnvioDTO->setStrSinConclusiva(MdRespostaEnvioRN::$EV_RESPOSTA);
       $objMdRespostaEnvioDTO->setDthDthResposta(InfraData::getStrDataHoraAtual());
 		  
       $objProcedimentoDTO = new ProcedimentoDTO();
@@ -136,10 +136,6 @@ try {
 
 					$objMdRespostaEnvioRN = new MdRespostaEnvioRN();
 					$objDocumentoDTO = $objMdRespostaEnvioRN->cadastrar($objMdRespostaEnvioDTO);
-					
-					// if ($_GET['acao']!='responder_formulario'){
-					//   PaginaSEI::getInstance()->setStrMensagem(PaginaSEI::getInstance()->formatarParametrosJavaScript('Resposta enviada.'),PaginaSEI::$TIPO_MSG_AVISO);
-					// }
           
           header('Location: '.SessaoSEI::getInstance()->assinarLink('controlador.php?acao=arvore_visualizar&acao_origem='.$_GET['acao'].'&id_procedimento='.$_GET['id_procedimento'].'&id_documento='.$objDocumentoDTO->getDblIdDocumento().'&atualizar_arvore=1'));
           die;
@@ -211,20 +207,22 @@ function validarEnvio() {
     return false;
   }
 
-  if (document.getElementById('hdnInfraItensSelecionados') == null){
-    alert('Não há documento(s) no processo.');
-    return false;
+  if(document.getElementById('optDefinitiva').checked ){
+    if (document.getElementById('hdnInfraItensSelecionados') == null){
+      alert('Não há documento(s) no processo.');
+      return false;
+    }
+
+    if (document.getElementById('hdnInfraItensSelecionados').value==''){
+      alert('Nenhum documento selecionado.');
+      return false;
+    }
   }
 
-  if (document.getElementById('hdnInfraItensSelecionados').value==''){
-    alert('Nenhum documento selecionado.');
-    return false;
-  }
-
-  /*if (!document.getElementById('optDefinitiva').checked && !document.getElementById('optParcial').checked){
+  if (!document.getElementById('optDefinitiva').checked && !document.getElementById('optParcial').checked){
     alert('Selecione o Tipo de resposta.');
     return false;
-  }*/
+  }
     
   return true;
 }
@@ -234,15 +232,15 @@ function submeterFormulario(){
 
     transmitir=true;
 
-    /*if(document.getElementById('optDefinitiva').checked ){
-      if (!confirm("Confirma o envio da resposta? \nEssa ação não poderá ser desfeita.")) {
+    if(document.getElementById('optDefinitiva').checked ){
+      if (!confirm("Confirma o envio da resposta? \nEssa ação não poderá ser desfeita. \n\nOBS.: Após a verificação da resposta pelo solicitante no portal gov.br, será anexado automaticamente no processo o Termo de Ciência de Recebimento da Resposta.")) {
+        transmitir=false;
+      } 
+    }else{
+      if (!confirm("Confirma o envio para ajuste/complementação? \nEssa ação não poderá ser desfeita.")) {
         transmitir=false;
       }
-    }*/
-
-    if (!confirm("Confirma o envio da resposta? \nEssa ação não poderá ser desfeita. \n\nOBS.: Após a verificação da resposta pelo solicitante no portal gov.br, será anexado automaticamente no processo o Termo de Ciência de Recebimento da Resposta.")) {
-        transmitir=false;
-    }    
+    }
 
     if(transmitir){
       infraExibirAviso(false);
@@ -259,18 +257,18 @@ function submeterFormulario(){
   }
 }
 
-function descricaoResposta(obj){
+// function descricaoResposta(obj){
 
-  document.getElementById('divDescricaoResposta').style.display='inline';
-  switch (obj.value) {
-    case 'R':
-      document.getElementById('divDescricaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários.';
-      break;
-    case 'A':
-      document.getElementById('divDescricaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários. *O solicitante terá até 10 dias contados da ciência para responder.';
-      break;
-  }
-}
+//   document.getElementById('divDescricaoResposta').style.display='inline';
+//   switch (obj.value) {
+//     case 'R':
+//       document.getElementById('divDescricaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários.';
+//       break;
+//     case 'A':
+//       document.getElementById('divDescricaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários. *O solicitante terá até 10 dias contados da ciência para responder.';
+//       break;
+//   }
+// }
 
 //</script>
 <?
@@ -305,22 +303,22 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
   </div>
   <br/>
   
-  <!--fieldset id="fldSinConclusiva" class="infraFieldset" style="height:6em">
+  <fieldset id="fldSinConclusiva" class="infraFieldset" style="height:6.5em">
     	<legend class="infraLegend">&nbsp;<?=MdRespostaEnvioRN::$TX_TITULO?>&nbsp;</legend>
     	<div class="group">
         <div id="divOptDefinitiva" class="infraDivRadio"> 
-          <input type="radio" name="rdoSinConclusiva" id="optDefinitiva" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_RESPOSTA?>" class="infraRadio"/>
+          <input type="radio" name="rdoSinConclusiva" id="optDefinitiva" value="<?=MdRespostaEnvioRN::$EV_RESPOSTA?>" class="infraRadio"/>
           <span id="spnDefinitiva"><label id="lblDefinitiva" for="optDefinitiva" class="infraLabelRadio" ><?=MdRespostaEnvioRN::$TX_RESPOSTA?></label></span>
         </div>
       
         <div id="divOptParcial" class="infraDivRadio">	  
-          <input type="radio" name="rdoSinConclusiva" id="optParcial" onclick="descricaoResposta(this)" value="<?=MdRespostaEnvioRN::$EV_AJUSTE?>" class="infraRadio"/>
+          <input type="radio" name="rdoSinConclusiva" id="optParcial" value="<?=MdRespostaEnvioRN::$EV_AJUSTE?>" class="infraRadio"/>
           <span id="spnParcial"><label id="lblParcial" for="optParcial" class="infraLabelRadio" ><?=MdRespostaEnvioRN::$TX_AJUSTE?></label></span>
         </div>
       </div>
   	  
-      <div id="divDescricaoResposta"></div>
-  </fieldset--> 
+      <div id="divDescricaoResposta" style="text-align:center; width: 92%;">OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários.</div>
+  </fieldset> 
 
 </form>
 <?

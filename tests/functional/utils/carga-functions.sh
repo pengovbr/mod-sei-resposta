@@ -79,7 +79,7 @@ rodar_teste(){
             -e "SELENIUMTEST_SISTEMA_ORGAO=$SELENIUMTEST_SISTEMA_ORGAO" \
             -e "SELENIUMTEST_MODALIDADE=$SELENIUMTEST_MODALIDADE" \
             -e "SELENIUMTEST_SELENIUMHOST_URL=$SELENIUMTEST_SELENIUMHOST_URL" \
-            --network=host linhares/pytestseleniumdocker:latest bash -c \
+            --network=host supergovbr/pytestseleniumdocker:latest bash -c \
             "echo '127.0.0.1 seleniumchrome' >> /etc/hosts && pytest --disable-pytest-warnings -W ignore::DeprecationWarning -o junit_family=xunit2 --junitxml=/resultado/resultado.xml -x --tb=short seleniumPython/$1"
     fi
     

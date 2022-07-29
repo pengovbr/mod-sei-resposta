@@ -42,13 +42,14 @@ class MdRespostaIntegracao extends SeiIntegracao{
 
     $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
     $objMdRespostaParametroDTO -> retStrValor();
-    $objMdRespostaParametroDTO -> setStrNome('PARAM_TIPO_PROCESSO');
+    $objMdRespostaParametroDTO -> setStrNome('PARAM_SISTEMA');
 
     $objMdRespostaParametroRN = new MdRespostaParametroRN();
     $objMdRespostaTipoProcessoDTO = $objMdRespostaParametroRN->consultar($objMdRespostaParametroDTO);
 
     $objProcedimentoDTO = new ProcedimentoDTO();
     $objProcedimentoDTO->retStrStaEstadoProtocolo();
+    $objProcedimentoDTO->retNumIdUsuarioGeradorProtocolo();
     $objProcedimentoDTO->setDblIdProcedimento($_GET['id_procedimento']);
 
     $objProcedimentoRN = new ProcedimentoRN();
@@ -80,7 +81,7 @@ class MdRespostaIntegracao extends SeiIntegracao{
         if(is_object($objMdRespostaTipoProcessoDTO)){
           $arrTipoProcesso = unserialize($objMdRespostaTipoProcessoDTO->getStrValor());
           foreach($arrTipoProcesso as $valor){
-            if($objProcedimentoAPI->getIdTipoProcedimento() == $valor){
+            if($objProcedimentoDTO->getNumIdUsuarioGeradorProtocolo() == $valor){
               $liberarAcesso=true;
             }
           }

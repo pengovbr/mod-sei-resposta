@@ -21,3 +21,9 @@ Disponibilizar a opção para indicar se a resposta a ser enviada para o Protoco
 #### [Issue #44] Desabilitar botão de resposta para aquelas solicitações concluídas no Protocolo Digital
 
 Necessário controle para o que módulo possa identificar as solicitações que já foram concluídas diretamente no Protocolo Digital e não disponibilize a funcionalidade de resposta para estes processos.
+
+#### [Issue #46] Seleção do sistema na funcionalidade de configuração
+
+Substitui o parâmetro de tipo de processo por sistema na tela de configuração do módulo.
+
+Incluir regra para que o botão de envio de resposta apareça apenas para os processo criados pelo sistema mapeado na funcionalidade de configuração do módulo

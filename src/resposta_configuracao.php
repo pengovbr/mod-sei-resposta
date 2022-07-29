@@ -32,20 +32,15 @@ try {
            
             switch($campo) {
               case 'selTipoDocumento':
-              case 'selSistema':
                 $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
-                if($campo == 'selSistema'){
-                  $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_SISTEMA);
-                }elseif($campo == 'selTipoDocumento'){
-                  $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO);
-                }
+                $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO);
                 $objMdRespostaParametroDTO->setStrValor($valor);
                 $arrObjMdRespostaParametroDTO[] = $objMdRespostaParametroDTO;
               break;
-              case 'selTipoProcesso':
+              case 'selSistema':
                   $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
-                  $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_PROCESSO);
-                  $objMdRespostaParametroDTO->setStrValor(serialize($_POST['selTipoProcesso']));
+                  $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_SISTEMA);
+                  $objMdRespostaParametroDTO->setStrValor(serialize($_POST['selSistema']));
                   $arrObjMdRespostaParametroDTO[] = $objMdRespostaParametroDTO;
               break;              
             }
@@ -76,21 +71,17 @@ try {
       throw new InfraException("Ação '".$_GET['acao']."' não reconhecida.");
   }
 
-  $strParametroSistema = null;
+  $strParametroSistema = array();
   $strParametroTipoDoc = null;
-  $strParametroProcesso = array();
 
   foreach($arrObjMdRespostaParametroDTO as $objMdRespostaDTO){
 
     switch($objMdRespostaDTO->getStrNome()) {
 
       case 'PARAM_SISTEMA':
-        $strParametroSistema = $objMdRespostaDTO->getStrValor();
-      break;
-      case 'PARAM_TIPO_PROCESSO':
-        $arrTipoProcesso = unserialize($objMdRespostaDTO->getStrValor());
-        foreach($arrTipoProcesso as $valor){
-          $strParametroProcesso[] = $valor;
+        $arrSistema = unserialize($objMdRespostaDTO->getStrValor());
+        foreach($arrSistema as $valor){
+          $strParametroSistema[] = $valor;
         }
       break;
       case 'PARAM_TIPO_DOCUMENTO':
@@ -109,15 +100,6 @@ try {
   // Consulta nas classes de regra de negócio
   $objSerieRN = new SerieRN();
   $arrObjSerieDTO = $objSerieRN->listarRN0646($objSerieDTO);
-
-
-  $objTipoProcedimentoDTO = new TipoProcedimentoDTO();
-  $objTipoProcedimentoDTO->retNumIdTipoProcedimento();
-  $objTipoProcedimentoDTO->retStrNome();
-  $objTipoProcedimentoDTO->setOrdStrNome(InfraDTO::$TIPO_ORDENACAO_ASC);
-
-  $objTipoProcedimentoRN = new TipoProcedimentoRN();
-  $arrObjTipoProcedimentoDTO = $objTipoProcedimentoRN->listarRN0244($objTipoProcedimentoDTO);
   
 }catch(Exception $e){
   PaginaSEI::getInstance()->processarExcecao($e);
@@ -135,11 +117,8 @@ PaginaSEI::getInstance()->abrirStyle();
 #lblSistema {position:absolute;left:0%;top:0%;width:50%;}
 #selSistema {position:absolute;left:0%;top:6%;width:50%;}
 
-#lblTipoProcesso {position:absolute;left:0%;top:16%;width:50%;}
-#selTipoProcesso {position:absolute;left:0%;top:22%;width:50%;}
-
-#lblTipoDocumento {position:absolute;left:0%;top:55%;width:50%;}
-#selTipoDocumento {position:absolute;left:0%;top:62%;width:50%;}
+#lblTipoDocumento {position:absolute;left:0%;top:35%;width:50%;}
+#selTipoDocumento {position:absolute;left:0%;top:42%;width:50%;}
 
 <?
 PaginaSEI::getInstance()->fecharStyle();
@@ -165,12 +144,6 @@ function validarFormParametrosCadastro() {
     return false;
   }
 
-  if (!infraSelectSelecionado('selTipoProcesso')) {
-    alert('Selecione o Tipo de Processo.');
-    document.getElementById('selTipoProcesso').focus();
-    return false;
-  }
-
   if (!infraSelectSelecionado('selTipoDocumento')) {
     alert('Selecione o Tipo de Documento.');
     document.getElementById('selTipoDocumento').focus();
@@ -190,22 +163,15 @@ PaginaSEI::getInstance()->montarBarraComandosSuperior($arrComandos);
 PaginaSEI::getInstance()->abrirAreaDados('30em');
 ?>
   <label id="lblSistema" for="selSistema" accesskey="s" class="infraLabelObrigatorio"><span class="infraTeclaAtalho">S</span>istema:</label>
-  <select id="selSistema" name="selSistema" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" >
+  <select id="selSistema" name="selSistema[]" multiple="multiple" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>" >
   <?=$strItensSelSistema?>
   </select>
-
-  <label id="lblTipoProcesso" for="selTipoProcesso" accesskey="p" class="infraLabelObrigatorio">Tipo de <span class="infraTeclaAtalho">P</span>rocesso:</label>
-  <?
-  echo '<select id="selTipoProcesso" name="selTipoProcesso[]" multiple="multiple" size="5" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="'.PaginaSEI::getInstance()->getProxTabDados().'">';
-  echo InfraINT::montarSelectArrInfraDTO('null', '', $strParametroProcesso, $arrObjTipoProcedimentoDTO, 'IdTipoProcedimento', 'Nome');
-  echo '<select>';  
-  ?>
   
   <label id="lblTipoDocumento" for="selTipoDocumento" accesskey="t" class="infraLabelObrigatorio"><span class="infraTeclaAtalho">T</span>ipo Documento:</label>
   <?
   echo '<select id="selTipoDocumento" name="selTipoDocumento" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="'.PaginaSEI::getInstance()->getProxTabDados().'">';
   echo InfraINT::montarSelectArrInfraDTO('null', '&nbsp;', $strParametroTipoDoc, $arrObjSerieDTO, 'IdSerie', 'Nome');
-  echo '<select>';  
+  echo '<select>';
 
   PaginaSEI::getInstance()->fecharAreaDados();
   ?>

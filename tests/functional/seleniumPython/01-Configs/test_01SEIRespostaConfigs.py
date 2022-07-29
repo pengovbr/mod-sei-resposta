@@ -44,7 +44,7 @@ class Test01SEIRespostaConfigs():
     assert self.driver.switch_to.alert.text == "Selecione o Sistema."
     self.driver.switch_to.alert.accept()
   
-  def test_01ConfigValidacaoProcesso(self):
+  def test_01ConfigValidacaoDocumento(self):
     self.driver.get(os.environ["SELENIUMTEST_SISTEMA_URL"]+"/sip/login.php?sigla_orgao_sistema="+os.environ["SELENIUMTEST_SISTEMA_ORGAO"]+"&sigla_sistema=SEI")
     self.driver.find_element(By.ID, "txtUsuario").send_keys("teste")
     self.driver.find_element(By.ID, "pwdSenha").click()
@@ -59,32 +59,11 @@ class Test01SEIRespostaConfigs():
     self.driver.find_element(By.ID, "selSistema").click()
     dropdown = self.driver.find_element(By.ID, "selSistema")
     dropdown.find_element(By.XPATH, "//option[. = 'PD_GOV_BR']").click()
-    self.driver.find_element(By.NAME, "sbmSalvar").click()
-    assert self.driver.switch_to.alert.text == "Selecione o Tipo de Processo."
-    self.driver.switch_to.alert.accept()
-  
-  def test_02ConfigValidacaoDocumento(self):
-    self.driver.get(os.environ["SELENIUMTEST_SISTEMA_URL"]+"/sip/login.php?sigla_orgao_sistema="+os.environ["SELENIUMTEST_SISTEMA_ORGAO"]+"&sigla_sistema=SEI")
-    self.driver.find_element(By.ID, "txtUsuario").send_keys("teste")
-    self.driver.find_element(By.ID, "pwdSenha").click()
-    self.driver.find_element(By.ID, "pwdSenha").send_keys("teste")
-    self.driver.find_element(By.ID, "Acessar").click()
-    WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.XPATH, "//*[text()=\"Administração\"]")))
-    self.driver.find_element(By.XPATH, "//*[text()=\"Administração\"]").click()
-    WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.XPATH, "//*[text()=\"Módulo de Resposta - Gov.br\"]")))
-    self.driver.find_element(By.XPATH, "//*[text()=\"Módulo de Resposta - Gov.br\"]").click()
-    WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "Parâmetros de Configuração")))
-    self.driver.find_element(By.LINK_TEXT, "Parâmetros de Configuração").click()
-    self.driver.find_element(By.ID, "selSistema").click()
-    dropdown = self.driver.find_element(By.ID, "selSistema")
-    dropdown.find_element(By.XPATH, "//option[. = 'PD_GOV_BR']").click()
-    dropdown = self.driver.find_element(By.ID, "selTipoProcesso")
-    dropdown.find_element(By.XPATH, "//option[. = 'Protocolização de documentos para o Protocolo Central do ME']").click()
     self.driver.find_element(By.NAME, "sbmSalvar").click()
     assert self.driver.switch_to.alert.text == "Selecione o Tipo de Documento."
     self.driver.switch_to.alert.accept()
   
-  def test_03ConfigConfirmacao(self):
+  def test_02ConfigConfirmacao(self):
     self.driver.get(os.environ["SELENIUMTEST_SISTEMA_URL"]+"/sip/login.php?sigla_orgao_sistema="+os.environ["SELENIUMTEST_SISTEMA_ORGAO"]+"&sigla_sistema=SEI")
     self.driver.find_element(By.ID, "txtUsuario").send_keys("teste")
     self.driver.find_element(By.ID, "pwdSenha").click()
@@ -99,8 +78,6 @@ class Test01SEIRespostaConfigs():
     self.driver.find_element(By.ID, "selSistema").click()
     dropdown = self.driver.find_element(By.ID, "selSistema")
     dropdown.find_element(By.XPATH, "//option[. = 'PD_GOV_BR']").click()
-    dropdown = self.driver.find_element(By.ID, "selTipoProcesso")
-    dropdown.find_element(By.XPATH, "//option[. = 'Protocolização de documentos para o Protocolo Central do ME']").click()
     dropdown = self.driver.find_element(By.ID, "selTipoDocumento")
     dropdown.find_element(By.XPATH, "//option[. = 'Resposta pelo Protocolo Digital']").click()
     self.driver.find_element(By.ID, "selTipoDocumento").click()

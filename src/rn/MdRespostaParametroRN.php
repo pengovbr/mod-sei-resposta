@@ -171,10 +171,6 @@ class MdRespostaParametroRN extends InfraRN {
       $objInfraException->adicionarValidacao('Selecione o Sistema.');
     }
 
-    if($tipoProcessoVazio){
-      $objInfraException->adicionarValidacao('Selecione o Tipo de Processo.');
-    }
-
     if($tipoDocumentoVazio){
       $objInfraException->adicionarValidacao('Selecione o Tipo de Documento.');
     }

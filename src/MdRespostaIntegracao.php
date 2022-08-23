@@ -43,6 +43,7 @@ class MdRespostaIntegracao extends SeiIntegracao{
     $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
     $objMdRespostaParametroDTO -> retStrValor();
     $objMdRespostaParametroDTO -> setStrNome('PARAM_SISTEMA');
+    $IdProcedimento = $objProcedimentoAPI->getIdProcedimento();
 
     $objMdRespostaParametroRN = new MdRespostaParametroRN();
     $objMdRespostaTipoProcessoDTO = $objMdRespostaParametroRN->consultar($objMdRespostaParametroDTO);
@@ -50,7 +51,7 @@ class MdRespostaIntegracao extends SeiIntegracao{
     $objProcedimentoDTO = new ProcedimentoDTO();
     $objProcedimentoDTO->retStrStaEstadoProtocolo();
     $objProcedimentoDTO->retNumIdUsuarioGeradorProtocolo();
-    $objProcedimentoDTO->setDblIdProcedimento($_GET['id_procedimento']);
+    $objProcedimentoDTO->setDblIdProcedimento($IdProcedimento);
 
     $objProcedimentoRN = new ProcedimentoRN();
     $objProcedimentoDTO = $objProcedimentoRN->consultarRN0201($objProcedimentoDTO);    
@@ -63,14 +64,14 @@ class MdRespostaIntegracao extends SeiIntegracao{
     $objMdRespostaDTO = new MdRespostaDTO();
     $objMdRespostaDTO->retNumIdResposta();
     $objMdRespostaDTO->setStrSinConclusiva(MdRespostaEnvioRN::$EV_RESPOSTA);
-    $objMdRespostaDTO->setDblIdProcedimento($_GET['id_procedimento']);
+    $objMdRespostaDTO->setDblIdProcedimento($IdProcedimento);
   
     $objMdRespostaRN = new MdRespostaRN();
     $objMdResposta = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
 
     $objMdProcessoSemRespostaDTO = new MdProcessoSemRespostaDTO();
     $objMdProcessoSemRespostaDTO->retDblIdProcedimento();
-    $objMdProcessoSemRespostaDTO->setDblIdProcedimento($_GET['id_procedimento']);
+    $objMdProcessoSemRespostaDTO->setDblIdProcedimento($IdProcedimento);
   
     $objMdProcessoSemRespostaRN = new MdProcessoSemRespostaRN();
     $objMdProcessoSemRespostaDTO = $objMdProcessoSemRespostaRN->consultarProcessoSemResposta($objMdProcessoSemRespostaDTO);
@@ -95,7 +96,7 @@ class MdRespostaIntegracao extends SeiIntegracao{
       && $liberarAcesso
       && $bolProcessoEstadoNormal) {
       $numTabBotao = $objPaginaSEI->getProxTabBarraComandosSuperior();
-      $strLinkBotaoResposta  = '<a href="'.SessaoSEI::getInstance()->assinarLink('controlador.php?acao=md_resposta_enviar&acao_origem=arvore_visualizar&acao_retorno=arvore_visualizar&id_procedimento='.$_GET['id_procedimento'].'&arvore=1').'" tabindex="'.$numTabBotao.'" class="botaoSEI">';
+      $strLinkBotaoResposta  = '<a href="'.SessaoSEI::getInstance()->assinarLink('controlador.php?acao=md_resposta_enviar&acao_origem=arvore_visualizar&acao_retorno=arvore_visualizar&id_procedimento='.$IdProcedimento.'&arvore=1').'" tabindex="'.$numTabBotao.'" class="botaoSEI">';
       $strLinkBotaoResposta .= '<img class="infraCorBarraSistema" tabindex="'.$numTabBotao.'" src="'.$strDiretorioImagens.'/img/'.MdRespostaINT::getCaminhoIcone("enviar_resposta_sei3.png").'" alt="Enviar Resposta" title="Enviar Resposta" />';
       $strLinkBotaoResposta .= '</a>';
 

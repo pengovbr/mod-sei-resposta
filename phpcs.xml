@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PHP_CodeSniffer" xsi:noNamespaceSchemaLocation="phpcs.xsd">
-    <description>Padrão de codificação para o projeto SEI, SIP</description>
+    <description>Padrão de codificação para o projeto SEI, SIP e INFRA</description>
     
     <config name="installed_paths" value="vendor/pheromone/phpcs-security-audit,vendor/phpcompatibility/php-compatibility" />
     <config name="minimum_supported_wp_version" value="4.4.0" />

@@ -1,15 +1,5 @@
-name: "CI"
-
-on:
-  pull_request:
-    paths:
-      - "**.php"
-      - "phpcs.xml"
-      - ".github/workflows/phpcs.yml"
-
-jobs:
-  phpcs:
-    stage: linting
-    image: pipelinecomponents/php-codesniffer:latest
-    script:
-      - phpcs -s -p --colors --extensions=php src/
+phpcs:
+  stage: linting
+  image: pipelinecomponents/php-codesniffer:latest
+  script:
+    - phpcs -s -p --colors --extensions=php src/

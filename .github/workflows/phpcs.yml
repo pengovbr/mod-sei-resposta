@@ -30,7 +30,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-suggest --no-progress
+        run: composer update | composer install --prefer-dist --no-suggest --no-progress
 
       - name: Detect coding standard violations
         run: vendor/bin/phpcs -q --report=checkstyle | cs2pr --graceful-warnings

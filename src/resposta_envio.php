@@ -7,14 +7,14 @@ try {
  
   InfraDebug::getInstance()->setBolLigado(false);
   InfraDebug::getInstance()->setBolDebugInfra(true);
-  InfraDebug::getInstance()->limpar();
+  InfraDebug::getInstance()->limpar(); 
 
   SessaoSEI::getInstance()->validarLink();
   SessaoSEI::getInstance()->validarPermissao($_GET['acao']);
 
   $arrComandos = array();
 
-  //Filtrar par‚metros
+  //Filtrar par√¢metros
   $strParametros = '';
   if(isset($_GET['arvore'])){
     PaginaSEI::getInstance()->setBolArvore($_GET['arvore']);
@@ -53,7 +53,7 @@ try {
       $arr = $objProcedimentoRN->listarCompleto($objProcedimentoDTO);
 
 			if(count($arr) == 0){
-				throw new InfraException('Processo n„o encontrado.');
+				throw new InfraException('Processo n√£o encontrado.');
 			}
 			
 			$objProcedimentoDTO = $arr[0];
@@ -120,7 +120,7 @@ try {
  						  									<caption class="infraCaption" >'.PaginaSEI::getInstance()->gerarCaptionTabela("Documentos",$numDocumentos).'</caption> 
 						 										<tr>
 						  										<th class="infraTh" width="10%">'.$strCheck.'</th>
-						  										<th class="infraTh" width="15%">N∫ SEI</th>
+						  										<th class="infraTh" width="15%">N¬∫ SEI</th>
 						  										<th class="infraTh">Documento</th>
 						  										<th class="infraTh" width="15%">Data</th>
 						  										
@@ -148,7 +148,7 @@ try {
       break;
      
     	default:
-      throw new InfraException("AÁ„o '".$_GET['acao']."' n„o reconhecida.");
+      throw new InfraException("A√ß√£o '".$_GET['acao']."' n√£o reconhecida.");
   }
 
 	$arrComandos[] = '<button type="button" onclick="submeterFormulario();" accesskey="E" name="btnEnviar" value="Enviar" class="infraButton"><span class="infraTeclaAtalho">E</span>nviar</button>';
@@ -196,7 +196,7 @@ function inicializar(){
 function validarEnvio() {
   
   if (document.getElementById('selProcedimentos').value == 'null') {
-    alert('Processo n„o informado.');
+    alert('Processo n√£o informado.');
     document.getElementById('selProcedimentos').focus();
     return false;
   }
@@ -209,7 +209,7 @@ function validarEnvio() {
 
   if(document.getElementById('optDefinitiva').checked ){
     if (document.getElementById('hdnInfraItensSelecionados') == null){
-      alert('N„o h· documento(s) no processo.');
+      alert('N√£o h√° documento(s) no processo.');
       return false;
     }
 
@@ -233,11 +233,11 @@ function submeterFormulario(){
     transmitir=true;
 
     if(document.getElementById('optDefinitiva').checked ){
-      if (!confirm("Confirma o envio da resposta? \nEssa aÁ„o n„o poder· ser desfeita. \n\nOBS.: ApÛs a verificaÁ„o da resposta pelo solicitante no portal gov.br, ser· anexado automaticamente no processo o Termo de CiÍncia de Recebimento da Resposta.")) {
+      if (!confirm("Confirma o envio da resposta? \nEssa a√ß√£o n√£o poder√° ser desfeita. \n\nOBS.: Ap√≥s a verifica√ß√£o da resposta pelo solicitante no portal gov.br, ser√° anexado automaticamente no processo o Termo de Ci√™ncia de Recebimento da Resposta.")) {
         transmitir=false;
       } 
     }else{
-      if (!confirm("Confirma o envio para ajuste/complementaÁ„o? \nEssa aÁ„o n„o poder· ser desfeita.")) {
+      if (!confirm("Confirma o envio para ajuste/complementa√ß√£o? \nEssa a√ß√£o n√£o poder√° ser desfeita.")) {
         transmitir=false;
       }
     }
@@ -262,10 +262,10 @@ function submeterFormulario(){
 //   document.getElementById('divDescricaoResposta').style.display='inline';
 //   switch (obj.value) {
 //     case 'R':
-//       document.getElementById('divDescricaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necess·rios.';
+//       document.getElementById('divDescricaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necess√°rios.';
 //       break;
 //     case 'A':
-//       document.getElementById('divDescricaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necess·rios. *O solicitante ter· atÈ 10 dias contados da ciÍncia para responder.';
+//       document.getElementById('divDescricaoResposta').innerHTML='OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necess√°rios. *O solicitante ter√° at√© 10 dias contados da ci√™ncia para responder.';
 //       break;
 //   }
 // }
@@ -317,7 +317,7 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
         </div>
       </div>
   	  
-      <div id="divDescricaoResposta" style="text-align:center; width: 92%;">OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necess·rios.</div>
+      <div id="divDescricaoResposta" style="text-align:center; width: 92%;">OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necess√°rios.</div>
   </fieldset> 
 
 </form>

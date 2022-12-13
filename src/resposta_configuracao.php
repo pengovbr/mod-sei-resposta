@@ -36,13 +36,13 @@ try {
                 $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO);
                 $objMdRespostaParametroDTO->setStrValor($valor);
                 $arrObjMdRespostaParametroDTO[] = $objMdRespostaParametroDTO;
-              break;
+                  break;
               case 'selSistema':
                   $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
                   $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_SISTEMA);
                   $objMdRespostaParametroDTO->setStrValor(serialize($_POST['selSistema']));
                   $arrObjMdRespostaParametroDTO[] = $objMdRespostaParametroDTO;
-              break;              
+                  break;              
             }
 
           }
@@ -50,7 +50,7 @@ try {
           $objMdRespostaParametroDTO = $objMdRespostaParametroRN->atribuir($arrObjMdRespostaParametroDTO);
 
           if ($_GET['acao']!='responder_formulario'){
-            PaginaSEI::getInstance()->setStrMensagem(PaginaSEI::getInstance()->formatarParametrosJavaScript('Mapeamento cadastrado com sucesso.'),PaginaSEI::$TIPO_MSG_AVISO);
+            PaginaSEI::getInstance()->setStrMensagem(PaginaSEI::getInstance()->formatarParametrosJavaScript('Mapeamento cadastrado com sucesso.'), PaginaSEI::$TIPO_MSG_AVISO);
           }
 
         }catch(Exception $e){
@@ -65,10 +65,10 @@ try {
       $objMdRespostaParametroRN = new MdRespostaParametroRN();
       $arrObjMdRespostaParametroDTO = $objMdRespostaParametroRN->listar($objMdRespostaParametroDTO);
 
-      break;
-  	
+        break;
+    
     default:
-      throw new InfraException("Ação '".$_GET['acao']."' não reconhecida.");
+        throw new InfraException("Ação '".$_GET['acao']."' não reconhecida.");
   }
 
   $strParametroSistema = array();
@@ -83,15 +83,15 @@ try {
         foreach($arrSistema as $valor){
           $strParametroSistema[] = $valor;
         }
-      break;
+          break;
       case 'PARAM_TIPO_DOCUMENTO':
         $strParametroTipoDoc = $objMdRespostaDTO->getStrValor();
-      break;
+          break;
     }
 
   }
 
-  $strItensSelSistema = UsuarioINT::montarSelectSiglaSistema('null','&nbsp;', $strParametroSistema);
+  $strItensSelSistema = UsuarioINT::montarSelectSiglaSistema('null', '&nbsp;', $strParametroSistema);
   
   $objSerieDTO = new SerieDTO();
   $objSerieDTO->retNumIdSerie();
@@ -155,7 +155,7 @@ function validarFormParametrosCadastro() {
 <?
 PaginaSEI::getInstance()->fecharJavaScript();
 PaginaSEI::getInstance()->fecharHead();
-PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
+PaginaSEI::getInstance()->abrirBody($strTitulo, 'onload="inicializar();"');
 ?>
 <form id="frmRespostaCadastro" method="post" onsubmit="return OnSubmitForm();" action="<?=SessaoSEI::getInstance()->assinarLink('controlador.php?acao='.$_GET['acao'].'&acao_origem='.$_GET['acao'])?>">
 <?

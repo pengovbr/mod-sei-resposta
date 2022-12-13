@@ -30,7 +30,6 @@ try {
   switch($_GET['acao']){
 
     case 'md_resposta_enviar':
-      
       $strTitulo = 'Enviar Resposta pelo Protocolo Digital';
       
       $arrProtocolos = array();
@@ -38,12 +37,12 @@ try {
       
       $objMdRespostaEnvioDTO = new MdRespostaEnvioDTO();
       $objMdRespostaEnvioDTO->setNumIdResposta(null);
-		  $objMdRespostaEnvioDTO->setStrMensagem($_POST['txaMensagem']);
+          $objMdRespostaEnvioDTO->setStrMensagem($_POST['txaMensagem']);
       $objMdRespostaEnvioDTO->setDblIdProtocolo($_GET['id_procedimento']);
       $objMdRespostaEnvioDTO->setStrSinConclusiva($_POST['rdoSinConclusiva']);
       // $objMdRespostaEnvioDTO->setStrSinConclusiva(MdRespostaEnvioRN::$EV_RESPOSTA);
       $objMdRespostaEnvioDTO->setDthDthResposta(InfraData::getStrDataHoraAtual());
-		  
+          
       $objProcedimentoDTO = new ProcedimentoDTO();
       $objProcedimentoDTO->retNumIdUnidadeGeradoraProtocolo();
       $objProcedimentoDTO->setDblIdProcedimento($_GET['id_procedimento']);
@@ -52,25 +51,25 @@ try {
       $objProcedimentoRN = new ProcedimentoRN();
       $arr = $objProcedimentoRN->listarCompleto($objProcedimentoDTO);
 
-			if(count($arr) == 0){
-				throw new InfraException('Processo não encontrado.');
-			}
-			
-			$objProcedimentoDTO = $arr[0];
+      if(count($arr) == 0){
+          throw new InfraException('Processo não encontrado.');
+      }
+            
+            $objProcedimentoDTO = $arr[0];
       
       $bolAnexouDocumento = false;
-      			
-			$objDocumentoRN = new DocumentoRN();
-			
-			$numDocumentos = 0;
-			
-			if (InfraArray::contar($objProcedimentoDTO->getArrObjDocumentoDTO())){
-				
-			  $strCheck = PaginaSEI::getInstance()->getThCheck();
-			   
-			  $bolAcaoDocumentoVisualizar = SessaoSEI::getInstance()->verificarPermissao('documento_visualizar');
+                
+            $objDocumentoRN = new DocumentoRN();
+            
+            $numDocumentos = 0;
+            
+      if (InfraArray::contar($objProcedimentoDTO->getArrObjDocumentoDTO())){
+                
+        $strCheck = PaginaSEI::getInstance()->getThCheck();
+               
+        $bolAcaoDocumentoVisualizar = SessaoSEI::getInstance()->verificarPermissao('documento_visualizar');
 
-			  if (count($objProcedimentoDTO->getArrObjDocumentoDTO())) {
+        if (count($objProcedimentoDTO->getArrObjDocumentoDTO())) {
 
           $objPesquisaProtocoloDTO = new PesquisaProtocoloDTO();
           $objPesquisaProtocoloDTO->setStrStaTipo(ProtocoloRN::$TPP_DOCUMENTOS);
@@ -114,10 +113,10 @@ try {
             }
           }
         }
-			}
-			
+      }
+            
       $strResultadoDocumentos = '<table id="tblDocumentos" width="95%" class="infraTable" summary="Lista de Documentos">
- 						  									<caption class="infraCaption" >'.PaginaSEI::getInstance()->gerarCaptionTabela("Documentos",$numDocumentos).'</caption> 
+ 						  									<caption class="infraCaption" >'.PaginaSEI::getInstance()->gerarCaptionTabela("Documentos", $numDocumentos).'</caption> 
 						 										<tr>
 						  										<th class="infraTh" width="10%">'.$strCheck.'</th>
 						  										<th class="infraTh" width="15%">Nº SEI</th>
@@ -130,29 +129,29 @@ try {
         
 
       if (isset($_POST['hdnFlagEnvio'])){
-      	
-     	  try{
-					$objMdRespostaEnvioDTO->setArrIdDocumentosProcesso(PaginaSEI::getInstance()->getArrStrItensSelecionados());
+        
+        try{
+                  $objMdRespostaEnvioDTO->setArrIdDocumentosProcesso(PaginaSEI::getInstance()->getArrStrItensSelecionados());
 
-					$objMdRespostaEnvioRN = new MdRespostaEnvioRN();
-					$objDocumentoDTO = $objMdRespostaEnvioRN->cadastrar($objMdRespostaEnvioDTO);
+                  $objMdRespostaEnvioRN = new MdRespostaEnvioRN();
+                  $objDocumentoDTO = $objMdRespostaEnvioRN->cadastrar($objMdRespostaEnvioDTO);
           
           header('Location: '.SessaoSEI::getInstance()->assinarLink('controlador.php?acao=arvore_visualizar&acao_origem='.$_GET['acao'].'&id_procedimento='.$_GET['id_procedimento'].'&id_documento='.$objDocumentoDTO->getDblIdDocumento().'&atualizar_arvore=1'));
           die;
-					
+                    
         }catch(Exception $e){
           PaginaSEI::getInstance()->processarExcecao($e);
         }
-	    }
+      }
       
-      break;
+        break;
      
-    	default:
-      throw new InfraException("Ação '".$_GET['acao']."' não reconhecida.");
+    default:
+        throw new InfraException("Ação '".$_GET['acao']."' não reconhecida.");
   }
 
-	$arrComandos[] = '<button type="button" onclick="submeterFormulario();" accesskey="E" name="btnEnviar" value="Enviar" class="infraButton"><span class="infraTeclaAtalho">E</span>nviar</button>';
-	$arrComandos[] = '<button type="button" accesskey="C" id="btnCancelar" name="btnCancelar" value="Cancelar" onclick="history.go(-1);" class="infraButton"><span class="infraTeclaAtalho">C</span>ancelar</button>';
+    $arrComandos[] = '<button type="button" onclick="submeterFormulario();" accesskey="E" name="btnEnviar" value="Enviar" class="infraButton"><span class="infraTeclaAtalho">E</span>nviar</button>';
+    $arrComandos[] = '<button type="button" accesskey="C" id="btnCancelar" name="btnCancelar" value="Cancelar" onclick="history.go(-1);" class="infraButton"><span class="infraTeclaAtalho">C</span>ancelar</button>';
 
   $strItensSelProcedimentos = ProcedimentoINT::conjuntoCompletoFormatadoRI0903($arrProtocolos);
 
@@ -227,7 +226,7 @@ function validarEnvio() {
   return true;
 }
 
-function submeterFormulario(){	
+function submeterFormulario(){  
   if (validarEnvio()){
 
     transmitir=true;
@@ -274,7 +273,7 @@ function submeterFormulario(){
 <?
 PaginaSEI::getInstance()->fecharJavaScript();
 PaginaSEI::getInstance()->fecharHead();
-PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
+PaginaSEI::getInstance()->abrirBody($strTitulo, 'onload="inicializar();"');
 ?>
 
 <link rel="stylesheet" href="<?php print MdRespostaIntegracao::getDiretorio(); ?>/css/<?php print MdRespostaINT::getCssCompatibilidadeSEI4("md_resposta_sei3.css"); ?>" type="text/css" />
@@ -284,9 +283,9 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
   PaginaSEI::getInstance()->montarBarraComandosSuperior($arrComandos);
   ?>
   <div id="divProcedimentos" class="infraAreaDados">
-	 	<label id="lblProcedimentos" for="selProcedimentos" class="infraLabelObrigatorio">Processo:</label>
-	  <select id="selProcedimentos" name="selProcedimentos" disabled="disabled" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>">
-	  <?=$strItensSelProcedimentos?>
+        <label id="lblProcedimentos" for="selProcedimentos" class="infraLabelObrigatorio">Processo:</label>
+      <select id="selProcedimentos" name="selProcedimentos" disabled="disabled" class="infraSelect" tabindex="<?=PaginaSEI::getInstance()->getProxTabDados()?>">
+      <?=$strItensSelProcedimentos?>
     </select>
   </div>
   <br/>
@@ -298,25 +297,25 @@ PaginaSEI::getInstance()->abrirBody($strTitulo,'onload="inicializar();"');
   <br/>
   <div id="divDocumentosProcesso">
      <?
-     PaginaSEI::getInstance()->montarAreaTabela($strResultadoDocumentos,$numDocumentos);
-     ?>
+      PaginaSEI::getInstance()->montarAreaTabela($strResultadoDocumentos, $numDocumentos);
+      ?>
   </div>
   <br/>
   
   <fieldset id="fldSinConclusiva" class="infraFieldset" style="height:6.5em">
-    	<legend class="infraLegend">&nbsp;<?=MdRespostaEnvioRN::$TX_TITULO?>&nbsp;</legend>
-    	<div class="group">
+        <legend class="infraLegend">&nbsp;<?=MdRespostaEnvioRN::$TX_TITULO?>&nbsp;</legend>
+        <div class="group">
         <div id="divOptDefinitiva" class="infraDivRadio"> 
           <input type="radio" name="rdoSinConclusiva" id="optDefinitiva" value="<?=MdRespostaEnvioRN::$EV_RESPOSTA?>" class="infraRadio"/>
           <span id="spnDefinitiva"><label id="lblDefinitiva" for="optDefinitiva" class="infraLabelRadio" ><?=MdRespostaEnvioRN::$TX_RESPOSTA?></label></span>
         </div>
       
-        <div id="divOptParcial" class="infraDivRadio">	  
+        <div id="divOptParcial" class="infraDivRadio">    
           <input type="radio" name="rdoSinConclusiva" id="optParcial" value="<?=MdRespostaEnvioRN::$EV_AJUSTE?>" class="infraRadio"/>
           <span id="spnParcial"><label id="lblParcial" for="optParcial" class="infraLabelRadio" ><?=MdRespostaEnvioRN::$TX_AJUSTE?></label></span>
         </div>
       </div>
-  	  
+      
       <div id="divDescricaoResposta" style="text-align:center; width: 92%;">OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários.</div>
   </fieldset> 
 

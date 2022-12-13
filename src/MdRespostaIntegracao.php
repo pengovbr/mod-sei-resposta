@@ -23,11 +23,11 @@ class MdRespostaIntegracao extends SeiIntegracao{
 
       case 'md_resposta_configuracao':
         require_once dirname(__FILE__).'/resposta_configuracao.php';
-        return true;
+          return true;
         
       case 'md_resposta_enviar':
         require_once dirname(__FILE__).'/resposta_envio.php';
-        return true;
+          return true;
     }
 
     return false;
@@ -115,11 +115,11 @@ class MdRespostaIntegracao extends SeiIntegracao{
   public function processarControladorWebServices($servico)
   {
       $strArq = null;
-      switch ($_GET['servico']) {
-        case 'MdRespostaWS':
-          $strArq =  dirname(__FILE__) . '/ws/MdResposta.wsdl';
+    switch ($_GET['servico']) {
+      case 'MdRespostaWS':
+        $strArq =  dirname(__FILE__) . '/ws/MdResposta.wsdl';
           break;
-      }
+    }
 
       return $strArq;
   }

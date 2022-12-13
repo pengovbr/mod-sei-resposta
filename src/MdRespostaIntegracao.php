@@ -3,10 +3,10 @@
 
 class MdRespostaIntegracao extends SeiIntegracao{
 
-  const VERSAO_MODULO = "1.2.2";
+  const VERSAO_MODULO = "1.2.3";
 
   public function getNome(){
-    return 'Módulo de Resposta';
+    return 'MÃ³dulo de Resposta';
   }
 
   public function getVersao() {
@@ -14,7 +14,7 @@ class MdRespostaIntegracao extends SeiIntegracao{
   }
 
   public function getInstituicao(){
-    return 'Ministério da Economia - ME';
+    return 'MinistÃ©rio da Economia - ME';
   }
 
   public function processarControlador($strAcao){

@@ -14,7 +14,7 @@ jobs:
         with:
           php-version: '7.3'
           coverage: none
-          tools: composer, cs2pr
+          tools: composer
 
       - name: Get Composer cache directory
         id: composer-cache
@@ -33,4 +33,4 @@ jobs:
         run: composer install --prefer-dist --no-suggest --no-progress
 
       - name: Detect coding standard violations
-        run: src/vendor/bin/phpcs -q --report=checkstyle src | cs2pr --graceful-warnings
+        run: src/vendor/bin/phpcs -q --report=checkstyle src

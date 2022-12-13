@@ -85,6 +85,7 @@ class MdMetaBD extends InfraMetaBD {
         if($arrVersion[0].$arrVersion[1] < 56){
             $this->getObjInfraIBanco()->executarSql('@SET STORAGE_ENGINE=InnoDB');
         }
+      //InfraSqlServer ou Oracle
       case 'InfraSqlServer':
       case 'InfraOracle':
           break;
@@ -136,7 +137,8 @@ class MdMetaBD extends InfraMetaBD {
 
         case 'InfraSqlServer':
           $strQuery = sprintf("sp_rename '%s', '%s'", $strNomeTabelaAtual, $strNomeTabelaNovo);
-
+            break;
+            
         case 'InfraOracle':
           $strQuery = sprintf("RENAME TABLE %s TO %s", $strNomeTabelaAtual, $strNomeTabelaNovo);
             break;

@@ -278,7 +278,7 @@ PaginaSEI::getInstance()->abrirBody($strTitulo, 'onload="inicializar();"');
 
 <link rel="stylesheet" href="<?php print MdRespostaIntegracao::getDiretorio(); ?>/css/<?php print MdRespostaINT::getCssCompatibilidadeSEI4("md_resposta_sei3.css"); ?>" type="text/css" />
 
-<form id="frmResposta" method="post" action="<?=SessaoSEI::getInstance()->assinarLink('controlador.php?acao='.$_GET['acao'].'&acao_origem='.$_GET['acao'].$strParametros)?>" style="display:inline;">
+<form id="frmResposta" method="post" action="<?=SessaoSEI::getInstance()->assinarLink('controlador.php?acao='.htmlspecialchars($_GET['acao'], ENT_QUOTES, 'ISO-8859-1').'&acao_origem='.htmlspecialchars($_GET['acao'], ENT_QUOTES, 'ISO-8859-1').$strParametros)?>" style="display:inline;">
   <?
   PaginaSEI::getInstance()->montarBarraComandosSuperior($arrComandos);
   ?>

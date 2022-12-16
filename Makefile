@@ -45,6 +45,17 @@ Pressione y para continuar [y/n]...
 endef
 export TESTS_MENSAGEM_ORIENTACAO
 
+ifeq (, $(shell groups |grep docker))
+ CMD_DOCKER_SUDO=sudo
+else
+ CMD_DOCKER_SUDO=
+endif
+
+ifeq (, $(shell which docker-compose))
+ CMD_DOCKER_COMPOSE=$(CMD_DOCKER_SUDO) docker compose
+else
+ CMD_DOCKER_COMPOSE=$(CMD_DOCKER_SUDO) docker-compose
+endif
 
 all: clean dist
 
@@ -105,7 +116,7 @@ check-super-path:
 
 check-module-config:
 	@docker cp utils/verificar_modulo.php httpd:/
-	@docker-compose exec -T httpd bash -c "php /verificar_modulo.php" ; ret=$$?; echo "$$ret"; if [ ! $$ret -eq 0 ]; then echo "$(MENSAGEM_AVISO_MODULO)\n"; exit 1; fi
+	@$(CMD_DOCKER_COMPOSE) exec -T httpd bash -c "php /verificar_modulo.php" ; ret=$$?; echo "$$ret"; if [ ! $$ret -eq 0 ]; then echo "$(MENSAGEM_AVISO_MODULO)\n"; exit 1; fi
 
 
 # acessa o super e verifica se esta respondendo a tela de login
@@ -131,15 +142,15 @@ prerequisites-modulo-instalar: check-super-path check-module-config check-super-
 
 
 install: prerequisites-modulo-instalar
-	docker-compose exec -T -w /opt/sei/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SEI_MODULO)";
-	docker-compose exec -T -w /opt/sip/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SIP_MODULO)";
+	$(CMD_DOCKER_COMPOSE) exec -T -w /opt/sei/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SEI_MODULO)";
+	$(CMD_DOCKER_COMPOSE) exec -T -w /opt/sip/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SIP_MODULO)";
 	@echo "==================================================================================================="
 	@echo ""
 	@echo "Fim da instalação do módulo"
 
 
 up: prerequisites-up
-	docker-compose up -d
+	$(CMD_DOCKER_COMPOSE) up -d
 	make check-super-isalive
 
 
@@ -149,14 +160,14 @@ config:
 
 
 down: 
-	docker-compose down
+	$(CMD_DOCKER_COMPOSE) down
 
 
 restart: down up
 
 
 destroy: 
-	docker-compose down --volumes
+	$(CMD_DOCKER_COMPOSE) down --volumes
 
 
 # mensagens de orientacao para first time buccaneers

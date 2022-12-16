@@ -26,7 +26,7 @@ class MdRespostaEnvioRN extends InfraRN {
     try{
 
       //Valida Permissao
-      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_enviar',__METHOD__,$objMdRespostaEnvioDTO);
+      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_enviar', __METHOD__, $objMdRespostaEnvioDTO);
 
       //Regras de Negocio
       $objInfraException = new InfraException();
@@ -69,15 +69,15 @@ class MdRespostaEnvioRN extends InfraRN {
       return $objDocumentoDTO;
 
     } catch (\Exception $e) {
-      throw new InfraException('Erro no envio da resposta pelo Protocolo Digital.',$e);
+      throw new InfraException('Erro no envio da resposta pelo Protocolo Digital.', $e);
     }
   }
 
   protected function gerarDocumentoControlado(MdRespostaEnvioDTO $objMdRespostaEnvioDTO) {
     try{
 
-      ini_set('max_execution_time','600');
-      ini_set('memory_limit','1024M');
+      ini_set('max_execution_time', '600');
+      ini_set('memory_limit', '1024M');
 
       $strMensagem = $objMdRespostaEnvioDTO->getStrMensagem();
       $dthDataAtual = $objMdRespostaEnvioDTO->getDthDthResposta();
@@ -114,39 +114,39 @@ class MdRespostaEnvioRN extends InfraRN {
       $objProcedimentoDTO = $objProcedimentoRN->consultarRN0201($objProcedimentoDTO);
             
       
-   	  $strXML = '';
-   	  $strXML .= '<?xml version="1.0" encoding="iso-8859-1"?>'."\n";
-   	  $strXML .= '<documento>'."\n";
+      $strXML = '';
+      $strXML .= '<?xml version="1.0" encoding="iso-8859-1"?>'."\n";
+      $strXML .= '<documento>'."\n";
       $strXML .= '<atributo nome="Data" titulo="Data de Envio">'.InfraString::formatarXML($dthDataAtual).'</atributo>'."\n";
       $strXML .= '<atributo nome="Processo" titulo="Processo">'.$objProcedimentoDTO->getStrProtocoloProcedimentoFormatado().'</atributo>'."\n";
       $strXML .= '<atributo nome="Mensagem" titulo="Mensagem">'.InfraString::formatarXML($strMensagem).'</atributo>'."\n";
       $strXML .= '<atributo nome="RespostaConclusiva" titulo="'.self::$TX_TITULO.':">'.InfraString::formatarXML($strSinConclusiva).'</atributo>'."\n";
 
-    	$objDocumentoDTO->setStrConteudo(null);
-    	$objDocumentoDTO->setDblIdDocumentoEdoc(null);
-    	$objDocumentoDTO->setDblIdDocumentoEdocBase(null);
-   	  $objDocumentoDTO->setNumIdUnidadeResponsavel(SessaoSEI::getInstance()->getNumIdUnidadeAtual());
-    	$objDocumentoDTO->setStrNumero(null);
-    	$objDocumentoDTO->setStrStaDocumento(DocumentoRN::$TD_FORMULARIO_AUTOMATICO);
+        $objDocumentoDTO->setStrConteudo(null);
+        $objDocumentoDTO->setDblIdDocumentoEdoc(null);
+        $objDocumentoDTO->setDblIdDocumentoEdocBase(null);
+      $objDocumentoDTO->setNumIdUnidadeResponsavel(SessaoSEI::getInstance()->getNumIdUnidadeAtual());
+        $objDocumentoDTO->setStrNumero(null);
+        $objDocumentoDTO->setStrStaDocumento(DocumentoRN::$TD_FORMULARIO_AUTOMATICO);
 
       $objProtocoloDTO = new ProtocoloDTO();
       $objProtocoloDTO->setDblIdProtocolo(null);
       $objProtocoloDTO->setStrStaNivelAcessoLocal(ProtocoloRN::$NA_PUBLICO);
       $objProtocoloDTO->setStrDescricao(null);
-  	  $objProtocoloDTO->setDtaGeracao(InfraData::getStrDataAtual());
-			$objProtocoloDTO->setArrObjRelProtocoloAssuntoDTO(array());							
+      $objProtocoloDTO->setDtaGeracao(InfraData::getStrDataAtual());
+            $objProtocoloDTO->setArrObjRelProtocoloAssuntoDTO(array());                         
 
-      $objProtocoloDTO->setArrObjParticipanteDTO(array());						
-			$objProtocoloDTO->setArrObjObservacaoDTO(array());
+      $objProtocoloDTO->setArrObjParticipanteDTO(array());                      
+            $objProtocoloDTO->setArrObjObservacaoDTO(array());
       if (InfraArray::contar($arrStrIds)) {
-	 		  $objProtocoloDTO->setArrObjAnexoDTO($objMdRespostaEnvioDTO->getArrObjAnexoDTO());
+              $objProtocoloDTO->setArrObjAnexoDTO($objMdRespostaEnvioDTO->getArrObjAnexoDTO());
       }
-	 		$objDocumentoDTO->setObjProtocoloDTO($objProtocoloDTO);
+            $objDocumentoDTO->setObjProtocoloDTO($objProtocoloDTO);
 
       $objDocumentoRN = new DocumentoRN();
-	 		$objDocumentoDTO = $objDocumentoRN->cadastrarRN0003($objDocumentoDTO);
+            $objDocumentoDTO = $objDocumentoRN->cadastrarRN0003($objDocumentoDTO);
 
-	 		//busca os anexos para gravar com o id possibilitando link na consulta
+            //busca os anexos para gravar com o id possibilitando link na consulta
       if (InfraArray::contar($arrStrIds)) {
         $objAnexoDTO = new AnexoDTO();
         $objAnexoDTO->retNumIdAnexo();
@@ -168,12 +168,12 @@ class MdRespostaEnvioRN extends InfraRN {
         $strXML .= '</atributo>'."\n";  
       }      
       
-    	$strXML .= '</documento>';
+        $strXML .= '</documento>';
 
-    	$dto = new DocumentoDTO();
-    	$dto->setDblIdDocumento($objDocumentoDTO->getDblIdDocumento());
-    	$dto->setStrConteudo(InfraUtil::filtrarISO88591($strXML));
-    	$objDocumentoRN->atualizarConteudoRN1205($dto);
+        $dto = new DocumentoDTO();
+        $dto->setDblIdDocumento($objDocumentoDTO->getDblIdDocumento());
+        $dto->setStrConteudo(InfraUtil::filtrarISO88591($strXML));
+        $objDocumentoRN->atualizarConteudoRN1205($dto);
       
       $arrObjAtributoAndamentoDTO = array();
       $objAtributoAndamentoDTO = new AtributoAndamentoDTO();
@@ -185,7 +185,7 @@ class MdRespostaEnvioRN extends InfraRN {
       return $objDocumentoDTO;
 
     }catch(Exception $e){
-      throw new InfraException('Erro na geração da resposta pelo Protocolo Digital.',$e);
+      throw new InfraException('Erro na geração da resposta pelo Protocolo Digital.', $e);
     }
   }
 
@@ -319,12 +319,12 @@ class MdRespostaEnvioRN extends InfraRN {
     $objInfraParametro = new InfraParametro(BancoSEI::getInstance());
     $numConversaoAnexoHtmlParaPdf = $objInfraParametro->getValor('SEI_EMAIL_CONVERTER_ANEXO_HTML_PARA_PDF', false);
 
-		if ($numConversaoAnexoHtmlParaPdf === '1'){
+    if ($numConversaoAnexoHtmlParaPdf === '1'){
 
-		  $numAnexos = InfraArray::contar($arrAnexos);
-		  for($i=0; $i<$numAnexos; $i++){
+      $numAnexos = InfraArray::contar($arrAnexos);
+      for($i=0; $i<$numAnexos; $i++){
 
-        if (substr($arrAnexos[$i][1],-4) == '.htm' || substr($arrAnexos[$i][1],-5) == '.html'){
+        if (substr($arrAnexos[$i][1], -4) == '.htm' || substr($arrAnexos[$i][1], -5) == '.html'){
 
           $strArquivoHtml = $arrAnexos[$i][0].'.html';
 
@@ -341,7 +341,7 @@ class MdRespostaEnvioRN extends InfraRN {
 
           unlink(DIR_SEI_TEMP.'/'.$strArquivoHtml);
 
-          $strNomePdf = substr($arrAnexos[$i][1], 0, strlen($arrAnexos[$i][1])-(substr($arrAnexos[$i][1],-4)=='.htm'?4:5)).'.pdf';
+          $strNomePdf = substr($arrAnexos[$i][1], 0, strlen($arrAnexos[$i][1])-(substr($arrAnexos[$i][1], -4)=='.htm'?4:5)).'.pdf';
           $numTamanhoPdf = filesize(DIR_SEI_TEMP.'/'.$strArquivoPdf);
 
           $arrAnexos[$i] = array($strArquivoPdf, $strNomePdf, InfraData::getStrDataHoraAtual(), $numTamanhoPdf, InfraUtil::formatarTamanhoBytes($numTamanhoPdf));
@@ -349,17 +349,17 @@ class MdRespostaEnvioRN extends InfraRN {
       }
     }
 
-		$arrObjAnexoDTO = array();
+        $arrObjAnexoDTO = array();
     $arrAnexosTemp = array();
-		foreach($arrAnexos as $anexo){
-			$objAnexoDTO = new AnexoDTO();
+    foreach($arrAnexos as $anexo){
+        $objAnexoDTO = new AnexoDTO();
       $objAnexoDTO->setStrSinExclusaoAutomatica('N');
       $objAnexoDTO->setNumIdAnexo($anexo[0]);
       $objAnexoDTO->setStrNome($anexo[1]);
       $objAnexoDTO->setDthInclusao($anexo[2]);
       $objAnexoDTO->setNumTamanho($anexo[3]);
       $objAnexoDTO->setNumIdUsuario(SessaoSEI::getInstance()->getNumIdUsuario());
-			$arrObjAnexoDTO[] = $objAnexoDTO;
+        $arrObjAnexoDTO[] = $objAnexoDTO;
 
       $arrAnexosTemp[$objAnexoDTO->getStrNome()] = DIR_SEI_TEMP.'/'.$objAnexoDTO->getNumIdAnexo();
     }
@@ -379,33 +379,33 @@ class MdRespostaEnvioRN extends InfraRN {
   }  
 
   private function validarDblIdProtocolo(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
-  	if (InfraString::isBolVazia($objMdRespostaEnvioDTO->getDblIdProtocolo())){
-	      $objInfraException->adicionarValidacao('Processo não selecionado.', $strAtributoValidacao);
-	  }
+    if (InfraString::isBolVazia($objMdRespostaEnvioDTO->getDblIdProtocolo())){
+          $objInfraException->adicionarValidacao('Processo não selecionado.', $strAtributoValidacao);
+    }
   }
   
   private function validarStrMensagem(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
-  	if (InfraString::isBolVazia($objMdRespostaEnvioDTO->getStrMensagem())){
-	      $objInfraException->adicionarValidacao('Mensagem não Informada.', $strAtributoValidacao);
-	  }
+    if (InfraString::isBolVazia($objMdRespostaEnvioDTO->getStrMensagem())){
+          $objInfraException->adicionarValidacao('Mensagem não Informada.', $strAtributoValidacao);
+    }
   }
 
   private function validarTamanhoMensagem(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
-  	if (strlen($objMdRespostaEnvioDTO->getStrMensagem()) > 1000){
-	      $objInfraException->adicionarValidacao('Mensagem com tamanho superior ao permitido.', $strAtributoValidacao);
-	  }
+    if (strlen($objMdRespostaEnvioDTO->getStrMensagem()) > 1000){
+          $objInfraException->adicionarValidacao('Mensagem com tamanho superior ao permitido.', $strAtributoValidacao);
+    }
   }
 
   private function validarArrIdDocumentosProcesso(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
-  	if (count($objMdRespostaEnvioDTO->getArrIdDocumentosProcesso()) == 0 && $objMdRespostaEnvioDTO->getStrSinConclusiva() == self::$EV_RESPOSTA){
-	      $objInfraException->adicionarValidacao('Nenhum documento selecionado.', $strAtributoValidacao);
-	  }
+    if (count($objMdRespostaEnvioDTO->getArrIdDocumentosProcesso()) == 0 && $objMdRespostaEnvioDTO->getStrSinConclusiva() == self::$EV_RESPOSTA){
+          $objInfraException->adicionarValidacao('Nenhum documento selecionado.', $strAtributoValidacao);
+    }
   }  
 
   private function validarStrSinConclusiva(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){
-  	if (InfraString::isBolVazia($objMdRespostaEnvioDTO->getStrSinConclusiva())){
-	      $objInfraException->adicionarValidacao('Resposta não selecionada.', $strAtributoValidacao);
-	  }
+    if (InfraString::isBolVazia($objMdRespostaEnvioDTO->getStrSinConclusiva())){
+          $objInfraException->adicionarValidacao('Resposta não selecionada.', $strAtributoValidacao);
+    }
   }
 
   private function validarRespostaEnviada(MdRespostaEnvioDTO $objMdRespostaEnvioDTO, InfraException $objInfraException, $strAtributoValidacao = null){

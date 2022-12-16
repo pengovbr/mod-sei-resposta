@@ -20,7 +20,7 @@ class MdRespostaParametroRN extends InfraRN {
   public function atribuir($arrObjMdRespostaParametroDTO) {
 
     //Valida Permissao
-    SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao',__METHOD__,$objMdRespostaConfiguracaoDTO);
+    SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao', __METHOD__, $objMdRespostaConfiguracaoDTO);
 
     //Regras de Negocio
     $objInfraException = new InfraException();
@@ -49,7 +49,7 @@ class MdRespostaParametroRN extends InfraRN {
     try{
       
       //Valida Permissao
-      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao',__METHOD__,$objMdRespostaConfiguracaoDTO);
+      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao', __METHOD__, $objMdRespostaConfiguracaoDTO);
 
       //Regras de Negocio
       $objInfraException = new InfraException();
@@ -61,7 +61,7 @@ class MdRespostaParametroRN extends InfraRN {
       return $ret;
       
     }catch(Exception $e){
-      throw new InfraException('Erro cadastrando parâmetro(s) do módulo de resposta.',$e);
+      throw new InfraException('Erro cadastrando parâmetro(s) do módulo de resposta.', $e);
     }
   }
 
@@ -70,7 +70,7 @@ class MdRespostaParametroRN extends InfraRN {
     try{
       
       //Valida Permissao
-      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao',__METHOD__,$objMdRespostaParametroDTO);
+      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao', __METHOD__, $objMdRespostaParametroDTO);
       
       //Regras de Negocio
       $objInfraException = new InfraException();
@@ -83,7 +83,7 @@ class MdRespostaParametroRN extends InfraRN {
       return $ret;
       
     }catch(Exception $e){
-      throw new InfraException('Erro excluíndo parâmetro(s) do módulo de resposta.',$e);
+      throw new InfraException('Erro excluíndo parâmetro(s) do módulo de resposta.', $e);
     }
   }
 
@@ -92,7 +92,7 @@ class MdRespostaParametroRN extends InfraRN {
     try{
       
       //Valida Permissao
-      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao',__METHOD__,$objMdRespostaConfiguracaoDTO);
+      SessaoSEI::getInstance()->validarAuditarPermissao('md_resposta_configuracao', __METHOD__, $objMdRespostaConfiguracaoDTO);
       
       //Regras de Negocio
       $objInfraException = new InfraException();
@@ -105,7 +105,7 @@ class MdRespostaParametroRN extends InfraRN {
       return $ret;
       
     }catch(Exception $e){
-      throw new InfraException('Erro alterando parâmetro(s) do módulo de resposta.',$e);
+      throw new InfraException('Erro alterando parâmetro(s) do módulo de resposta.', $e);
     }
   }
   
@@ -120,7 +120,7 @@ class MdRespostaParametroRN extends InfraRN {
       return $ret;
       
     }catch(Exception $e){
-      throw new InfraException('Erro consultado parâmetro(s) do módulo de resposta.',$e);
+      throw new InfraException('Erro consultado parâmetro(s) do módulo de resposta.', $e);
     }
   }
   
@@ -137,7 +137,7 @@ class MdRespostaParametroRN extends InfraRN {
       return $arrObjMdRespostaParametroDTO;
       
     }catch(Exception $e){
-      throw new InfraException('Erro listar parâmetros do módulo de resposta.',$e);
+      throw new InfraException('Erro listar parâmetros do módulo de resposta.', $e);
     }
   }  
 

@@ -5,7 +5,7 @@ require_once dirname(__FILE__).'/../../../SEI.php';
 class MdRespostaEnvioDTO extends InfraDTO {
 
   public function getStrNomeTabela() {
-  	 return 'md_resposta_envio';
+     return 'md_resposta_envio';
   }
 
   public function montar() {

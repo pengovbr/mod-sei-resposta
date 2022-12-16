@@ -12,7 +12,7 @@ class MdRespostaParametroDTO extends InfraDTO
   {
       $this->adicionarAtributoTabela(InfraDTO::$PREFIXO_STR, 'Nome', 'nome');
       $this->adicionarAtributoTabela(InfraDTO::$PREFIXO_STR, 'Valor', 'valor');
-      $this->configurarPK('Nome',InfraDTO::$TIPO_PK_INFORMADO);
+      $this->configurarPK('Nome', InfraDTO::$TIPO_PK_INFORMADO);
   }
 }
 ?>

@@ -332,7 +332,7 @@ class MdRespostaEnvioRN extends InfraRN {
 
           $strArquivoPdf = $objAnexoRN->gerarNomeArquivoTemporario('.pdf');
 
-          $strComandoPdf = DIR_SEI_BIN.'/wkhtmltopdf-amd64 --quiet '.DIR_SEI_TEMP.'/'.$strArquivoHtml.' ' .DIR_SEI_TEMP.'/'.$strArquivoPdf .' 2>&1';
+          $strComandoPdf = DIR_SEI_BIN.'/wkhtmltopdf --quiet '.DIR_SEI_TEMP.'/'.$strArquivoHtml.' ' .DIR_SEI_TEMP.'/'.$strArquivoPdf .' 2>&1';
 
           $ret = shell_exec($strComandoPdf);
           if ($ret != ''){

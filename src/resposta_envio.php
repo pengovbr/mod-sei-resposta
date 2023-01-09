@@ -114,7 +114,8 @@ try {
           }
         }
       }
-            
+
+      // phpcs:disable
       $strResultadoDocumentos = '<table id="tblDocumentos" width="95%" class="infraTable" summary="Lista de Documentos">
  						  									<caption class="infraCaption" >'.PaginaSEI::getInstance()->gerarCaptionTabela("Documentos", $numDocumentos).'</caption> 
 						 										<tr>
@@ -126,7 +127,7 @@ try {
 						  									</tr>'.
                                 $strResultadoDocumentos.
                                 '</table>';
-        
+      // phpcs:enable
 
       if (isset($_POST['hdnFlagEnvio'])){
         

@@ -10,7 +10,6 @@
       "phpunit/phpunit": "*",
       "squizlabs/php_codesniffer": "*",
       "mockery/mockery": "^1.5",
-      "php-webdriver/webdriver": "^1.14.0",
       "phpcompatibility/php-compatibility": "^9.3"
   },
   "require": {

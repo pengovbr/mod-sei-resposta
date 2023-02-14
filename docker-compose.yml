@@ -1,17 +1,16 @@
 version: '2'
 services:
   jod:
-    image: processoeletronico/vagrant_sei4_jod:${ENVIRONMENT_VERSION}
-    container_name: jod
+    image: processoeletronico/vagrant_super4_jod:${ENVIRONMENT_VERSION}
 
   smtp:
-    image: processoeletronico/vagrant_sei4_mailcatcher:${ENVIRONMENT_VERSION}
+    image: processoeletronico/vagrant_super4_mailcatcher:${ENVIRONMENT_VERSION}
     container_name: smtp
     ports:
       - "1080:1080"
 
   memcached:
-    image: processoeletronico/vagrant_sei4_memcached:${ENVIRONMENT_VERSION}
+    image: processoeletronico/vagrant_super4_memcached:${ENVIRONMENT_VERSION}
     container_name: memcached
     ports:
       - "11211:11211"
@@ -28,13 +27,13 @@ services:
       - ${DATABASE_PORT}:${DATABASE_PORT}
 
   solr:
-    image: processoeletronico/vagrant_sei4_solr:${ENVIRONMENT_VERSION}
+    image: processoeletronico/vagrant_super4_solr:${ENVIRONMENT_VERSION}
     container_name: solr
     ports:
       - "8983:8983"
 
   httpd:
-    image: processoeletronico/vagrant_sei4_httpd:${ENVIRONMENT_VERSION}
+    image: processoeletronico/vagrant_super4_httpd:${ENVIRONMENT_VERSION}
     container_name: httpd
     restart: always
     env_file:
@@ -48,10 +47,11 @@ services:
       - ${SEI_PATH}/sei:/opt/sei
       - ${SEI_PATH}/sip:/opt/sip
       - ${SEI_PATH}/infra:/opt/infra
-      - ./src:/opt/sei/web/modulos/mod-sei-resposta
-      - ./src/config:/opt/sei/config/mod-sei-resposta
-      - ./src/scripts:/opt/sei/scripts/mod-sei-resposta
-      - ./src/scripts:/opt/sip/scripts/mod-sei-resposta
+      - ./envs/config/ConfiguracaoSEI.php:/opt/sei/config/ConfiguracaoSEI.php:ro
+      - ./envs/config/ConfiguracaoSip.php:/opt/sip/config/ConfiguracaoSip.php:ro
+      - ./src:/opt/sei/web/modulos/resposta
+      - ./src/scripts:/opt/sei/scripts/mod-resposta
+      - ./src/scripts:/opt/sip/scripts/mod-resposta
       - .:/project
     environment:
       - LANG=pt_BR.ISO-8859-1

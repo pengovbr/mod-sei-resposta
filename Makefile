@@ -12,8 +12,8 @@ ifndef HOST_URL
 HOST_URL=http://localhost:8000
 endif
 
-MODULO_NOME = mod-sei-resposta
-MODULO_PASTAS_CONFIG = $(MODULO_NOME)
+MODULO_NOME = resposta
+MODULO_PASTAS_CONFIG = mod-resposta
 MODULO_PASTA_NOME = $(notdir $(shell pwd))
 VERSAO_MODULO := $(shell grep 'const VERSAO_MODULO' ./src/MdRespostaIntegracao.php | cut -d'"' -f2)
 SEI_SCRIPTS_DIR = dist/sei/scripts/$(MODULO_PASTAS_CONFIG)
@@ -31,7 +31,7 @@ RED=\033[0;31m
 NC=\033[0m
 YELLOW=\033[1;33m
 
-MENSAGEM_AVISO_MODULO = $(RED)[ATENÇÃO]:$(NC)$(YELLOW) Necessário configurar a chave de configuração do módulo no arquivo de configuração do SEI (ConfiguracaoSEI.php) e prover o modulo na pasta correta $(NC)\n               $(YELLOW)'Modulos' => array('MdRespostaIntegracao' => 'mod-sei-resposta') $(NC)
+MENSAGEM_AVISO_MODULO = $(RED)[ATENÇÃO]:$(NC)$(YELLOW) Necessário configurar a chave de configuração do módulo no arquivo de configuração do SEI (ConfiguracaoSEI.php) e prover o modulo na pasta correta $(NC)\n               $(YELLOW)'Modulos' => array('MdRespostaIntegracao' => 'resposta') $(NC)
 MENSAGEM_AVISO_ENV = $(RED)[ATENÇÃO]:$(NC)$(YELLOW) Configurar parâmetros de autenticação do ambiente de testes do módulo de Resposta no arquivo .modulo.env $(NC)
 MENSAGEM_AVISO_FONTES = $(RED)[ATENÇÃO]:$(NC)$(YELLOW) Nao foi possivel localizar o fonte do Super. Verifique o valor SEI_PATH no arquivo .env $(NC)
 

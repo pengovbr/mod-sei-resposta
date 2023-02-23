@@ -1,0 +1,15 @@
+<phpunit
+        bootstrap="vendor/autoload.php"
+        convertErrorsToExceptions="true">
+    <listeners>
+        <listener class="\Mockery\Adapter\Phpunit\TestListener">
+        </listener>
+    </listeners>
+    <php>
+        <const name="SELENIUM_SERVER_URL" value="http://selenium:4444/wd/hub" />
+        <const name="IMPLICITLY_WAIT" value="5" />
+        <const name="SISTEMA_ORGAO" value="ABC" />
+        <const name="SEI_URL" value="http://webapp:8000/sei" />
+        <const name="SIP_URL" value="http://webapp:8000/sip" />
+    </php>
+</phpunit>

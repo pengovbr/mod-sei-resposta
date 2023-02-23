@@ -1,5 +1,6 @@
 {
   "config": {
+    "vendor-dir": "./vendor",
     "platform": {
       "php": "7.3"
     }
@@ -9,9 +10,6 @@
       "Tests\\": "tests/"
     }
   },
-  "include-path": [
-    "src/infra/infra_php"
-  ],
   "require-dev": {
     "php": "7.3",
     "phpunit/phpunit": "*",

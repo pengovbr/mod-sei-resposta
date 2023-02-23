@@ -7,6 +7,7 @@
 
 # Parâmetros de configuração
 base = mysql
+test = .
 
 ifndef HOST_URL
 HOST_URL=http://localhost:8000
@@ -26,6 +27,8 @@ ARQUIVO_ENV_RESPOSTA=.modulo.env
 MODULO_COMPACTADO = $(MODULO_NOME)-$(VERSAO_MODULO).zip
 CMD_INSTALACAO_SEI_MODULO = echo -ne '$(SEI_DATABASE_USER)\n$(SEI_DATABASE_PASSWORD)\n' | php sei_atualizar_versao_modulo_resposta.php
 CMD_INSTALACAO_SIP_MODULO = echo -ne '$(SIP_DATABASE_USER)\n$(SIP_DATABASE_PASSWORD)\n' | php sip_atualizar_versao_modulo_resposta.php
+
+DOCKER_COMPOSE_FILE_TEST = -f docker-compose.yml -f docker-compose.test.yml
 
 RED=\033[0;31m
 NC=\033[0m
@@ -160,14 +163,14 @@ config:
 
 
 down: 
-	$(CMD_DOCKER_COMPOSE) down
+	$(CMD_DOCKER_COMPOSE) $(DOCKER_COMPOSE_FILE_TEST) down
 
 
 restart: down up
 
 
 destroy: 
-	$(CMD_DOCKER_COMPOSE) down --volumes
+	$(CMD_DOCKER_COMPOSE) $(DOCKER_COMPOSE_FILE_TEST) down --volumes
 
 
 # mensagens de orientacao para first time buccaneers
@@ -193,11 +196,14 @@ tests-functional-prerequisites: .testselenium.env tests-functional-validar
 # roda apenas os testes, o ajuste de data inicial e a criacao do ambiente ja devem ter sido realizados
 tests-functional: tests-functional-prerequisites check-super-isalive
 	@echo "Vamos iniciar a execucao dos testes..."
-	@cd tests/functional && HOST_URL=$(HOST_URL) ./testes.sh
+	@cd tests/Funcional && HOST_URL=$(HOST_URL) ./testes.sh
 
 
 tests-functional-soap:
-	docker run -i --network=host --rm -v "$$PWD"/tests/functional/SoapUI:/opt/soapui/projects -v "$$PWD"/tests/functional/SoapUI/result:/opt/soapui/projects/testresult lukastosic/docker-soapui -e$(HOST_URL)/sei/modulos/$(MODULO_NOME)/ws/MdRespostaWS.php -s"SeiMdRespostaSOAP TestSuite" -r -j -f/opt/soapui/projects/testresult -I "/opt/soapui/projects/MdRespostaWS-soapui-project.xml"
+	docker run -i --network=host --rm -v "$$PWD"/tests/Funcional/SoapUI:/opt/soapui/projects -v "$$PWD"/tests/Funcional/SoapUI/result:/opt/soapui/projects/testresult lukastosic/docker-soapui -e$(HOST_URL)/sei/modulos/$(MODULO_NOME)/ws/MdRespostaWS.php -s"SeiMdRespostaSOAP TestSuite" -r -j -f/opt/soapui/projects/testresult -I "/opt/soapui/projects/MdRespostaWS-soapui-project.xml"
 
 
 tests-functional-full: tests-functional tests-functional-soap
+
+test-functional: vendor ## Executa testes funcionais da aplicação
+	$(CMD_DOCKER_COMPOSE) $(DOCKER_COMPOSE_FILE_TEST) run --rm -w /project php-test-func bash -c 'vendor/bin/phpunit --filter $(test) tests/Functional'

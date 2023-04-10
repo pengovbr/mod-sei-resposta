@@ -145,53 +145,55 @@ class MdRespostaWS extends InfraWS {
         $objMdRespostaDTO->retDthDthResposta();
         $objMdRespostaDTO->retDblIdDocumentoAnexo(); 
         $objMdRespostaDTO->retStrProtocoloFormatadoAnexos(); 
-        $objMdRespostaDTO->retStrProtocoloFormatadoResposta(); 
-            
+        $objMdRespostaDTO->retStrProtocoloFormatadoResposta();
+
+      if (!empty($arrIdProcedimento)) {
         $objMdRespostaDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
-            
-      if($IdResposta != null || $IdResposta != ""){
+
+        if ($IdResposta != null || $IdResposta != "") {
           $objMdRespostaDTO->setNumIdResposta($IdResposta);
-      }
+        }
 
         $objMdRespostaRN = new MdRespostaRN();
         $arrObjMdRespostaDTO = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
 
-      if (count($arrObjMdRespostaDTO)){
-    
+        if (count($arrObjMdRespostaDTO)) {
+
           $IdRespostaRetorno = "";
           $arrResposta = new ArrayObject();
-                
-        foreach($arrObjMdRespostaDTO as $objMdRespostaDTO ){
-          if($IdRespostaRetorno != $objMdRespostaDTO->getNumIdResposta()){
-            $IdRespostaRetorno = $objMdRespostaDTO->getNumIdResposta();
 
-            $arrDocumentos = new ArrayObject();
-            foreach($arrObjMdRespostaDTO as $objDocumentos){
-              if($IdRespostaRetorno == $objDocumentos->getNumIdResposta()){
-                $soapVar = new SoapVar($objDocumentos->getStrProtocoloFormatadoAnexos(), XSD_STRING, null, null, 'ProtocoloDocumento');
-                $arrDocumentos->append($soapVar);
+          foreach ($arrObjMdRespostaDTO as $objMdRespostaDTO) {
+            if ($IdRespostaRetorno != $objMdRespostaDTO->getNumIdResposta()) {
+              $IdRespostaRetorno = $objMdRespostaDTO->getNumIdResposta();
+
+              $arrDocumentos = new ArrayObject();
+              foreach ($arrObjMdRespostaDTO as $objDocumentos) {
+                if ($IdRespostaRetorno == $objDocumentos->getNumIdResposta()) {
+                  $soapVar = new SoapVar($objDocumentos->getStrProtocoloFormatadoAnexos(), XSD_STRING, null, null, 'ProtocoloDocumento');
+                  $arrDocumentos->append($soapVar);
+                }
               }
-            }
-                        
-            $Resposta = (object) array(
-            'IdResposta' => (int) $objMdRespostaDTO->getNumIdResposta(),
-            'IdProcedimento' => (int) $objMdRespostaDTO->getDblIdProcedimento(),
-            'NumProtocolo' => (string) $arrObjProcedimentoDTOIndexado[$objMdRespostaDTO->getDblIdProcedimento()]->getStrProtocoloProcedimentoFormatado(),
-            'ProtocoloDocumento' => (string) $objMdRespostaDTO->getStrProtocoloFormatadoResposta(),
-            'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
-            'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
-            'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
-            'ProtocoloDocumentosAnexados' => (object) $arrDocumentos
+
+              $Resposta = (object) array(
+                'IdResposta' => (int) $objMdRespostaDTO->getNumIdResposta(),
+                'IdProcedimento' => (int) $objMdRespostaDTO->getDblIdProcedimento(),
+                'NumProtocolo' => (string) $arrObjProcedimentoDTOIndexado[$objMdRespostaDTO->getDblIdProcedimento()]->getStrProtocoloProcedimentoFormatado(),
+                'ProtocoloDocumento' => (string) $objMdRespostaDTO->getStrProtocoloFormatadoResposta(),
+                'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
+                'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
+                'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
+                'ProtocoloDocumentosAnexados' => (object) $arrDocumentos
               );
 
               $soapVarResposta = new SoapVar($Resposta, null, null, null, 'Resposta');
               $arrResposta->append($soapVarResposta);
+            }
           }
-        }
 
           return $arrResposta;
-
-      }     
+        }
+      }
+        
 
       if ($arrObjMdRespostaDTO==null) {
           throw new InfraException('Nenhuma resposta encontrada.');

@@ -7,7 +7,7 @@ Este repositório no GitHub é o local oficial onde será mantido todo o desenvo
 ## DOWNLOAD
 
 O download do pacote de instalação/atualização do mod-sei-resposta pode ser encontrado na seção Releases deste projeto no GitHub. 
-Acesse o link https://github.com/spbgovbr/mod-sei-resposta/releases
+Acesse o link https://github.com/pengovbr/mod-sei-resposta/releases
 
 **[DOWNLOAD PACOTE DE INSTALAÇÃO MOD-SEI-RESPOSTA](https://github.com/spbgovbr/mod-sei-resposta/releases)** 
 

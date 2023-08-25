@@ -9,8 +9,8 @@ class MdRespostaEnvioRN extends InfraRN {
   public static $EV_AJUSTE = 'A';
   public static $EV_CONCLUSAO = 'C';
 
-  public static $TX_RESPOSTA = 'Enviar resposta';
-  public static $TX_AJUSTE = 'Enviar para ajuste/complementação';  
+  public static $TX_RESPOSTA = 'Resultado'; // Enviar resposta
+  public static $TX_AJUSTE = 'Solicitação de ajuste ou complementação';  // Enviar para ajuste/complementação
 
   public static $TX_TITULO = 'Tipo de Resposta';
   

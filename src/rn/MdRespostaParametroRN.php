@@ -6,7 +6,8 @@ require_once dirname(__FILE__).'/../../../SEI.php';
 class MdRespostaParametroRN extends InfraRN {
 
   const PARAM_SISTEMA = 'PARAM_SISTEMA';
-  const PARAM_TIPO_DOCUMENTO = 'PARAM_TIPO_DOCUMENTO';
+  const PARAM_TIPO_DOCUMENTO_AJUSTE_COMPLEMENTACAO = 'PARAM_TIPO_DOCUMENTO_AJUSTE_COMPLEMENTACAO';
+  const PARAM_TIPO_DOCUMENTO_RESULTADO = 'PARAM_TIPO_DOCUMENTO_RESULTADO';
   const PARAM_TIPO_PROCESSO = 'PARAM_TIPO_PROCESSO';
   
   public function __construct(){
@@ -145,7 +146,8 @@ class MdRespostaParametroRN extends InfraRN {
 
     $sistemaVazio = true;
     $tipoProcessoVazio = true;
-    $tipoDocumentoVazio = true;
+    $tipoDocumentoResultadoVazio = true;
+    $tipoDocumentoAjusteComplementacaoVazio = true;
 
     foreach ($arrObjMdRespostaParametroDTO as $objMdRespostaParametroDTO) {
       if($objMdRespostaParametroDTO->getStrNome() == MDRespostaParametroRN::PARAM_SISTEMA){
@@ -160,9 +162,15 @@ class MdRespostaParametroRN extends InfraRN {
         }
       }
 
-      if($objMdRespostaParametroDTO->getStrNome() == MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO){
+      if($objMdRespostaParametroDTO->getStrNome() == MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO_RESULTADO){
         if (!InfraString::isBolVazia($objMdRespostaParametroDTO->getStrValor())){
-          $tipoDocumentoVazio = false;
+          $tipoDocumentoResultadoVazio = false;
+        }
+      }
+
+      if($objMdRespostaParametroDTO->getStrNome() == MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO_AJUSTE_COMPLEMENTACAO){
+        if (!InfraString::isBolVazia($objMdRespostaParametroDTO->getStrValor())){
+          $tipoDocumentoAjusteComplementacaoVazio = false;
         }
       }
     }
@@ -171,8 +179,12 @@ class MdRespostaParametroRN extends InfraRN {
       $objInfraException->adicionarValidacao('Selecione o Sistema.');
     }
 
-    if($tipoDocumentoVazio){
-      $objInfraException->adicionarValidacao('Selecione o Tipo de Documento.');
+    if($tipoDocumentoResultadoVazio){
+      $objInfraException->adicionarValidacao('Selecione o Tipo de Documento para Resultado.');
+    }
+
+    if($tipoDocumentoAjusteComplementacaoVazio){
+      $objInfraException->adicionarValidacao('Selecione o Tipo de Documento para Solicitação de Ajuste ou Complementação.');
     }
 
   }

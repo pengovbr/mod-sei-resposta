@@ -109,6 +109,7 @@ class MdRespostaWS extends InfraWS {
         $SiglaSistema = $objSOAP->SiglaSistema;
         $IdentificacaoServico = $objSOAP->IdentificacaoServico;
         $arrIdProcedimento = $objSOAP->IdProcedimentos->IdProcedimento;
+
         $arrNumProcedimento = $objSOAP->NumProcedimentos->NumProcedimento;
         $IdResposta = $objSOAP->IdResposta;
 
@@ -129,11 +130,13 @@ class MdRespostaWS extends InfraWS {
         $arrObjProcedimentoDTOIndexado = InfraArray::indexarArrInfraDTO($arrObjProcedimentoDTO, "IdProcedimento");
 
       if(empty($arrIdProcedimento)){
+        $arrIdProcedimento = !is_array($arrIdProcedimento) ? array() : $arrIdProcedimento;
         foreach ($arrObjProcedimentoDTO as $objProcedimento){
             $arrIdProcedimento[] = $objProcedimento->getDblIdProcedimento();
         }
       }
-            
+      
+      if (!empty($arrIdProcedimento)) {
         $objMdRespostaDTO = new MdRespostaDTO();
             
         //campos que serão retornados
@@ -191,11 +194,8 @@ class MdRespostaWS extends InfraWS {
 
           return $arrResposta;
 
-      }     
-
-      if ($arrObjMdRespostaDTO==null) {
-          throw new InfraException('Nenhuma resposta encontrada.');
-      }
+      } 
+    }    
     
     } catch (Exception $e) {
         $this->processarExcecao($e);

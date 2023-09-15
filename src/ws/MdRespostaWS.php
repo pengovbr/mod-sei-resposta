@@ -195,7 +195,11 @@ class MdRespostaWS extends InfraWS {
           return $arrResposta;
 
       } 
-    }    
+      }
+      
+      if ($arrObjMdRespostaDTO==null) {
+        throw new InfraException('Nenhuma resposta encontrada.');
+      }
     
     } catch (Exception $e) {
         $this->processarExcecao($e);

@@ -52,6 +52,8 @@ services:
       - ./src/config:/opt/sei/config/mod-sei-resposta
       - ./src/scripts:/opt/sei/scripts/mod-sei-resposta
       - ./src/scripts:/opt/sip/scripts/mod-sei-resposta
+      - ./src/config/ConfiguracaoSEI.php:/opt/sei/config/ConfiguracaoSEI.php
+      - ./src/config/ConfiguracaoSip.php:/opt/sip/config/ConfiguracaoSip.php
       - .:/project
     environment:
       - LANG=pt_BR.ISO-8859-1

@@ -175,9 +175,9 @@ destroy:
 
 # mensagens de orientacao para first time buccaneers
 tests-functional-orientations:
-ifndef MSGORIENTACAO 
-	@( read -p "$$TESTS_MENSAGEM_ORIENTACAO" sure && case "$$sure" in [yY]) true;; *) false;; esac )
-endif
+	@if [ "$$CI" != "true" ] && [ -z "$$MSGORIENTACAO" ]; then \
+		read -p "$$TESTS_MENSAGEM_ORIENTACAO" sure && case "$$sure" in [yY]) true;; *) false;; esac \
+	fi
 
 
 # validar os testes antes de rodar

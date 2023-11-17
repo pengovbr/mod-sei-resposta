@@ -1,0 +1,26 @@
+name: Testes SOAP e Funcional
+
+on: pull_request
+env: # Or as an environment variable
+  CI: 'true'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Pull Request branch
+        uses: actions/checkout@v3
+        with:
+            repository: pengovbr/sei
+            token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
+            path: super
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+            path: sei/src/sei/web/modulos/mod-sei-resposta
+
+      - name: Run make test
+        run: |
+             cd sei/src/sei/web/modulos/mod-sei-resposta
+             make up; make update; make install
+             make tests-functional-full

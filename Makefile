@@ -24,6 +24,9 @@ SIP_SCRIPTS_DIR = dist/sip/scripts/$(MODULO_PASTAS_CONFIG)
 ARQUIVO_CONFIG_SEI=$(SEI_PATH)/sei/config/ConfiguracaoSEI.php
 ARQUIVO_ENV_RESPOSTA=.modulo.env
 MODULO_COMPACTADO = $(MODULO_NOME)-$(VERSAO_MODULO).zip
+CMD_INSTALACAO_SEI = echo -ne '$(SEI_DATABASE_USER)\n$(SEI_DATABASE_PASSWORD)\n' | php atualizar_versao_sei.php
+CMD_INSTALACAO_SIP = echo -ne '$(SIP_DATABASE_USER)\n$(SIP_DATABASE_PASSWORD)\n' | php atualizar_versao_sip.php
+CMD_INSTALACAO_RECURSOS_SEI = echo -ne '$(SIP_DATABASE_USER)\n$(SIP_DATABASE_PASSWORD)\n' | php atualizar_recursos_sei.php
 CMD_INSTALACAO_SEI_MODULO = echo -ne '$(SEI_DATABASE_USER)\n$(SEI_DATABASE_PASSWORD)\n' | php sei_atualizar_versao_modulo_resposta.php
 CMD_INSTALACAO_SIP_MODULO = echo -ne '$(SIP_DATABASE_USER)\n$(SIP_DATABASE_PASSWORD)\n' | php sip_atualizar_versao_modulo_resposta.php
 
@@ -199,5 +202,9 @@ tests-functional: tests-functional-prerequisites check-super-isalive
 tests-functional-soap:
 	docker run -i --network=host --rm -v "$$PWD"/tests/functional/SoapUI:/opt/soapui/projects -v "$$PWD"/tests/functional/SoapUI/result:/opt/soapui/projects/testresult lukastosic/docker-soapui -e$(HOST_URL)/sei/modulos/$(MODULO_NOME)/ws/MdRespostaWS.php -s"SeiMdRespostaSOAP TestSuite" -r -j -f/opt/soapui/projects/testresult -I "/opt/soapui/projects/MdRespostaWS-soapui-project.xml"
 
+update: ## Atualiza banco de dados através dos scripts de atualização do sistema
+	$(CMD_DOCKER_COMPOSE) run --rm -w /opt/sei/scripts/ httpd sh -c "$(CMD_INSTALACAO_SEI)"; true
+	$(CMD_DOCKER_COMPOSE) run --rm -w /opt/sip/scripts/ httpd sh -c "$(CMD_INSTALACAO_SIP)"; true
+	$(CMD_DOCKER_COMPOSE) run --rm -w /opt/sip/scripts/ httpd sh -c "$(CMD_INSTALACAO_RECURSOS_SEI)"; true
 
 tests-functional-full: tests-functional tests-functional-soap

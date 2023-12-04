@@ -116,14 +116,14 @@ try {
       }
             
       $strResultadoDocumentos = '<table id="tblDocumentos" width="95%" class="infraTable" summary="Lista de Documentos">
- 						  									<caption class="infraCaption" >'.PaginaSEI::getInstance()->gerarCaptionTabela("Documentos", $numDocumentos).'</caption> 
-						 										<tr>
-						  										<th class="infraTh" width="10%">'.$strCheck.'</th>
-						  										<th class="infraTh" width="15%">Nº SEI</th>
-						  										<th class="infraTh">Documento</th>
-						  										<th class="infraTh" width="15%">Data</th>
-						  										
-						  									</tr>'.
+                                                            <caption class="infraCaption" >'.PaginaSEI::getInstance()->gerarCaptionTabela("Documentos", $numDocumentos).'</caption> 
+                                                                <tr>
+                                                                <th class="infraTh" width="10%">'.$strCheck.'</th>
+                                                                <th class="infraTh" width="15%">Nº SEI</th>
+                                                                <th class="infraTh">Documento</th>
+                                                                <th class="infraTh" width="15%">Data</th>
+                                                                
+                                                            </tr>'.
                                 $strResultadoDocumentos.
                                 '</table>';
         

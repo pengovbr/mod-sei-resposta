@@ -245,7 +245,7 @@
          <!--Optional:-->
          <IdProcedimentos xsi:type="seim:IdProcedimentos">
             <!--0 to 100 repetitions:-->
-            <IdProcedimento xsi:type="xsd:int">13</IdProcedimento>
+            <IdProcedimento xsi:type="xsd:int">50</IdProcedimento>
          </IdProcedimentos>
          <!--Optional:-->
          <NumProcedimentos xsi:type="seim:NumProcedimentos">
@@ -262,7 +262,7 @@
       <seim:cadastrarProcessoSemRespostaRequest>
          <SiglaSistema>PD_GOV_BR</SiglaSistema>
          <IdentificacaoServico>SeiResposta</IdentificacaoServico>
-         <IdProcedimento>1</IdProcedimento>
+         <IdProcedimento>17</IdProcedimento>
       </seim:cadastrarProcessoSemRespostaRequest>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="SeiMdRespostaAction"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="917cdb17-52cd-44aa-b20b-070773a1a595" isOneWay="false" action="SeiMdRespostaAction" name="retirarProcessoSemResposta" bindingOperationName="retirarProcessoSemResposta" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="45ad2aee-7ff0-423e-bc4c-9840e6768cc3" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8000/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
@@ -271,7 +271,7 @@
       <seim:retirarProcessoSemRespostaRequest>
          <SiglaSistema>PD_GOV_BR</SiglaSistema>
          <IdentificacaoServico>SeiResposta</IdentificacaoServico>
-         <IdProcedimento>13</IdProcedimento>
+         <IdProcedimento>16</IdProcedimento>
       </seim:retirarProcessoSemRespostaRequest>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="SeiMdRespostaAction"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="f96f1b72-de80-4e7c-b324-f02a20d691af" name="SeiMdRespostaSOAP TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="d0a9f274-95e8-43b4-8c61-ba246d58ec4e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="SeiMdRespostaSOAP TestSuite" searchProperties="true"><con:settings/><con:testStep type="request" id="12ca8a59-5557-47a5-bac5-a99cca28474a" name="ViolationOfEncodingRules"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaBinding</con:interface><con:operation>listarResposta</con:operation><con:request name="ViolationOfEncodingRules" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8000/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">

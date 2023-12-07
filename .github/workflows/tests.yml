@@ -1,6 +1,6 @@
 name: Testes SOAP e Funcional
 
-on: pull_request
+on: [push, pull_request]
 env: # Or as an environment variable
   CI: 'true'
 

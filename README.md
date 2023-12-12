@@ -1,4 +1,4 @@
-# Módulo de Resposta à plataforma Gov.br [![PHP_CodeSniffer](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml)
+# Módulo de Resposta à plataforma Gov.br [![PHP_CodeSniffer](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml) [![Testes SOAP e Funcional](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests.yml)
 O módulo é o responsável por integrar o SUPER à plataforma Gov.br. Tem como objetivo proporcionar respostas tempestivas aos questionamentos executado diretamente por usuário externo, a fim de formar novo processo ou compor processo já existente dos cidadões.
 
 ## O REPOSITÓRIO

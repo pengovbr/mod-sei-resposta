@@ -13,7 +13,7 @@ jobs:
         with:
             repository: pengovbr/sei
             token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
-            path: super
+            path: sei
       - name: Checkout
         uses: actions/checkout@v3
         with:

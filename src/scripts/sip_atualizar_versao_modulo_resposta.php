@@ -263,6 +263,46 @@ class VersaoSipRN extends InfraScriptVersao
   public function versao_1_2_2($strVersaoAtual)
     {
   }
+
+  public function versao_1_3_0($strVersaoAtual)
+    {
+      $id_sistema = '';
+
+      $sistemaDTO = new SistemaDTO();
+      $sistemaDTO->setStrSigla('SEI');
+      $sistemaDTO->setNumRegistrosPaginaAtual(1);
+      $sistemaDTO->retNumIdSistema();
+
+      $sistemaRN = new SistemaRN();
+      $sistemaDTO = $sistemaRN->consultar($sistemaDTO);
+
+      if (!empty($sistemaDTO)) {
+        $id_sistema = $sistemaDTO->getNumIdSistema();
+      }
+
+      $itemMenuDTO = new ItemMenuDTO();
+      $itemMenuDTO->setStrRotulo('Módulo de Resposta - Gov.br');
+      $itemMenuDTO->setNumIdSistema($id_sistema);
+      $itemMenuDTO->retNumIdItemMenu();
+      $itemMenuDTO->retNumIdMenu();
+
+      $itemMenuRN = new ItemMenuRN();
+      $itemMenuDTO = $itemMenuRN->consultar($itemMenuDTO);
+
+      if (!empty($itemMenuDTO)) {
+        $id_item_menu = $itemMenuDTO->getNumIdItemMenu();
+        $id_menu = $itemMenuDTO->getNumIdMenu();
+
+        $itemMenuDTO = new ItemMenuDTO();
+        $itemMenuDTO->setStrRotulo('Módulo de Resposta ao Protocolo GOV.BR');
+        $itemMenuDTO->setNumIdSistema($id_sistema);
+        $itemMenuDTO->setNumIdMenu($id_menu);
+        $itemMenuDTO->setNumIdItemMenu($id_item_menu);
+
+        $itemMenuRN = new ItemMenuRN();
+        $itemMenuDTO = $itemMenuRN->alterar($itemMenuDTO);
+      }
+  }
 }
 
 try {
@@ -286,6 +326,7 @@ try {
             '1.2.0' => 'versao_1_2_0',
             '1.2.1' => 'versao_1_2_1',
             '1.2.2' => 'versao_1_2_2',
+            '1.3.0' => 'versao_1_3_0'
         )
     );
 

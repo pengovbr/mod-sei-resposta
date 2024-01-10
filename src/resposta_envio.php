@@ -167,6 +167,15 @@ PaginaSEI::getInstance()->montarTitle(PaginaSEI::getInstance()->getStrNomeSistem
 PaginaSEI::getInstance()->montarStyle();
 PaginaSEI::getInstance()->abrirStyle();
 ?>
+
+#divOptParcial{
+  left:20% !important;
+}
+
+#divOptDefinitiva{
+  left:50% !important;
+}
+
 <link rel="stylesheet" href="<?php print MdRespostaIntegracao::getDiretorio(); ?>/css/<?php print MdRespostaINT::getCssCompatibilidadeSEI4("md_resposta_sei3.css"); ?>" type="text/css" />
 <?
 PaginaSEI::getInstance()->fecharStyle();
@@ -226,6 +235,27 @@ function validarEnvio() {
   return true;
 }
 
+// Função para exibir o texto correspondente à opção clicada
+function exibirMensagem(opcao) {
+    var divDescricaoResposta = document.getElementById("divDescricaoResposta");
+    if (opcao === "ajustes") {
+      divDescricaoResposta.innerHTML = "<b>O solicitante será notificado por e-mail e deverá acessar o Portal gov.br para realizar o ajuste ou complementação. A solicitação permanecerá aberta no Protocolo GOV.BR.</b>";
+    } else if (opcao === "resultado") {
+      divDescricaoResposta.innerHTML = "<b>O solicitante será notificado por e-mail e deverá acessar o Portal gov.br para ver o Resultado. A solicitação será concluída no Protocolo GOV.BR.</b>";
+    }
+  }
+
+  // Adiciona os eventos de clique após o DOM estar carregado
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("divOptParcial").addEventListener("click", function() {
+      exibirMensagem("ajustes");
+    });
+
+    document.getElementById("divOptDefinitiva").addEventListener("click", function() {
+      exibirMensagem("resultado");
+    });
+  });
+
 function submeterFormulario(){  
   if (validarEnvio()){
 
@@ -236,7 +266,7 @@ function submeterFormulario(){
         transmitir=false;
       } 
     }else{
-      if (!confirm("Confirma o envio para ajuste/complementação? \nEssa ação não poderá ser desfeita.")) {
+      if (!confirm("Confirma o envio para ajuste ou complementação? \nEssa ação não poderá ser desfeita.")) {
         transmitir=false;
       }
     }
@@ -302,20 +332,18 @@ PaginaSEI::getInstance()->abrirBody($strTitulo, 'onload="inicializar();"');
   </div>
   <br/>
   
-  <fieldset id="fldSinConclusiva" class="infraFieldset" style="height:6.5em">
-        <legend class="infraLegend">&nbsp;<?=MdRespostaEnvioRN::$TX_TITULO?>&nbsp;</legend>
-        <div class="group">
-        <div id="divOptDefinitiva" class="infraDivRadio"> 
-          <input type="radio" name="rdoSinConclusiva" id="optDefinitiva" value="<?=MdRespostaEnvioRN::$EV_RESPOSTA?>" class="infraRadio"/>
-          <span id="spnDefinitiva"><label id="lblDefinitiva" for="optDefinitiva" class="infraLabelRadio" ><?=MdRespostaEnvioRN::$TX_RESPOSTA?></label></span>
-        </div>
-      
-        <div id="divOptParcial" class="infraDivRadio">    
-          <input type="radio" name="rdoSinConclusiva" id="optParcial" value="<?=MdRespostaEnvioRN::$EV_AJUSTE?>" class="infraRadio"/>
-          <span id="spnParcial"><label id="lblParcial" for="optParcial" class="infraLabelRadio" ><?=MdRespostaEnvioRN::$TX_AJUSTE?></label></span>
-        </div>
+  <fieldset id="fldSinConclusiva" class="infraFieldset" style="height:8.5em">
+    <legend class="infraLegend">&nbsp;<?=MdRespostaEnvioRN::$TX_TITULO?>&nbsp;</legend>
+    <div class="group">
+      <div id="divOptParcial" class="infraDivRadio">  
+        <input type="radio" name="rdoSinConclusiva" id="optParcial" value="<?=MdRespostaEnvioRN::$EV_AJUSTE?>" class="infraRadio"/>
+        <span id="spnParcial"><label id="lblParcial" for="optParcial" class="infraLabelRadio" ><?=MdRespostaEnvioRN::$TX_AJUSTE?></label></span>
       </div>
-      
+      <div id="divOptDefinitiva" class="infraDivRadio"> 
+        <input type="radio" name="rdoSinConclusiva" id="optDefinitiva" value="<?=MdRespostaEnvioRN::$EV_RESPOSTA?>" class="infraRadio"/>
+        <span id="spnDefinitiva"><label id="lblDefinitiva" for="optDefinitiva" class="infraLabelRadio" ><?=MdRespostaEnvioRN::$TX_RESPOSTA?></label></span>
+      </div>
+    </div>
       <div id="divDescricaoResposta" style="text-align:center; width: 92%;">OBS: Preencha o campo Mensagem e anexe o(s) documento(s) necessários.</div>
   </fieldset> 
 

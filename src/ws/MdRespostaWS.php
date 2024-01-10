@@ -96,6 +96,7 @@ class MdRespostaWS extends InfraWS {
   }
 
   protected function listarRespostaMonitorado($objSOAP) {
+    $arrObjMdRespostaDTO = null;
     try {
                 
         $InfraException = new InfraException();
@@ -191,14 +192,17 @@ class MdRespostaWS extends InfraWS {
 
           return $arrResposta;
 
-      }     
-
-      if ($arrObjMdRespostaDTO==null) {
-          throw new InfraException('Nenhuma resposta encontrada.');
-      }
-    
+      }        
     } catch (Exception $e) {
         $this->processarExcecao($e);
+    }
+    if ($arrObjMdRespostaDTO==null) {
+      $this->processarExcecao(
+        new InfraException('Nenhuma resposta encontrada.', null, null, null, null, InfraLog::$AVISO),
+        false,
+        InfraLog::$AVISO,
+        204
+      );
     }
   }
 

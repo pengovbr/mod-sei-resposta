@@ -264,6 +264,7 @@ class VersaoSipRN extends InfraScriptVersao
     {
   }
 
+  // phpcs:ignore PSR1.Methods.CamelCapsMethodName
   public function versao_1_3_0($strVersaoAtual)
     {
       $id_sistema = '';
@@ -276,9 +277,9 @@ class VersaoSipRN extends InfraScriptVersao
       $sistemaRN = new SistemaRN();
       $sistemaDTO = $sistemaRN->consultar($sistemaDTO);
 
-      if (!empty($sistemaDTO)) {
-        $id_sistema = $sistemaDTO->getNumIdSistema();
-      }
+    if (!empty($sistemaDTO)) {
+      $id_sistema = $sistemaDTO->getNumIdSistema();
+    }
 
       $itemMenuDTO = new ItemMenuDTO();
       $itemMenuDTO->setStrRotulo('Módulo de Resposta - Gov.br');
@@ -289,19 +290,19 @@ class VersaoSipRN extends InfraScriptVersao
       $itemMenuRN = new ItemMenuRN();
       $itemMenuDTO = $itemMenuRN->consultar($itemMenuDTO);
 
-      if (!empty($itemMenuDTO)) {
-        $id_item_menu = $itemMenuDTO->getNumIdItemMenu();
-        $id_menu = $itemMenuDTO->getNumIdMenu();
+    if (!empty($itemMenuDTO)) {
+      $id_item_menu = $itemMenuDTO->getNumIdItemMenu();
+      $id_menu = $itemMenuDTO->getNumIdMenu();
 
-        $itemMenuDTO = new ItemMenuDTO();
-        $itemMenuDTO->setStrRotulo('Módulo de Resposta ao Protocolo GOV.BR');
-        $itemMenuDTO->setNumIdSistema($id_sistema);
-        $itemMenuDTO->setNumIdMenu($id_menu);
-        $itemMenuDTO->setNumIdItemMenu($id_item_menu);
+      $itemMenuDTO = new ItemMenuDTO();
+      $itemMenuDTO->setStrRotulo('Módulo de Resposta ao Protocolo GOV.BR');
+      $itemMenuDTO->setNumIdSistema($id_sistema);
+      $itemMenuDTO->setNumIdMenu($id_menu);
+      $itemMenuDTO->setNumIdItemMenu($id_item_menu);
 
-        $itemMenuRN = new ItemMenuRN();
-        $itemMenuDTO = $itemMenuRN->alterar($itemMenuDTO);
-      }
+      $itemMenuRN = new ItemMenuRN();
+      $itemMenuDTO = $itemMenuRN->alterar($itemMenuDTO);
+    }
   }
 }
 

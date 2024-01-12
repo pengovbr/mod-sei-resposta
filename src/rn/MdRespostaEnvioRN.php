@@ -69,7 +69,7 @@ class MdRespostaEnvioRN extends InfraRN {
       return $objDocumentoDTO;
 
     } catch (\Exception $e) {
-      throw new InfraException('Erro no envio da resposta pelo Protocolo Digital.', $e);
+      throw new InfraException('Erro no envio da resposta pelo Protocolo GOV.BR.', $e);
     }
   }
 
@@ -187,7 +187,7 @@ class MdRespostaEnvioRN extends InfraRN {
       return $objDocumentoDTO;
 
     }catch(Exception $e){
-      throw new InfraException('Erro na geração da resposta pelo Protocolo Digital.', $e);
+      throw new InfraException('Erro na geração da resposta pelo Protocolo GOV.BR.', $e);
     }
   }
 

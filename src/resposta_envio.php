@@ -30,7 +30,7 @@ try {
   switch($_GET['acao']){
 
     case 'md_resposta_enviar':
-      $strTitulo = 'Enviar Resposta pelo Protocolo Digital';
+      $strTitulo = 'Enviar Resposta pelo Protocolo GOV.BR';
       
       $arrProtocolos = array();
       $arrProtocolos[] = $_GET['id_procedimento'];     

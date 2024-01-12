@@ -119,6 +119,7 @@ class MdRespostaWS extends InfraWS {
         $arrObjProcedimentoDTO->retDblIdProcedimento();
         $arrObjProcedimentoDTO->retStrProtocoloProcedimentoFormatado();
       if(empty($arrIdProcedimento)){
+        $arrIdProcedimento = [];
         is_array($arrNumProcedimento) ? $arrNumProcedimento : $arrNumProcedimento = array($arrNumProcedimento);
         $arrObjProcedimentoDTO->setStrProtocoloProcedimentoFormatadoPesquisa($arrNumProcedimento, InfraDTO::$OPER_IN);
       }else{
@@ -136,7 +137,8 @@ class MdRespostaWS extends InfraWS {
             $arrIdProcedimento[] = $objProcedimento->getDblIdProcedimento();
         }
       }
-            
+      $arrObjMdRespostaDTO = [];
+      if (!empty($arrIdProcedimento) && is_array($arrIdProcedimento)){
         $objMdRespostaDTO = new MdRespostaDTO();
             
         //campos que serão retornados
@@ -158,6 +160,7 @@ class MdRespostaWS extends InfraWS {
 
         $objMdRespostaRN = new MdRespostaRN();
         $arrObjMdRespostaDTO = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
+      }
 
       if (count($arrObjMdRespostaDTO)){
     
@@ -198,7 +201,7 @@ class MdRespostaWS extends InfraWS {
     } catch (Exception $e) {
         $this->processarExcecao($e);
     }
-    if ($arrObjMdRespostaDTO==null) {
+    if (empty($arrObjMdRespostaDTO)) {
       $objInfraException = new InfraException();
       $objInfraException->lancarValidacao('Nenhuma resposta encontrada.');
     }

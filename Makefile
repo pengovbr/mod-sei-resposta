@@ -2,7 +2,7 @@
 
 # Parâmetros de execução do comando MAKE
 # Opções possíveis para spe (sistema de proc eletronico): sei4, sei41, super
-sistema=sei4
+sistema=super
 
 -include .testselenium.env
 -include .env

@@ -1,0 +1,78 @@
+Status: FAILED
+Time Taken: 3263
+Size: 413
+Timestamp: Wed Jan 10 14:33:25 GMT 2024
+TestStep: RespNumProcedimentoSucess
+
+----------------- Messages ------------------------------
+[ContainsResposta] Missing token [Resposta] in Response
+[ContainsIdResposta] Missing token [IdResposta] in Response
+[ContainsNumProtocolo] Missing token [NumProtocolo] in Response
+[ContainsProtocoloDocumento] Missing token [ProtocoloDocumento] in Response
+[ContainsMensagem] Missing token [Mensagem] in Response
+[ContainsSinConclusiva] Missing token [SinConclusiva] in Response
+[ContainsDthResposta] Missing token [DthResposta] in Response
+[ContainsProtocoloDocumentosAnexados] Missing token [ProtocoloDocumentosAnexados] in Response
+
+----------------- Properties ------------------------------
+Endpoint: http://localhost:8000/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php
+Encoding: UTF-8
+
+---------------- Request ---------------------------
+Request Headers: SOAPAction : "SeiMdRespostaAction"
+Connection : Keep-Alive
+User-Agent : Apache-HttpClient/4.1.1 (java 1.5)
+Host : localhost:8000
+Accept-Encoding : gzip,deflate
+Content-Length : 1043
+Content-Type : text/xml;charset=UTF-8
+
+
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">PD_GOV_BR</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">SeiResposta</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int"/>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string">99990000001202319</NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string"/>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+---------------- Response --------------------------
+Response Headers: Server : Apache/2.4.6 (CentOS) PHP/7.3.28
+Connection : close
+Set-Cookie : XDEBUG_SESSION=default; expires=Wed, 10-Jan-2024 15:33:25 GMT; Max-Age=3600; path=/; SameSite=Strict
+Set-Cookie : XDEBUG_SESSION=default; expires=Wed, 10-Jan-2024 15:33:28 GMT; Max-Age=3600; path=/; SameSite=Strict
+#status# : HTTP/1.1 500 Internal Server Error
+Content-Length : 413
+Date : Wed, 10 Jan 2024 14:33:25 GMT
+X-Powered-By : PHP/7.3.28
+Content-Type : text/xml; charset=utf-8
+
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Body>
+      <SOAP-ENV:Fault>
+         <faultcode>SOAP-ENV:Client</faultcode>
+         <faultstring>Parâmetro do método [setDblIdProcedimento] não é um array.</faultstring>
+         <detail>
+            <item>
+               <key>infra_tipo_excecao</key>
+               <value>INFRA_ERRO</value>
+            </item>
+         </detail>
+      </SOAP-ENV:Fault>
+   </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

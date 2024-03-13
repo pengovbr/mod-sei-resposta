@@ -137,7 +137,7 @@ class Test02SEIMREnviarResposta():
     self.driver.find_element(By.ID, "imgInfraCheck").click()
     self.driver.find_element(By.ID, "lblParcial").click()
     self.driver.find_element(By.NAME, "btnEnviar").click()
-    assert self.driver.switch_to.alert.text == "Confirma o envio para ajuste/complementação? \nEssa ação não poderá ser desfeita."
+    assert self.driver.switch_to.alert.text == "Confirma o envio para ajuste ou complementação? \nEssa ação não poderá ser desfeita."
     self.driver.switch_to.alert.accept()
     self.driver.switch_to.default_content()
     self.driver.switch_to.frame(0)

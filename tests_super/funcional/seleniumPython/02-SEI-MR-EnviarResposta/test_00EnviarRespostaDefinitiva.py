@@ -142,19 +142,19 @@ class Test02SEIMREnviarResposta():
     self.driver.switch_to.alert.accept()
     self.driver.switch_to.default_content()
     self.driver.switch_to.frame(0)
-    WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.XPATH, "//span[contains(.,\'Resposta pelo Protocolo Digital\')]")))
-    elements = self.driver.find_elements(By.XPATH, "//span[contains(.,\'Resposta pelo Protocolo Digital\')]")
+    WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.XPATH, "//span[contains(.,\'Voto\')]")))
+    elements = self.driver.find_elements(By.XPATH, "//span[contains(.,\'Voto\')]")
     assert len(elements) > 0
-    self.driver.find_element(By.XPATH, "//span[contains(.,\'Resposta pelo Protocolo Digital\')]").click()
+    self.driver.find_element(By.XPATH, "//span[contains(.,\'Voto\')]").click()
     self.driver.switch_to.default_content()
     self.driver.switch_to.frame(1)
     WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.ID, "ifrArvoreHtml")))
     print("o index abaixo deve ser zero para rodar corretamente no python. Caso deseje rodar pelo IDE use 1")
     self.driver.switch_to.frame(0)
-    WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located((By.XPATH, "//label[contains(.,\'Resposta pelo Protocolo Digital\')]")))
+    WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located((By.XPATH, "//label[contains(.,\'Voto\')]")))
     elements = self.driver.find_elements(By.XPATH, "//b[contains(.,\'Anexos\')]")
     assert len(elements) > 0
     elements = self.driver.find_elements(By.XPATH, "//a[contains(text(),\'Despacho\')]")
     assert len(elements) > 0
-    elements = self.driver.find_elements(By.XPATH, "//label[contains(.,\'Resposta pelo Protocolo Digital\')]")
+    elements = self.driver.find_elements(By.XPATH, "//label[contains(.,\'Voto\')]")
     assert len(elements) > 0

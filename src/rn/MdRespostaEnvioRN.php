@@ -9,8 +9,8 @@ class MdRespostaEnvioRN extends InfraRN {
   public static $EV_AJUSTE = 'A';
   public static $EV_CONCLUSAO = 'C';
 
-  public static $TX_RESPOSTA = 'Enviar resposta';
-  public static $TX_AJUSTE = 'Enviar para ajuste/complementação';  
+  public static $TX_RESPOSTA = 'Resultado';
+  public static $TX_AJUSTE = 'Solicitação de ajuste ou complementação';  
 
   public static $TX_TITULO = 'Tipo de Resposta';
   
@@ -69,7 +69,7 @@ class MdRespostaEnvioRN extends InfraRN {
       return $objDocumentoDTO;
 
     } catch (\Exception $e) {
-      throw new InfraException('Erro no envio da resposta pelo Protocolo Digital.', $e);
+      throw new InfraException('Erro no envio da resposta pelo Protocolo GOV.BR.', $e);
     }
   }
 
@@ -83,8 +83,10 @@ class MdRespostaEnvioRN extends InfraRN {
       $dthDataAtual = $objMdRespostaEnvioDTO->getDthDthResposta();
 
       $strSinConclusiva = self::$TX_AJUSTE;
+      $parTipoDocumento = MdRespostaParametroRN::PARAM_TIPO_DOCUMENTO_AJUSTE_COMPLEMENTACAO;
       if($objMdRespostaEnvioDTO->getStrSinConclusiva() == self::$EV_RESPOSTA){
         $strSinConclusiva = self::$TX_RESPOSTA;
+        $parTipoDocumento = MdRespostaParametroRN::PARAM_TIPO_DOCUMENTO_RESULTADO;
       }
 
       $arrStrIds = $objMdRespostaEnvioDTO->getArrIdDocumentosProcesso();
@@ -95,7 +97,7 @@ class MdRespostaEnvioRN extends InfraRN {
       $objMdRespostaParametroRN = new MdRespostaParametroRN();
       
       $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
-      $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO);
+      $objMdRespostaParametroDTO->setStrNome($parTipoDocumento);
       $objMdRespostaParametroDTO->retStrValor();
 
       $objParametroTipoDocumentoDTO = $objMdRespostaParametroRN->consultar($objMdRespostaParametroDTO);
@@ -185,7 +187,7 @@ class MdRespostaEnvioRN extends InfraRN {
       return $objDocumentoDTO;
 
     }catch(Exception $e){
-      throw new InfraException('Erro na geração da resposta pelo Protocolo Digital.', $e);
+      throw new InfraException('Erro na geração da resposta pelo Protocolo GOV.BR.', $e);
     }
   }
 

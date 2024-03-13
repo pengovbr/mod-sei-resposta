@@ -22,7 +22,7 @@ try {
   switch($_GET['acao']){
 
     case 'md_resposta_configuracao':
-      $strTitulo = 'Configuração do Módulo de Respostas';
+      $strTitulo = 'Parâmetros de Configuração';
       $arrComandos[] = '<button type="submit" accesskey="S" name="sbmSalvar" value="Salvar" class="infraButton"><span class="infraTeclaAtalho">S</span>alvar</button>';
       $arrComandos[] = '<button type="button" accesskey="C" name="btnCancelar" id="btnCancelar" value="Cancelar" onclick="location.href=\''.SessaoSEI::getInstance()->assinarLink('controlador.php?acao='.PaginaSEI::getInstance()->getAcaoRetorno().'&acao_origem='.$_GET['acao']).'\';" class="infraButton"><span class="infraTeclaAtalho">C</span>ancelar</button>';
 
@@ -31,9 +31,15 @@ try {
           foreach ($_POST as $campo => $valor) { 
            
             switch($campo) {
-              case 'selTipoDocumento':
+              case 'selTipoDocumentoResultado':
                 $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
-                $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO);
+                $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO_RESULTADO);
+                $objMdRespostaParametroDTO->setStrValor($valor);
+                $arrObjMdRespostaParametroDTO[] = $objMdRespostaParametroDTO;
+                  break;
+              case 'selTipoDocumentoAjusteComplementacao':
+                $objMdRespostaParametroDTO = new MdRespostaParametroDTO();
+                $objMdRespostaParametroDTO->setStrNome(MDRespostaParametroRN::PARAM_TIPO_DOCUMENTO_AJUSTE_COMPLEMENTACAO);
                 $objMdRespostaParametroDTO->setStrValor($valor);
                 $arrObjMdRespostaParametroDTO[] = $objMdRespostaParametroDTO;
                   break;
@@ -72,7 +78,8 @@ try {
   }
 
   $strParametroSistema = array();
-  $strParametroTipoDoc = null;
+  $strParametroTipoDocResultado = null;
+  $strParametroTipoDocAjusteComplementacao = null;
 
   foreach($arrObjMdRespostaParametroDTO as $objMdRespostaDTO){
 
@@ -84,9 +91,12 @@ try {
           $strParametroSistema[] = $valor;
         }
           break;
-      case 'PARAM_TIPO_DOCUMENTO':
-        $strParametroTipoDoc = $objMdRespostaDTO->getStrValor();
-          break;
+      case 'PARAM_TIPO_DOCUMENTO_RESULTADO':
+        $strParametroTipoDocResultado = $objMdRespostaDTO->getStrValor();
+        break;
+      case 'PARAM_TIPO_DOCUMENTO_AJUSTE_COMPLEMENTACAO':
+        $strParametroTipoDocAjusteComplementacao = $objMdRespostaDTO->getStrValor();
+        break;
     }
 
   }
@@ -117,8 +127,10 @@ PaginaSEI::getInstance()->abrirStyle();
 #lblSistema {position:absolute;left:0%;top:0%;width:50%;}
 #selSistema {position:absolute;left:0%;top:6%;width:50%;}
 
-#lblTipoDocumento {position:absolute;left:0%;top:35%;width:50%;}
-#selTipoDocumento {position:absolute;left:0%;top:42%;width:50%;}
+#lblTipoDocumentoAjusteComplementacao {position:absolute;left:0%;top:35%;width:50%;}
+#selTipoDocumentoAjusteComplementacao {position:absolute;left:0%;top:42%;width:50%;}
+#lblTipoDocumentoResultado {position:absolute;left:0%;top:54%;width:50%;}
+#selTipoDocumentoResultado {position:absolute;left:0%;top:60%;width:50%;}
 
 <?
 PaginaSEI::getInstance()->fecharStyle();
@@ -144,9 +156,15 @@ function validarFormParametrosCadastro() {
     return false;
   }
 
-  if (!infraSelectSelecionado('selTipoDocumento')) {
-    alert('Selecione o Tipo de Documento.');
-    document.getElementById('selTipoDocumento').focus();
+  if (!infraSelectSelecionado('selTipoDocumentoAjusteComplementacao')) {
+    alert('Selecione o Tipo de Documento para Ajuste ou Complementação.');
+    document.getElementById('selTipoDocumentoAjusteComplementacao').focus();
+    return false;
+  }
+
+  if (!infraSelectSelecionado('selTipoDocumentoResultado')) {
+    alert('Selecione o Tipo de Documento para Resultado.');
+    document.getElementById('selTipoDocumentoResultado').focus();
     return false;
   }
 
@@ -167,10 +185,16 @@ PaginaSEI::getInstance()->abrirAreaDados('30em');
   <?=$strItensSelSistema?>
   </select>
   
-  <label id="lblTipoDocumento" for="selTipoDocumento" accesskey="t" class="infraLabelObrigatorio"><span class="infraTeclaAtalho">T</span>ipo Documento:</label>
+  <label id="lblTipoDocumentoAjusteComplementacao" for="selTipoDocumentoAjusteComplementacao" accesskey="t" class="infraLabelObrigatorio"><span class="infraTeclaAtalho">T</span>ipo de Documento para Solicitação de Ajuste ou Complementação:</label>
   <?
-  echo '<select id="selTipoDocumento" name="selTipoDocumento" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="'.PaginaSEI::getInstance()->getProxTabDados().'">';
-  echo InfraINT::montarSelectArrInfraDTO('null', '&nbsp;', $strParametroTipoDoc, $arrObjSerieDTO, 'IdSerie', 'Nome');
+  echo '<select id="selTipoDocumentoAjusteComplementacao" name="selTipoDocumentoAjusteComplementacao" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="'.PaginaSEI::getInstance()->getProxTabDados().'">';
+  echo InfraINT::montarSelectArrInfraDTO('null', '&nbsp;', $strParametroTipoDocAjusteComplementacao, $arrObjSerieDTO, 'IdSerie', 'Nome');
+  echo '<select>';
+  ?>
+  <label id="lblTipoDocumentoResultado" for="selTipoDocumentoResultado" accesskey="t" class="infraLabelObrigatorio"><span class="infraTeclaAtalho">T</span>ipo de Documento para Resultado:</label>  
+  <?
+  echo '<select id="selTipoDocumentoResultado" name="selTipoDocumentoResultado" onkeypress="return infraMascaraNumero(this, event);" class="infraSelect" tabindex="'.PaginaSEI::getInstance()->getProxTabDados().'">';
+  echo InfraINT::montarSelectArrInfraDTO('null', '&nbsp;', $strParametroTipoDocResultado, $arrObjSerieDTO, 'IdSerie', 'Nome');
   echo '<select>';
 
   PaginaSEI::getInstance()->fecharAreaDados();

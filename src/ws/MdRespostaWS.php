@@ -17,8 +17,10 @@ class MdRespostaWS extends InfraWS {
 
         SessaoSEI::getInstance(false);
 
+        $objInfraException = new InfraException();
+
       if (!method_exists($this, $func.'Monitorado')) {
-        throw new InfraException('Serviço ['.get_class($this).'.'.$func.'] não encontrado.');
+        $objInfraException->lancarValidacao('Serviço ['.get_class($this).'.'.$func.'] não encontrado.');
       }
 
         BancoSEI::getInstance()->abrirConexao();
@@ -33,7 +35,7 @@ class MdRespostaWS extends InfraWS {
                     
         $this->validarAcessoAutorizado(explode(',', str_replace(' ', '', $objServicoDTO->getStrServidor())));
 
-        $this->validarArrayProcedimento($arrIdProcedimento, $arrNumProcedimento);
+        $this->validarArrayProcedimento($objInfraException, $arrIdProcedimento, $arrNumProcedimento);
 
         SessaoSEI::getInstance()->setObjServicoDTO($objServicoDTO);
 
@@ -96,6 +98,7 @@ class MdRespostaWS extends InfraWS {
   }
 
   protected function listarRespostaMonitorado($objSOAP) {
+    $arrObjMdRespostaDTO = null;
     try {
                 
         $InfraException = new InfraException();
@@ -116,6 +119,7 @@ class MdRespostaWS extends InfraWS {
         $arrObjProcedimentoDTO->retDblIdProcedimento();
         $arrObjProcedimentoDTO->retStrProtocoloProcedimentoFormatado();
       if(empty($arrIdProcedimento)){
+        $arrIdProcedimento = [];
         is_array($arrNumProcedimento) ? $arrNumProcedimento : $arrNumProcedimento = array($arrNumProcedimento);
         $arrObjProcedimentoDTO->setStrProtocoloProcedimentoFormatadoPesquisa($arrNumProcedimento, InfraDTO::$OPER_IN);
       }else{
@@ -133,7 +137,8 @@ class MdRespostaWS extends InfraWS {
             $arrIdProcedimento[] = $objProcedimento->getDblIdProcedimento();
         }
       }
-            
+      $arrObjMdRespostaDTO = [];
+      if (!empty($arrIdProcedimento) && is_array($arrIdProcedimento)){
         $objMdRespostaDTO = new MdRespostaDTO();
             
         //campos que serão retornados
@@ -155,6 +160,7 @@ class MdRespostaWS extends InfraWS {
 
         $objMdRespostaRN = new MdRespostaRN();
         $arrObjMdRespostaDTO = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
+      }
 
       if (count($arrObjMdRespostaDTO)){
     
@@ -191,14 +197,13 @@ class MdRespostaWS extends InfraWS {
 
           return $arrResposta;
 
-      }     
-
-      if ($arrObjMdRespostaDTO==null) {
-          throw new InfraException('Nenhuma resposta encontrada.');
-      }
-    
+      }        
     } catch (Exception $e) {
         $this->processarExcecao($e);
+    }
+    if (empty($arrObjMdRespostaDTO)) {
+      $objInfraException = new InfraException();
+      $objInfraException->lancarValidacao('Nenhuma resposta encontrada.');
     }
   }
 
@@ -264,8 +269,10 @@ class MdRespostaWS extends InfraWS {
       $objUsuarioRN = new UsuarioRN();
       $objUsuarioDTO = $objUsuarioRN->consultarRN0489($objUsuarioDTO);
         
+      $objInfraException = new InfraException();
+
     if ($objUsuarioDTO==null){
-        throw new InfraException('Sistema ['.$SiglaSistema.'] não encontrado.');
+        $objInfraException->lancarValidacao('Sistema ['.$SiglaSistema.'] não encontrado.');
     }
         
       $objServicoDTO = new ServicoDTO();
@@ -283,21 +290,21 @@ class MdRespostaWS extends InfraWS {
       $objServicoDTO = $objServicoRN->consultar($objServicoDTO); 
                 
     if ($objServicoDTO==null){
-        throw new InfraException('Serviço ['.$IdentificacaoServico.'] do sistema ['.$SiglaSistema.'] não encontrado.');
+        $objInfraException->lancarValidacao('Serviço ['.$IdentificacaoServico.'] do sistema ['.$SiglaSistema.'] não encontrado.');
     }
                 
       return $objServicoDTO;
         
   }
 
-  private function validarArrayProcedimento($arrIdProcedimento, $arrNumProcedimento){
+  private function validarArrayProcedimento($objInfraException, $arrIdProcedimento, $arrNumProcedimento){
             
     if (count($arrIdProcedimento) > 100) {
-        throw new InfraException('Número de repetições do atributo [IdProcedimento] superior ao permitido.');
+        $objInfraException->lancarValidacao('Número de repetições do atributo [IdProcedimento] superior ao permitido.');
     }
 
     if (count($arrNumProcedimento) > 100) {
-        throw new InfraException('Número de repetições do atributo [NumProcedimento] superior ao permitido.');
+        $objInfraException->lancarValidacao('Número de repetições do atributo [NumProcedimento] superior ao permitido.');
     }
         
   }

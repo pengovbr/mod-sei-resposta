@@ -1,5 +1,9 @@
 .PHONY: .env help clean build all install restart down destroy up config
 
+# Parâmetros de execução do comando MAKE
+# Opções possíveis para spe (sistema de proc eletronico): sei4, sei41, super
+sistema=super
+
 -include .testselenium.env
 -include .env
 -include .modulo.env
@@ -20,6 +24,11 @@ SEI_SCRIPTS_DIR = dist/sei/scripts/$(MODULO_PASTAS_CONFIG)
 SEI_CONFIG_DIR = dist/sei/config/$(MODULO_PASTAS_CONFIG)
 SEI_MODULO_DIR = dist/sei/web/modulos/$(MODULO_NOME)
 SIP_SCRIPTS_DIR = dist/sip/scripts/$(MODULO_PASTAS_CONFIG)
+TEST_FUNC = tests_$(sistema)/funcional
+
+-include $(TEST_FUNC)/.testselenium.env
+-include $(TEST_FUNC)/.env
+-include $(TEST_FUNC)/.modulo.env
 
 ARQUIVO_CONFIG_SEI=$(SEI_PATH)/sei/config/ConfiguracaoSEI.php
 ARQUIVO_ENV_RESPOSTA=.modulo.env
@@ -125,7 +134,7 @@ check-module-config:
 # acessa o super e verifica se esta respondendo a tela de login
 check-super-isalive:
 	@echo ""
-	@echo "Vamos tentar acessar a pagina de login do SUPER, vamos aguardar por 45 segs."
+	@echo "Vamos tentar acessar a pagina de login do $(sistema), vamos aguardar por 45 segs."
 	@for number in 1 2 3 4 5 6 7 8 9 ; do \
 	    echo 'Tentando acessar...'; var=$$(echo $$($(CMD_CURL_SUPER_LOGIN))); \
 			if [ "$$var" != "" ]; then \
@@ -196,11 +205,11 @@ tests-functional-prerequisites: .testselenium.env tests-functional-validar
 # roda apenas os testes, o ajuste de data inicial e a criacao do ambiente ja devem ter sido realizados
 tests-functional: tests-functional-prerequisites check-super-isalive
 	@echo "Vamos iniciar a execucao dos testes..."
-	@cd tests/functional && HOST_URL=$(HOST_URL) ./testes.sh
+	@cd $(TEST_FUNC) && HOST_URL=$(HOST_URL) ./testes.sh
 
 
 tests-functional-soap:
-	docker run -i --network=host --rm -v "$$PWD"/tests/functional/SoapUI:/opt/soapui/projects -v "$$PWD"/tests/functional/SoapUI/result:/opt/soapui/projects/testresult lukastosic/docker-soapui -e$(HOST_URL)/sei/modulos/$(MODULO_NOME)/ws/MdRespostaWS.php -s"SeiMdRespostaSOAP TestSuite" -r -j -f/opt/soapui/projects/testresult -I "/opt/soapui/projects/MdRespostaWS-soapui-project.xml"
+	docker run -i --network=host --rm -v "$$PWD"/$(TEST_FUNC)/SoapUI:/opt/soapui/projects -v "$$PWD"/$(TEST_FUNC)/SoapUI/result:/opt/soapui/projects/testresult lukastosic/docker-soapui -e$(HOST_URL)/sei/modulos/$(MODULO_NOME)/ws/MdRespostaWS.php -s"SeiMdRespostaSOAP TestSuite" -r -j -f/opt/soapui/projects/testresult -I "/opt/soapui/projects/MdRespostaWS-soapui-project.xml"
 
 update: ## Atualiza banco de dados através dos scripts de atualização do sistema
 	$(CMD_DOCKER_COMPOSE) run --rm -w /opt/sei/scripts/ httpd sh -c "$(CMD_INSTALACAO_SEI)"; true

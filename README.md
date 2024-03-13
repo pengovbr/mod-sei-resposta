@@ -26,7 +26,7 @@ Para rotinas de testes do módulo rode ``` make tests-functional-full ```, mas a
 
 ## PROJETOS RELACIONADOS
 
-O mod-sei-resposta trata-se de um módulo adicional ao SUPER para adição de novas funcionalidades relacionada a interoperabilidade entre o SUPER e o Protocolo Digital.
+O mod-sei-resposta trata-se de um módulo adicional ao SUPER para adição de novas funcionalidades relacionada a interoperabilidade entre o SUPER e o Protocolo GOV.BR.
 
 
 ## CONTRIBUIÇÃO

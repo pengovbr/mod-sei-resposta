@@ -186,17 +186,17 @@
   </wsdl:message>
   <wsdl:portType name="SeiMdRespostaPortType">
     <wsdl:operation name="listarResposta">
-      <wsdl:documentation>Consulta Resposta ao Protocolo GOV.BR</wsdl:documentation>
+      <wsdl:documentation>Consulta Resposta ao Protocolo Digital</wsdl:documentation>
       <wsdl:input message="tns:listarRespostaRequest"/>
       <wsdl:output message="tns:listarRespostaResponse"/>
     </wsdl:operation>
     <wsdl:operation name="cadastrarProcessoSemResposta">
-      <wsdl:documentation>Informa os processo que não terão resposta ao Protocolo GOV.BR</wsdl:documentation>
+      <wsdl:documentation>Informa os processo que não terão resposta ao Protocolo Digital</wsdl:documentation>
       <wsdl:input message="tns:cadastrarProcessoSemRespostaRequest"/>
       <wsdl:output message="tns:cadastrarProcessoSemRespostaResponse"/>
     </wsdl:operation>
     <wsdl:operation name="retirarProcessoSemResposta">
-      <wsdl:documentation>Exclui os processo que não terão resposta ao Protocolo GOV.BR</wsdl:documentation>
+      <wsdl:documentation>Exclui os processo que não terão resposta ao Protocolo Digital</wsdl:documentation>
       <wsdl:input message="tns:retirarProcessoSemRespostaRequest"/>
       <wsdl:output message="tns:retirarProcessoSemRespostaResponse"/>
     </wsdl:operation>

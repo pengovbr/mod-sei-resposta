@@ -1,8 +1,8 @@
 .PHONY: .env help clean build all install restart down destroy up config
 
 # Parâmetros de execução do comando MAKE
-# Opções possíveis para spe (sistema de proc eletronico): sei4, sei41, super
-sistema=super
+# Opções possíveis para spe (sistema de proc eletronico): sei5
+sistema=sei5
 
 -include .testselenium.env
 -include .env

@@ -186,17 +186,17 @@
   </wsdl:message>
   <wsdl:portType name="SeiMdRespostaPortType">
     <wsdl:operation name="listarResposta">
-      <wsdl:documentation>Consulta Resposta ao Protocolo Digital</wsdl:documentation>
+      <wsdl:documentation>Consulta Resposta ao Protocolo GOV.BR</wsdl:documentation>
       <wsdl:input message="tns:listarRespostaRequest"/>
       <wsdl:output message="tns:listarRespostaResponse"/>
     </wsdl:operation>
     <wsdl:operation name="cadastrarProcessoSemResposta">
-      <wsdl:documentation>Informa os processo que não terão resposta ao Protocolo Digital</wsdl:documentation>
+      <wsdl:documentation>Informa os processo que não terão resposta ao Protocolo GOV.BR</wsdl:documentation>
       <wsdl:input message="tns:cadastrarProcessoSemRespostaRequest"/>
       <wsdl:output message="tns:cadastrarProcessoSemRespostaResponse"/>
     </wsdl:operation>
     <wsdl:operation name="retirarProcessoSemResposta">
-      <wsdl:documentation>Exclui os processo que não terão resposta ao Protocolo Digital</wsdl:documentation>
+      <wsdl:documentation>Exclui os processo que não terão resposta ao Protocolo GOV.BR</wsdl:documentation>
       <wsdl:input message="tns:retirarProcessoSemRespostaRequest"/>
       <wsdl:output message="tns:retirarProcessoSemRespostaResponse"/>
     </wsdl:operation>
@@ -354,7 +354,7 @@
          <IdResposta xsi:type="xsd:string"></IdResposta>
       </seim:RespostaRequest>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e11ff2a0-6e35-4a19-8be4-8b0ddf4edd2d" name="SOAP Response"/><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="Contains"><con:configuration><token>Parâmetro do método [setDblIdProcedimento] não é um array.</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="3c39e372-ad95-46f5-ba40-eafa23d87744" name="RespIdProcedimentoSucess"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaBinding</con:interface><con:operation>listarResposta</con:operation><con:request name="RespIdProcedimentoSucess" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8000/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e11ff2a0-6e35-4a19-8be4-8b0ddf4edd2d" name="SOAP Response"/><con:assertion type="Simple Contains" id="10acf218-8fc0-4c87-959c-eaae4d51bb5d" name="Contains"><con:configuration><token>Identificador e/ou processo da resposta não foi informado.</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="SeiMdRespostaAction" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="3c39e372-ad95-46f5-ba40-eafa23d87744" name="RespIdProcedimentoSucess"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SeiMdRespostaBinding</con:interface><con:operation>listarResposta</con:operation><con:request name="RespIdProcedimentoSucess" id="80db6b70-70c5-4351-a958-91abbfe3c1e3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8000/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
    <soapenv:Header/>
    <soapenv:Body>
       <seim:RespostaRequest>

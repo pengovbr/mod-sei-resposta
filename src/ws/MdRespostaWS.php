@@ -98,10 +98,10 @@ class MdRespostaWS extends InfraWS {
   }
 
   protected function listarRespostaMonitorado($objSOAP) {
-    $arrObjMdRespostaDTO = null;
+    $arrObjMdRespostaDTO = array();
     try {
                 
-        $InfraException = new InfraException();
+      $objInfraException = new InfraException();
                 
         InfraDebug::getInstance()->setBolLigado(false);
         InfraDebug::getInstance()->setBolDebugInfra(false);
@@ -115,95 +115,100 @@ class MdRespostaWS extends InfraWS {
         $arrNumProcedimento = $objSOAP->NumProcedimentos->NumProcedimento;
         $IdResposta = $objSOAP->IdResposta;
 
+        if (empty($arrIdProcedimento) && empty($arrNumProcedimento) && empty($IdResposta)) {
+          $objInfraException->lancarValidacao('Identificador e/ou processo da resposta não foi informado.');
+        }
+
         $arrObjProcedimentoDTO = new ProcedimentoDTO();
         $arrObjProcedimentoDTO->retDblIdProcedimento();
         $arrObjProcedimentoDTO->retStrProtocoloProcedimentoFormatado();
-      if(empty($arrIdProcedimento)){
-        $arrIdProcedimento = [];
-        is_array($arrNumProcedimento) ? $arrNumProcedimento : $arrNumProcedimento = array($arrNumProcedimento);
-        $arrObjProcedimentoDTO->setStrProtocoloProcedimentoFormatadoPesquisa($arrNumProcedimento, InfraDTO::$OPER_IN);
-      }else{
-          is_array($arrIdProcedimento) ? $arrIdProcedimento : $arrIdProcedimento = array($arrIdProcedimento);
-          $arrObjProcedimentoDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
-      }
+
+        if(empty($arrIdProcedimento)){
+          $arrIdProcedimento = array();
+          is_array($arrNumProcedimento) ? $arrNumProcedimento : $arrNumProcedimento = array($arrNumProcedimento);
+          $arrObjProcedimentoDTO->setStrProtocoloProcedimentoFormatadoPesquisa($arrNumProcedimento, InfraDTO::$OPER_IN);
+        }else{
+            is_array($arrIdProcedimento) ? $arrIdProcedimento : $arrIdProcedimento = array($arrIdProcedimento);
+            $arrObjProcedimentoDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
+        }
             
         // Consulta nas classes de regra de negócio
         $objProcedimentoRN = new ProcedimentoRN();
         $arrObjProcedimentoDTO = $objProcedimentoRN->listarRN0278($arrObjProcedimentoDTO);
         $arrObjProcedimentoDTOIndexado = InfraArray::indexarArrInfraDTO($arrObjProcedimentoDTO, "IdProcedimento");
 
-      if(empty($arrIdProcedimento)){
-        foreach ($arrObjProcedimentoDTO as $objProcedimento){
-            $arrIdProcedimento[] = $objProcedimento->getDblIdProcedimento();
-        }
-      }
-      $arrObjMdRespostaDTO = [];
-      if (!empty($arrIdProcedimento) && is_array($arrIdProcedimento)){
-        $objMdRespostaDTO = new MdRespostaDTO();
-            
-        //campos que serão retornados
-        $objMdRespostaDTO->retNumIdResposta();
-        $objMdRespostaDTO->retDblIdProcedimento();
-        $objMdRespostaDTO->retDblIdDocumento();
-        $objMdRespostaDTO->retStrMensagem();
-        $objMdRespostaDTO->retStrSinConclusiva();
-        $objMdRespostaDTO->retDthDthResposta();
-        $objMdRespostaDTO->retDblIdDocumentoAnexo(); 
-        $objMdRespostaDTO->retStrProtocoloFormatadoAnexos(); 
-        $objMdRespostaDTO->retStrProtocoloFormatadoResposta(); 
-            
-        $objMdRespostaDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
-            
-      if($IdResposta != null || $IdResposta != ""){
-          $objMdRespostaDTO->setNumIdResposta($IdResposta);
-      }
-
-        $objMdRespostaRN = new MdRespostaRN();
-        $arrObjMdRespostaDTO = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
-      }
-
-      if (count($arrObjMdRespostaDTO)){
-    
-          $IdRespostaRetorno = "";
-          $arrResposta = new ArrayObject();
-                
-        foreach($arrObjMdRespostaDTO as $objMdRespostaDTO ){
-          if($IdRespostaRetorno != $objMdRespostaDTO->getNumIdResposta()){
-            $IdRespostaRetorno = $objMdRespostaDTO->getNumIdResposta();
-
-            $arrDocumentos = new ArrayObject();
-            foreach($arrObjMdRespostaDTO as $objDocumentos){
-              if($IdRespostaRetorno == $objDocumentos->getNumIdResposta()){
-                $soapVar = new SoapVar($objDocumentos->getStrProtocoloFormatadoAnexos(), XSD_STRING, null, null, 'ProtocoloDocumento');
-                $arrDocumentos->append($soapVar);
-              }
-            }
-                        
-            $Resposta = (object) array(
-            'IdResposta' => (int) $objMdRespostaDTO->getNumIdResposta(),
-            'IdProcedimento' => (int) $objMdRespostaDTO->getDblIdProcedimento(),
-            'NumProtocolo' => (string) $arrObjProcedimentoDTOIndexado[$objMdRespostaDTO->getDblIdProcedimento()]->getStrProtocoloProcedimentoFormatado(),
-            'ProtocoloDocumento' => (string) $objMdRespostaDTO->getStrProtocoloFormatadoResposta(),
-            'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
-            'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
-            'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
-            'ProtocoloDocumentosAnexados' => (object) $arrDocumentos
-              );
-
-              $soapVarResposta = new SoapVar($Resposta, null, null, null, 'Resposta');
-              $arrResposta->append($soapVarResposta);
+        if(empty($arrIdProcedimento)){
+          foreach ($arrObjProcedimentoDTO as $objProcedimento){
+              $arrIdProcedimento[] = $objProcedimento->getDblIdProcedimento();
           }
         }
+      
+        if (!empty($arrIdProcedimento) && is_array($arrIdProcedimento)){
+          $objMdRespostaDTO = new MdRespostaDTO();
+              
+          //campos que serão retornados
+          $objMdRespostaDTO->retNumIdResposta();
+          $objMdRespostaDTO->retDblIdProcedimento();
+          $objMdRespostaDTO->retDblIdDocumento();
+          $objMdRespostaDTO->retStrMensagem();
+          $objMdRespostaDTO->retStrSinConclusiva();
+          $objMdRespostaDTO->retDthDthResposta();
+          $objMdRespostaDTO->retDblIdDocumentoAnexo(); 
+          $objMdRespostaDTO->retStrProtocoloFormatadoAnexos(); 
+          $objMdRespostaDTO->retStrProtocoloFormatadoResposta(); 
+              
+          $objMdRespostaDTO->setDblIdProcedimento($arrIdProcedimento, InfraDTO::$OPER_IN);
+              
+          if($IdResposta != null || $IdResposta != ""){
+              $objMdRespostaDTO->setNumIdResposta($IdResposta);
+          }
 
-          return $arrResposta;
+          $objMdRespostaRN = new MdRespostaRN();
+          $arrObjMdRespostaDTO = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
 
-      }        
+          if (empty($arrObjMdRespostaDTO)) {
+            $objInfraException->lancarValidacao('Nenhuma resposta encontrada.');
+          }
+
+        }
+
+        if (count($arrObjMdRespostaDTO) > 0){
+      
+            $IdRespostaRetorno = "";
+            $arrResposta = new ArrayObject();
+                  
+          foreach($arrObjMdRespostaDTO as $objMdRespostaDTO ){
+            if($IdRespostaRetorno != $objMdRespostaDTO->getNumIdResposta()){
+              $IdRespostaRetorno = $objMdRespostaDTO->getNumIdResposta();
+
+              $arrDocumentos = new ArrayObject();
+              foreach($arrObjMdRespostaDTO as $objDocumentos){
+                if($IdRespostaRetorno == $objDocumentos->getNumIdResposta()){
+                  $soapVar = new SoapVar($objDocumentos->getStrProtocoloFormatadoAnexos(), XSD_STRING, null, null, 'ProtocoloDocumento');
+                  $arrDocumentos->append($soapVar);
+                }
+              }
+                          
+              $Resposta = (object) array(
+              'IdResposta' => (int) $objMdRespostaDTO->getNumIdResposta(),
+              'IdProcedimento' => (int) $objMdRespostaDTO->getDblIdProcedimento(),
+              'NumProtocolo' => (string) $arrObjProcedimentoDTOIndexado[$objMdRespostaDTO->getDblIdProcedimento()]->getStrProtocoloProcedimentoFormatado(),
+              'ProtocoloDocumento' => (string) $objMdRespostaDTO->getStrProtocoloFormatadoResposta(),
+              'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
+              'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
+              'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
+              'ProtocoloDocumentosAnexados' => (object) $arrDocumentos
+                );
+
+                $soapVarResposta = new SoapVar($Resposta, null, null, null, 'Resposta');
+                $arrResposta->append($soapVarResposta);
+            }
+          }
+
+            return $arrResposta;
+        }        
     } catch (Exception $e) {
         $this->processarExcecao($e);
-    }
-    if (empty($arrObjMdRespostaDTO)) {
-      $objInfraException = new InfraException();
-      $objInfraException->lancarValidacao('Nenhuma resposta encontrada.');
     }
   }
 

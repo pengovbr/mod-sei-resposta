@@ -135,6 +135,7 @@ class Test02SEIMREnviarResposta():
     WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located((By.XPATH, "//img[@alt=\'Enviar Resposta\']")))
     self.driver.find_element(By.XPATH, "//img[@alt=\'Enviar Resposta\']").click()
     self.driver.switch_to.frame(0)
+    WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located((By.XPATH, "//*[@id=\'lblMensagem\']")))
     self.driver.find_element(By.ID, "txaMensagem").click()
     self.driver.find_element(By.ID, "txaMensagem").send_keys("teste")
     self.driver.find_element(By.ID, "imgInfraCheck").click()

@@ -217,3 +217,7 @@ update: ## Atualiza banco de dados através dos scripts de atualização do sist
 	$(CMD_DOCKER_COMPOSE) run --rm -w /opt/sip/scripts/ httpd sh -c "$(CMD_INSTALACAO_RECURSOS_SEI)"; true
 
 tests-functional-full: tests-functional tests-functional-soap
+
+generate-der: up
+	docker run --network host --rm -v .:/work -w /work ghcr.io/k1low/tbls doc --rm-dist mariadb://$(SEI_DATABASE_USER):$(SEI_DATABASE_PASSWORD)@localhost:3306/sei
+

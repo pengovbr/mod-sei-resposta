@@ -6,6 +6,11 @@ Para maiores informações sobre os procedimentos de instalação ou atualizaç�
 
 * **INSTALACAO.md** - Procedimento de instalação e configuração do módulo
 
+## Compatibilidade de versões
+* O módulo é compatível com as seguintes versões do **SEI**:
+    * 4.0.3 até 4.1.2 (com exceção da 4.1.0) 
+
+
 ## Lista de Melhorias e Correções de Problemas
 
 Ajustes para inclusão das opções de resposta definitiva e/ou solicitando ajuste/complementação assim criação de serviço para desabilitar a funcionalidade de envio de respostas para processo que não há necessidade de resposta.

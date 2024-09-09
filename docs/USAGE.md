@@ -1,23 +1,24 @@
 # Módulo de Resposta à plataforma Gov.br
 
-O módulo é o responsável por integrar o Sistema Eletrônico de Informações (SEI) à plataforma Gov.br. Tem como objetivo proporcionar respostas tempestivas aos questionamentos executado diretamente por usuário externo, a fim de formar novo processo ou compor processo já existente dos cidadões.
+O módulo é responsável por integrar o Sistema Eletrônico de Informações (SEI) à plataforma GOV.BR. Tem como objetivo possibilitar que o Órgão ou Entidade se comunique com o cidadão via SPE para demandar ajustes ou complementações e enviar os resultados das solicitações recebidas via Protocolo GOV.BR.
 
 
 A utilização deste módulo adicionará nova funcionalidade ao SEI, permitindo:
- - Enviar resposta à processos administrativos abertos por meio da plataforma Gov.br
+ - Solicitar ajustes ou complementos à documentação enviada pelo cidadão;
+ - Enviar resultados à processos administrativos abertos por meio da plataforma Gov.br
 
 ## Manual de Utilização
 
-Esta seção tem por objetivo demonstrar a funcionalidade que será disponibilizada pelo módulo de resposta do SuperBr à plataforma Gov.br.
+Esta seção tem por objetivo demonstrar a funcionalidade que será disponibilizada pelo módulo de resposta do SEI à plataforma Gov.br.
 
 ### Pré-requisitos
-- SuperBr com acesso externo liberado
+- SEI com acesso externo liberado
 
 ### Informações Obrigatórias para Envio da Resposta
 
-Para permitir a interoperabilidade entre o SuperBr e a plataforma Gov.br, definiu-se um padrão de dados para intercâmbio. Este padrão define atributos que são obrigatórios e/ou opcionais.
+Para permitir a interoperabilidade entre o SEI e a plataforma Gov.br, definiu-se um padrão de dados para intercâmbio. Este padrão define atributos que são obrigatórios e/ou opcionais.
 
-Ao enviar resposta, a Plataforma Gov.br, são obrigatórios os campos **processo, mensagem, lista de documentos e resposta conclusiva**. O SuperBr fará validações das informações pendentes para envio e exibirá mensagens para o usuário, tais como:
+Ao enviar resposta, a Plataforma Gov.br, são obrigatórios os campos **processo, mensagem, lista de documentos e tipo de resposta**. O SEI fará validações das informações pendentes para envio e exibirá mensagens para o usuário, tais como:
 
 - Informe a Mensagem
 - Nenhum documento selecionado (Verifica se o foi selecionado pelo menos um documento interno assinado ou se possui algum documento externo)

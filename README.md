@@ -1,8 +1,8 @@
 # Módulo de Resposta à plataforma Gov.br [![PHP_CodeSniffer](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml) [![Testes SOAP e Funcional](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests.yml)
-O módulo é o responsável por integrar o SUPER à plataforma Gov.br. Tem como objetivo proporcionar respostas tempestivas aos questionamentos executado diretamente por usuário externo, a fim de formar novo processo ou compor processo já existente dos cidadões.
+O módulo é responsável por integrar o SEI à plataforma GOV.BR e tem como objetivo possibilitar que o Órgão ou Entidade se comunique com o cidadão via SPE para demandar ajustes ou complementações e enviar o resultados das solicitações recebidas via Protocolo GOV.BR. 
 
 ## O REPOSITÓRIO
-Este repositório no GitHub é o local oficial onde será mantido todo o desenvolvimento do módulo de integração. Além do código-fonte, também pode ser encontrado o pacote de distribuição para instalação no SUPER, questões ou problema em aberto e planejamento de novas versões.
+Este repositório no GitHub é o local oficial onde será mantido todo o desenvolvimento do módulo de integração. Além do código-fonte, também pode ser encontrado o pacote de distribuição para instalação no SEI, questões ou problema em aberto e planejamento de novas versões.
 
 ## DOWNLOAD
 
@@ -26,7 +26,7 @@ Para rotinas de testes do módulo rode ``` make tests-functional-full ```, mas a
 
 ## PROJETOS RELACIONADOS
 
-O mod-sei-resposta trata-se de um módulo adicional ao SUPER para adição de novas funcionalidades relacionada a interoperabilidade entre o SUPER e o Protocolo GOV.BR.
+O mod-sei-resposta trata-se de um módulo adicional ao SEI para adição de novas funcionalidades relacionada a interoperabilidade entre o SEI e o Protocolo GOV.BR.
 
 
 ## CONTRIBUIÇÃO
@@ -39,9 +39,8 @@ Existem diversas formas de colaborar neste projeto:
 
 ## SUPORTE
 
-Em caso de dúvidas ou problemas durante o procedimento de atualização, favor entrar em conta pelos canais de atendimento disponibilizados na Central de Atendimento do Processo Eletrônico Nacional, que conta com uma equipe para avaliar e responder esta questão de forma mais rápida possível.
+Em caso de dúvidas ou problemas durante o procedimento de atualização, favor entrar em contato pelos canais de atendimento disponibilizados na Central de Atendimento do Processo Eletrônico Nacional, que conta com uma equipe para avaliar e responder esta questão de forma mais rápida possível.
 
 Para mais informações, contate a equipe responsável por meio dos seguintes canais:
 
-- [Portal de Atendimento (PEN): Canal de Atendimento](https://portaldeservicos.economia.gov.br) - Módulo do Barramento
-- Telefone: 0800 978 9005
+- [Portal de Atendimento (PEN): Canal de Atendimento](https://portaldeservicos.economia.gov.br)

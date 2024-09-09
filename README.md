@@ -1,5 +1,5 @@
 # Módulo de Resposta à plataforma Gov.br [![PHP_CodeSniffer](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml) [![Testes SOAP e Funcional](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests.yml)
-O módulo é responsável por integrar o SEI à plataforma GOV.BR e tem como objetivo possibilitar que o Órgão ou Entidade se comunique com o cidadão via SPE para demandar ajustes ou complementações e enviar o resultados das solicitações recebidas via Protocolo GOV.BR. 
+O módulo é responsável por integrar o SEI à plataforma GOV.BR e tem como objetivo possibilitar que o Órgão ou Entidade se comunique com o cidadão via SPE para demandar ajustes ou complementações e enviar os resultados das solicitações recebidas via Protocolo GOV.BR. 
 
 ## O REPOSITÓRIO
 Este repositório no GitHub é o local oficial onde será mantido todo o desenvolvimento do módulo de integração. Além do código-fonte, também pode ser encontrado o pacote de distribuição para instalação no SEI, questões ou problema em aberto e planejamento de novas versões.

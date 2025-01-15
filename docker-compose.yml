@@ -17,18 +17,18 @@ services:
       - "11211:11211"
 
   database:
-    image: ${DATABASE_IMAGE}:${ENVIRONMENT_VERSION}
+    image: ${DATABASE_IMAGE}
     container_name: ${DATABASE_HOST}
     environment:
       MYSQL_ROOT_PASSWORD: P@ssword
     volumes:
       - ${DATABASE_HOST}:${DATABASE_DATA_DIR}
-      - /var/sei/backup/${DATABASE_HOST}:/backup
+      #- /var/sei/backup/${DATABASE_HOST}:/backup
     ports:
       - ${DATABASE_PORT}:${DATABASE_PORT}
 
   solr:
-    image: processoeletronico/vagrant_sei4_solr:${ENVIRONMENT_VERSION}
+    image: processoeletronico/solr9.6.1:${ENVIRONMENT_VERSION}
     container_name: solr
     ports:
       - "8983:8983"
@@ -40,7 +40,6 @@ services:
     env_file:
       - .modulo.env
     ports:
-      - "80:8000"
       - "8000:8000"
     depends_on:
       - database

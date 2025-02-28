@@ -181,11 +181,11 @@ class MdRespostaWS extends InfraWS {
             if($IdRespostaRetorno != $objMdRespostaDTO->getNumIdResposta()){
               $IdRespostaRetorno = $objMdRespostaDTO->getNumIdResposta();
 
-              $arrDocumentos = new ArrayObject();
+              $arrDocumentos = [];
               foreach($arrObjMdRespostaDTO as $objDocumentos){
                 if($IdRespostaRetorno == $objDocumentos->getNumIdResposta()){
                   $soapVar = new SoapVar($objDocumentos->getStrProtocoloFormatadoAnexos(), XSD_STRING, null, null, 'ProtocoloDocumento');
-                  $arrDocumentos->append($soapVar);
+                  $arrDocumentos[] = $soapVar;
                 }
               }
                           
@@ -197,7 +197,7 @@ class MdRespostaWS extends InfraWS {
               'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
               'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
               'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
-              'ProtocoloDocumentosAnexados' => (object) $arrDocumentos
+              'ProtocoloDocumentosAnexados' => new SoapVar($arrDocumentos,SOAP_ENC_OBJECT,null,null,'ProtocoloDocumento')
                 );
 
                 $soapVarResposta = new SoapVar($Resposta, null, null, null, 'Resposta');

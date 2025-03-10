@@ -10,7 +10,7 @@ class MdRespostaIntegracao extends SeiIntegracao{
   ];
 
   const COMPATIBILIDADE_MODULO_SEI = [
-    '5.0.0'
+    '4.0.12.15','4.1.1', '4.1.2', '4.1.3', '4.1.4', '4.1.5'
   ];
 
   public function getNome(){

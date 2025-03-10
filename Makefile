@@ -72,7 +72,7 @@ endif
 all: clean dist
 
 
-dist: 
+dist: cria_json_compatibilidade
 	@mkdir -p $(SEI_SCRIPTS_DIR)
 	@mkdir -p $(SEI_CONFIG_DIR)
 	@mkdir -p $(SEI_MODULO_DIR)
@@ -81,11 +81,12 @@ dist:
 	@cp docs/INSTALL.md dist/INSTALACAO.md
 	@cp docs/UPGRADE.md dist/ATUALIZACAO.md
 	@cp docs/changelogs/CHANGELOG-$(VERSAO_MODULO).md dist/NOTAS_VERSAO.md
+	@cp compatibilidade.json dist/compatibilidade.json
 	@mv $(SEI_MODULO_DIR)/scripts/sei_atualizar_versao_modulo_resposta.php $(SEI_SCRIPTS_DIR)/
 	@mv $(SEI_MODULO_DIR)/scripts/sip_atualizar_versao_modulo_resposta.php $(SIP_SCRIPTS_DIR)/
 	@rm -rf $(SEI_MODULO_DIR)/config
 	@rm -rf $(SEI_MODULO_DIR)/scripts
-	@cd dist/ && zip -r $(MODULO_COMPACTADO) INSTALACAO.md ATUALIZACAO.md NOTAS_VERSAO.md sei/ sip/	
+	@cd dist/ && zip -r $(MODULO_COMPACTADO) INSTALACAO.md ATUALIZACAO.md NOTAS_VERSAO.md compatibilidade.json sei/ sip/	
 	@rm -rf dist/sei dist/sip dist/INSTALACAO.md dist/ATUALIZACAO.md
 	@echo "Construção do pacote de distribuição finalizada com sucesso"
 
@@ -221,3 +222,5 @@ tests-functional-full: tests-functional tests-functional-soap
 generate-der: up
 	docker run --network host --rm -v .:/work -w /work ghcr.io/k1low/tbls doc --rm-dist mariadb://$(SEI_DATABASE_USER):$(SEI_DATABASE_PASSWORD)@localhost:3306/sei
 
+cria_json_compatibilidade:
+	$(shell ./gerar_json_compatibilidade.sh)

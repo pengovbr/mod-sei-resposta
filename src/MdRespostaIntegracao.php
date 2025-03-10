@@ -5,6 +5,10 @@ class MdRespostaIntegracao extends SeiIntegracao{
 
   const VERSAO_MODULO = "2.0.0";
 
+  const COMPATIBILIDADE_MODULO_SEI = [
+    '5.0.0'
+  ];
+
   public function getNome(){
     return 'Módulo de Resposta';
   }

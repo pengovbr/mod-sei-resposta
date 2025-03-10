@@ -5,6 +5,7 @@ vendor/
 **/.vscode
 **/.DS_Store
 
+compatibilidade.json
 .modulo.env
 .env
 .testselenium.env

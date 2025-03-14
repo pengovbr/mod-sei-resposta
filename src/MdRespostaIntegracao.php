@@ -3,10 +3,11 @@
 
 class MdRespostaIntegracao extends SeiIntegracao{
 
-  const VERSAO_MODULO = "1.3.0";
+  const VERSAO_MODULO = "2.0.0";
+
 
   const COMPATIBILIDADE_MODULO_SEI = [
-    '4.0.12.15','4.1.1', '4.1.2', '4.1.3', '4.1.4', '4.1.5'
+    '5.0.0'
   ];
 
   public function getNome(){

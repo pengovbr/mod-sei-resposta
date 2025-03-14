@@ -1,17 +1,16 @@
-version: '2'
 services:
-  jod:
-    image: processoeletronico/vagrant_sei4_jod:${ENVIRONMENT_VERSION}
-    container_name: jod
+#  jod:
+#    image: processoeletronico/jod:${ENVIRONMENT_VERSION}
+#    container_name: jod
 
   smtp:
-    image: processoeletronico/vagrant_sei4_mailcatcher:${ENVIRONMENT_VERSION}
+    image: processoeletronico/mailcatcher:${ENVIRONMENT_VERSION}
     container_name: smtp
     ports:
       - "1080:1080"
 
   memcached:
-    image: processoeletronico/vagrant_sei4_memcached:${ENVIRONMENT_VERSION}
+    image: processoeletronico/memcached:${ENVIRONMENT_VERSION}
     container_name: memcached
     ports:
       - "11211:11211"
@@ -23,24 +22,22 @@ services:
       MYSQL_ROOT_PASSWORD: P@ssword
     volumes:
       - ${DATABASE_HOST}:${DATABASE_DATA_DIR}
-      - /var/sei/backup/${DATABASE_HOST}:/backup
     ports:
       - ${DATABASE_PORT}:${DATABASE_PORT}
 
   solr:
-    image: processoeletronico/vagrant_sei4_solr:${ENVIRONMENT_VERSION}
+    image: processoeletronico/solr9.6.1:${ENVIRONMENT_VERSION}
     container_name: solr
     ports:
       - "8983:8983"
 
   httpd:
-    image: processoeletronico/vagrant_sei4_httpd:${ENVIRONMENT_VERSION}
+    image: ${HTTPD_IMAGE}:${ENVIRONMENT_VERSION}
     container_name: httpd
     restart: always
     env_file:
       - .modulo.env
     ports:
-      - "80:8000"
       - "8000:8000"
     depends_on:
       - database
@@ -79,9 +76,10 @@ services:
       - memcached:memcached
       - solr:solr
       - smtp:smtp
-      - jod:jod
+      #- jod:jod
 
 volumes:
   mysql:
   oracle:
   sqlserver:
+  postgresql:

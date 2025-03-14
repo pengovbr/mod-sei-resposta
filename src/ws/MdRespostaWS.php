@@ -27,9 +27,9 @@ class MdRespostaWS extends InfraWS {
 
         $SiglaSistema = $params[0]->SiglaSistema;
         $IdentificacaoServico = $params[0]->IdentificacaoServico;
-        $arrIdProcedimento = (array) $params[0]->IdProcedimentos->IdProcedimento;
-        $arrNumProcedimento = (array) $params[0]->NumProcedimentos->NumProcedimento;          
-        $IdResposta = $params[0]->IdResposta;
+        $arrIdProcedimento = (array) $params[0]?->IdProcedimentos?->IdProcedimento;
+        $arrNumProcedimento = (array) $params[0]?->NumProcedimentos?->NumProcedimento;          
+        $IdResposta = $params[0]?->IdResposta;
                     
         $objServicoDTO = self::obterServico($SiglaSistema, $IdentificacaoServico);
                     
@@ -109,11 +109,11 @@ class MdRespostaWS extends InfraWS {
                 
         SessaoSEI::getInstance(false);
 
-        $SiglaSistema = $objSOAP->SiglaSistema;
-        $IdentificacaoServico = $objSOAP->IdentificacaoServico;
-        $arrIdProcedimento = $objSOAP->IdProcedimentos->IdProcedimento;
-        $arrNumProcedimento = $objSOAP->NumProcedimentos->NumProcedimento;
-        $IdResposta = $objSOAP->IdResposta;
+        $SiglaSistema = $objSOAP?->SiglaSistema;
+        $IdentificacaoServico = $objSOAP?->IdentificacaoServico;
+        $arrIdProcedimento = $objSOAP?->IdProcedimentos?->IdProcedimento;
+        $arrNumProcedimento = $objSOAP?->NumProcedimentos?->NumProcedimento;
+        $IdResposta = $objSOAP?->IdResposta;
 
         if (empty($arrIdProcedimento) && empty($arrNumProcedimento) && empty($IdResposta)) {
           $objInfraException->lancarValidacao('Identificador e/ou processo da resposta não foi informado.');
@@ -181,11 +181,11 @@ class MdRespostaWS extends InfraWS {
             if($IdRespostaRetorno != $objMdRespostaDTO->getNumIdResposta()){
               $IdRespostaRetorno = $objMdRespostaDTO->getNumIdResposta();
 
-              $arrDocumentos = new ArrayObject();
+              $arrDocumentos = [];
               foreach($arrObjMdRespostaDTO as $objDocumentos){
                 if($IdRespostaRetorno == $objDocumentos->getNumIdResposta()){
                   $soapVar = new SoapVar($objDocumentos->getStrProtocoloFormatadoAnexos(), XSD_STRING, null, null, 'ProtocoloDocumento');
-                  $arrDocumentos->append($soapVar);
+                  $arrDocumentos[] = $soapVar;
                 }
               }
                           
@@ -197,7 +197,7 @@ class MdRespostaWS extends InfraWS {
               'Mensagem' => (string) $objMdRespostaDTO->getStrMensagem(),
               'SinConclusiva' => (string) $objMdRespostaDTO->getStrSinConclusiva(),
               'DthResposta' => (string) $objMdRespostaDTO->getDthDthResposta(),
-              'ProtocoloDocumentosAnexados' => (object) $arrDocumentos
+              'ProtocoloDocumentosAnexados' => new SoapVar($arrDocumentos,SOAP_ENC_OBJECT,null,null,'ProtocoloDocumento')
                 );
 
                 $soapVarResposta = new SoapVar($Resposta, null, null, null, 'Resposta');
@@ -215,7 +215,7 @@ class MdRespostaWS extends InfraWS {
   protected function cadastrarProcessoSemRespostaMonitorado($objSOAP){
     try{
 
-        $IdProcedimento = $objSOAP->IdProcedimento;
+        $IdProcedimento = $objSOAP?->IdProcedimento;
 
       if (InfraString::isBolVazia($IdProcedimento)) {
         throw new InfraException('Processo não informado.');
@@ -241,7 +241,7 @@ class MdRespostaWS extends InfraWS {
   protected function retirarProcessoSemRespostaMonitorado($objSOAP){
     try{
 
-        $IdProcedimento = $objSOAP->IdProcedimento;
+        $IdProcedimento = $objSOAP?->IdProcedimento;
 
       if (InfraString::isBolVazia($IdProcedimento)) {
         throw new InfraException('Processo não informado.');

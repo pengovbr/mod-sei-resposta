@@ -1,4 +1,4 @@
-# NOTAS DE VERSÃO MOD-SEI-RESPOSTA (versão 1.2.2)
+# NOTAS DE VERSÃO MOD-SEI-RESPOSTA (versão 2.0.0)
 
 Este documento descreve as principais mudanças aplicadas nesta versão do módulo de integração do SuperBr com Platafoma Gov.br.
 
@@ -10,6 +10,5 @@ Para maiores informações sobre os procedimentos de instalação ou atualizaç�
 
 Ajustes para inclusão das opções de resposta definitiva e/ou solicitando ajuste/complementação assim criação de serviço para desabilitar a funcionalidade de envio de respostas para processo que não há necessidade de resposta.
 
-#### [Issue #52] Erro na listagem de resposta para ajuste
+### Compatibilidade com SEI 5
 
-Ao tentar, utilizando o endpoint de listarResposta, recuperar a resposta para ajuste sem documento anexo o sistema está apresentando erro.

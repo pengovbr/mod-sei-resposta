@@ -167,7 +167,11 @@ class MdRespostaWS extends InfraWS {
           $arrObjMdRespostaDTO = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
 
           if (empty($arrObjMdRespostaDTO)) {
-            $objInfraException->lancarValidacao('Nenhuma resposta encontrada.');
+            $mensagem = (object) array(
+                'mensagem' => ""
+            );
+
+            return new SoapVar($mensagem, null, null, null);
           }
 
         }

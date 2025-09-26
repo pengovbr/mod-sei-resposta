@@ -210,6 +210,10 @@ tests-functional: tests-functional-prerequisites check-super-isalive
 
 
 tests-functional-soap:
+	@if [ "$(chave)" ]; then \
+		sed -i -E 's|(>)[^<]*(</ChaveAcesso>)|\1$(chave)\2|g' $(TEST_FUNC)/SoapUI/MdRespostaWS-soapui-project.xml ; \
+		echo "Arquivo de testes atualizado com a chave de acesso informada."; \
+	fi
 	docker run -i --network=host --rm -v "$$PWD"/$(TEST_FUNC)/SoapUI:/opt/soapui/projects -v "$$PWD"/$(TEST_FUNC)/SoapUI/result:/opt/soapui/projects/testresult lukastosic/docker-soapui -e$(HOST_URL)/sei/modulos/$(MODULO_NOME)/ws/MdRespostaWS.php -s"SeiMdRespostaSOAP TestSuite" -r -j -f/opt/soapui/projects/testresult -I "/opt/soapui/projects/MdRespostaWS-soapui-project.xml"
 
 update: ## Atualiza banco de dados através dos scripts de atualização do sistema

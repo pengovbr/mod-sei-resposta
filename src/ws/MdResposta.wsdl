@@ -63,6 +63,14 @@
               </xsd:annotation>
             </xsd:element>
 
+            <xsd:element name="ChaveAcesso" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe a Chave de Acesso
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
@@ -91,6 +99,14 @@
               <xsd:annotation>
                 <xsd:documentation>
                   Informe o identificador do processo a que não terá resposta do Super.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="ChaveAcesso" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe a Chave de Acesso
                 </xsd:documentation>
               </xsd:annotation>
             </xsd:element>
@@ -139,6 +155,14 @@
               <xsd:annotation>
                 <xsd:documentation>
                   Informe o identificador do processo a que não terá resposta do Super.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="ChaveAcesso" type="xsd:string" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  Informe a Chave de Acesso
                 </xsd:documentation>
               </xsd:annotation>
             </xsd:element>

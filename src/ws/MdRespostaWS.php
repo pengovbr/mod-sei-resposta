@@ -30,6 +30,19 @@ class MdRespostaWS extends InfraWS {
         $arrIdProcedimento = (array) $params[0]?->IdProcedimentos?->IdProcedimento;
         $arrNumProcedimento = (array) $params[0]?->NumProcedimentos?->NumProcedimento;          
         $IdResposta = $params[0]?->IdResposta;
+        $ChaveAcesso = $params[0]?->ChaveAcesso;
+
+        $objServicoDTO = self::obterServico($SiglaSistema, $IdentificacaoServico);
+        if ($objServicoDTO->getStrSinChaveAcesso() == 'S') {
+          if (InfraString::isBolVazia($ChaveAcesso)) {
+            $objInfraException->lancarValidacao('Chave de Acesso não informada.');
+          }
+   
+          $objInfraBcrypt = new InfraBcrypt();
+          if (!$objInfraBcrypt->verificar(md5(substr($ChaveAcesso, strlen($objServicoDTO->getStrCrc()))), $objServicoDTO->getStrChaveAcesso())) {
+            $objInfraException->lancarValidacao('Chave de Acesso inválida.');
+          }
+        }
                     
         $objServicoDTO = self::obterServico($SiglaSistema, $IdentificacaoServico);
                     
@@ -167,7 +180,11 @@ class MdRespostaWS extends InfraWS {
           $arrObjMdRespostaDTO = $objMdRespostaRN->listarResposta($objMdRespostaDTO);
 
           if (empty($arrObjMdRespostaDTO)) {
-            $objInfraException->lancarValidacao('Nenhuma resposta encontrada.');
+            $mensagem = (object) array(
+                'mensagem' => ""
+            );
+
+            return new SoapVar($mensagem, null, null, null);
           }
 
         }
@@ -285,7 +302,11 @@ class MdRespostaWS extends InfraWS {
       $objServicoDTO->retStrIdentificacao();
       $objServicoDTO->retStrSiglaUsuario();
       $objServicoDTO->retNumIdUsuario();
+      $objServicoDTO->retStrSinServidor();
       $objServicoDTO->retStrServidor();
+      $objServicoDTO->retStrSinChaveAcesso();
+      $objServicoDTO->retStrChaveAcesso();
+      $objServicoDTO->retStrCrc();
       $objServicoDTO->retStrSinLinkExterno();
       $objServicoDTO->retNumIdContatoUsuario();
       $objServicoDTO->setNumIdUsuario($objUsuarioDTO->getNumIdUsuario());

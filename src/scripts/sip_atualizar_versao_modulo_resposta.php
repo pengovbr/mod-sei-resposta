@@ -309,6 +309,11 @@ class VersaoSipRN extends InfraScriptVersao
   public function versao_2_0_0($strVersaoAtual)
     {
   }
+
+  // phpcs:ignore PSR1.Methods.CamelCapsMethodName
+  public function versao_2_0_1($strVersaoAtual)
+    {
+  }
 }
 
 try {
@@ -333,7 +338,8 @@ try {
             '1.2.1' => 'versao_1_2_1',
             '1.2.2' => 'versao_1_2_2',
             '1.3.0' => 'versao_1_3_0',
-            '2.0.0' => 'versao_2_0_0'
+            '2.0.0' => 'versao_2_0_0',
+            '2.0.1' => 'versao_2_0_1'
         )
     );
 

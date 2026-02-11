@@ -29,17 +29,15 @@ class MdRespostaWS extends InfraWS {
         $IdentificacaoServico = $params[0]->IdentificacaoServico;
         $arrIdProcedimento = (array) $params[0]?->IdProcedimentos?->IdProcedimento;
         $arrNumProcedimento = (array) $params[0]?->NumProcedimentos?->NumProcedimento;          
-        $IdResposta = $params[0]?->IdResposta;
-        $ChaveAcesso = $params[0]?->ChaveAcesso;
 
         $objServicoDTO = self::obterServico($SiglaSistema, $IdentificacaoServico);
         if ($objServicoDTO->getStrSinChaveAcesso() == 'S') {
-          if (InfraString::isBolVazia($ChaveAcesso)) {
+          if (InfraString::isBolVazia($IdentificacaoServico)) {
             $objInfraException->lancarValidacao('Chave de Acesso não informada.');
           }
    
           $objInfraBcrypt = new InfraBcrypt();
-          if (!$objInfraBcrypt->verificar(md5(substr($ChaveAcesso, strlen($objServicoDTO->getStrCrc()))), $objServicoDTO->getStrChaveAcesso())) {
+          if (!$objInfraBcrypt->verificar(md5(substr($IdentificacaoServico, strlen($objServicoDTO->getStrCrc()))), $objServicoDTO->getStrChaveAcesso())) {
             $objInfraException->lancarValidacao('Chave de Acesso inválida.');
           }
         }
@@ -310,7 +308,6 @@ class MdRespostaWS extends InfraWS {
       $objServicoDTO->retStrSinLinkExterno();
       $objServicoDTO->retNumIdContatoUsuario();
       $objServicoDTO->setNumIdUsuario($objUsuarioDTO->getNumIdUsuario());
-      $objServicoDTO->setStrIdentificacao($IdentificacaoServico);
                 
       $objServicoRN = new ServicoRN();
       $objServicoDTO = $objServicoRN->consultar($objServicoDTO); 

@@ -157,6 +157,8 @@ Como o envio é realizado de forma automática, o sistema precisa atribuir um Ti
     Permitir publicação apenas para documentos assinados: Sim
     Permite interessados: Sim
 
+> [!NOTE]
+> Para acessar os documentos resposta é necessário estar marcado o 'Gerar links de acesso externos' no sistema.
 
 ## 3. SUPORTE
 

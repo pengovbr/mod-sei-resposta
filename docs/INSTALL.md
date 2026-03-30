@@ -159,6 +159,7 @@ Como o envio é realizado de forma automática, o sistema precisa atribuir um Ti
 
 > [!NOTE]
 > Para acessar os documentos resposta é necessário estar marcado o 'Gerar links de acesso externos' no sistema.
+> Favor verificar no [manual do PGOV](https://manuais.processoeletronico.gov.br/pt-br/latest/PROTOCOLO.GOV.BR/MANUAL_TECNICO_OPERACIONAL/CONFIGURACAO_DO_SISTEMA_DE_PROCESSO_ADMINISTRATIVO.html#cadastro-do-servico) outros requisitos necessários
 
 ## 3. SUPORTE
 

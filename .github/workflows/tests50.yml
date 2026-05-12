@@ -1,16 +1,14 @@
-name: Testes SOAP e Funcional
+name: Testes para SEI 5.0.4 Bancos oracle, mysql, sqlserver e postgres
 
 on:
   pull_request:
   workflow_dispatch:
-  schedule:
-    - cron: '35 3 * * *'
   push:
     branches:
       - "master"
     paths:
       - 'src/**'
-      - '.github/workflows/tests.yml'
+      - '.github/workflows/tests50.yml'
 env: # Or as an environment variable
   CI: 'true'
 
@@ -20,8 +18,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sei: [5.0.4, release/5.1.0]
-        banco: [oracle, mysql, sqlserver]
+        sei: [5.0.4]
+        banco: [oracle, mysql, sqlserver, postgres]
     steps:
       - name: Fetch Pull Request branch
         uses: actions/checkout@v3

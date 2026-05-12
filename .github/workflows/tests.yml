@@ -1,6 +1,16 @@
 name: Testes SOAP e Funcional
 
-on: [push, pull_request]
+on:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '35 3 * * *'
+  push:
+    branches:
+      - "master"
+    paths:
+      - 'src/**'
+      - '.github/workflows/tests.yml'
 env: # Or as an environment variable
   CI: 'true'
 
@@ -8,8 +18,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        sei: [main, release/5.1.0]
+        sei: [5.0.4, release/5.1.0]
+        banco: [oracle, mysql, sqlserver]
     steps:
       - name: Fetch Pull Request branch
         uses: actions/checkout@v3
@@ -26,5 +38,5 @@ jobs:
       - name: Run make test
         run: |
              cd sei/src/sei/web/modulos/mod-sei-resposta
-             make up; make update; make install
+             make config base=${{ matrix.banco }}; make up; sleep 30s; make update; make install
              make tests-functional-full

@@ -1,4 +1,7 @@
-# Módulo de Resposta à plataforma Gov.br [![PHP_CodeSniffer](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml) [![Testes SOAP e Funcional](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests.yml)
+# Módulo de Resposta à plataforma Gov.br [![PHP_CodeSniffer](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/phpcs.yml) 
+[![Testes para SEI 5.0.4 Bancos oracle, mysql, sqlserver e postgres](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests50.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests50.yml)
+[![Testes para SEI 5.1.0 Bancos oracle, mysql, sqlserver e postgres](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests51.yml/badge.svg)](https://github.com/pengovbr/mod-sei-resposta/actions/workflows/tests51.yml)
+
 O módulo é responsável por integrar o SEI à plataforma GOV.BR e tem como objetivo possibilitar que o Órgão ou Entidade se comunique com o cidadão via SPE para demandar ajustes ou complementações e enviar os resultados das solicitações recebidas via Protocolo GOV.BR. 
 
 ## O REPOSITÓRIO

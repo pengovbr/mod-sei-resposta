@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         sei: [release/5.1.0]
-        banco: [oracle, mysql, sqlserver, postgres]
+        banco: [oracle, mysql, sqlserver, postgresql]
     steps:
       - name: Fetch Pull Request branch
         uses: actions/checkout@v6

@@ -80,6 +80,7 @@ class MdMetaBD extends InfraMetaBD {
 
     switch($strTableDrive) {
 
+      // phpcs:ignore PSR2.ControlStructures.SwitchDeclaration.TerminatingComment
       case 'InfraMySqli':
         // Fix para bug de MySQL versão inferior ao 5.5 o default engine
         // é MyISAM e não tem suporte a FOREING KEYS
@@ -139,6 +140,7 @@ class MdMetaBD extends InfraMetaBD {
           $strQuery = sprintf("ALTER TABLE `%s` RENAME TO `%s`", $strNomeTabelaAtual, $strNomeTabelaNovo);
             break;
 
+        // phpcs:ignore PSR2.ControlStructures.SwitchDeclaration.TerminatingComment
         case 'InfraSqlServer':
           $strQuery = sprintf("sp_rename '%s', '%s'", $strNomeTabelaAtual, $strNomeTabelaNovo);
 

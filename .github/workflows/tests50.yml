@@ -14,7 +14,7 @@ env: # Or as an environment variable
 
 jobs:
   test:
-    runs-on: HuaweiRunner01
+    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:

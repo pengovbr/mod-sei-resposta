@@ -14,7 +14,7 @@ env: # Or as an environment variable
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: HuaweiRunner01
     strategy:
       fail-fast: false
       matrix:

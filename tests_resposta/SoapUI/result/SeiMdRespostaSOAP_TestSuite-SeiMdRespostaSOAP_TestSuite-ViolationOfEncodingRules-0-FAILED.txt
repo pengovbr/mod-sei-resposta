@@ -1,0 +1,63 @@
+Status: FAILED
+Time Taken: 91
+Size: 173
+Timestamp: Mon Sep 15 13:30:43 GMT 2025
+TestStep: ViolationOfEncodingRules
+
+----------------- Messages ------------------------------
+[SOAP Fault] Response is not a SOAP Fault
+
+----------------- Properties ------------------------------
+Endpoint: http://localhost:8000/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php
+Encoding: UTF-8
+
+---------------- Request ---------------------------
+Request Headers: SOAPAction : "SeiMdRespostaAction"
+Connection : Keep-Alive
+User-Agent : Apache-HttpClient/4.1.1 (java 1.5)
+Host : localhost:8000
+Accept-Encoding : gzip,deflate
+Content-Length : 1011
+Content-Type : text/xml;charset=UTF-8
+
+
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">?</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">?</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int">?</IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string">?</NumProcedimento>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string">?</IdResposta>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+---------------- Response --------------------------
+Response Headers: Keep-Alive : timeout=15, max=100
+Server : Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/7.3.33
+Cache-Control : max-age=3
+Content-Encoding : gzip
+Connection : Keep-Alive
+Vary : Accept-Encoding
+Expires : Mon, 15 Sep 2025 13:30:46 GMT
+#status# : HTTP/1.1 200 OK
+Content-Length : 163
+Date : Mon, 15 Sep 2025 13:30:43 GMT
+X-Powered-By : PHP/7.3.33
+Content-Type : text/html; charset=iso-8859-1
+
+
+<br />
+<b>Parse error</b>:  syntax error, unexpected '-&gt;' (T_OBJECT_OPERATOR) in <b>/opt/sei/web/modulos/mod-sei-resposta/ws/MdRespostaWS.php</b> on line <b>30</b><br />
+

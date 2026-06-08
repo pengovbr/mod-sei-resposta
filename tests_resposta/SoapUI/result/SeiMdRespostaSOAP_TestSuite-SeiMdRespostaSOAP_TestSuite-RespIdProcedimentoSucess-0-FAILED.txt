@@ -1,0 +1,76 @@
+Status: FAILED
+Time Taken: 4066
+Size: 239
+Timestamp: Wed Sep 24 21:32:22 GMT 2025
+TestStep: RespIdProcedimentoSucess
+
+----------------- Messages ------------------------------
+[ContainsIdResposta] Missing token [IdResposta] in Response
+[ContainsIdProcedimento] Missing token [IdProcedimento] in Response
+[ContainsNumProtocolo] Missing token [NumProtocolo] in Response
+[ContainsProtocoloDocumento] Missing token [ProtocoloDocumento] in Response
+[ContainsMensagem] Missing token [Mensagem] in Response
+[ContainsSinConclusiva] Missing token [SinConclusiva] in Response
+[ContainsDthResposta] Missing token [DthResposta] in Response
+[ContainsProtocoloDocumentosAnexados] Missing token [ProtocoloDocumentosAnexados] in Response
+
+----------------- Properties ------------------------------
+Endpoint: http://localhost:8000/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php
+Encoding: UTF-8
+
+---------------- Request ---------------------------
+Request Headers: SOAPAction : "SeiMdRespostaAction"
+Connection : Keep-Alive
+User-Agent : Apache-HttpClient/4.1.1 (java 1.5)
+Host : localhost:8000
+Accept-Encoding : gzip,deflate
+Content-Length : 1027
+Content-Type : text/xml;charset=UTF-8
+
+
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">PD_GOV_BR</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">SeiResposta</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int">1</IdProcedimento>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string"/>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string"/>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+---------------- Response --------------------------
+Response Headers: Keep-Alive : timeout=15, max=100
+Server : Apache/2.4.62 (Rocky Linux) OpenSSL/3.2.2
+Connection : Keep-Alive
+Date : Wed, 24 Sep 2025 21:32:22 GMT
+Cache-Control : max-age=3
+Content-Encoding : gzip
+Set-Cookie : XDEBUG_SESSION=default; path=/; SameSite=Lax
+Set-Cookie : XDEBUG_SESSION=default; path=/; SameSite=Lax
+Vary : Accept-Encoding
+Expires : Wed, 24 Sep 2025 21:32:25 GMT
+#status# : HTTP/1.1 200 OK
+Content-Length : 168
+X-Powered-By : PHP/8.2.27
+Content-Type : text/xml; charset=utf-8
+
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Body>
+      <listarRespostaResponse>
+         <mensagem/>
+      </listarRespostaResponse>
+   </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

@@ -90,6 +90,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
         // Criação de Tipo de Documento	
         $result = $bancoSEI->query("SELECT MAX(id_serie) as id FROM serie");
         $maximoSeries = $result[0]['id'];
+        $idSerieResposta = $maximoSeries + 1;
 
         $bancoSEI->execute(
             "INSERT INTO serie (
@@ -109,7 +110,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
                 sin_valor_monetario
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             array(
-                $maximoSeries + 1,
+                $idSerieResposta,
                 1,
                 48,
                 'Resposta pelo Protocolo Digital',
@@ -201,6 +202,38 @@ class CenarioBaseTestCase extends Selenium2TestCase
                 '0',
             )
         );
+
+        // Configuraçao do Modulo
+        $bancoSEI->execute(
+            "INSERT INTO md_resposta_parametro (
+                nome,
+                valor
+            ) VALUES (?, ?)",
+            array(
+                'PARAM_SISTEMA',
+                'a:1:{i:0;s:9:"100000002";}',
+            )
+        );
+        $bancoSEI->execute(
+            "INSERT INTO md_resposta_parametro (
+                nome,
+                valor
+            ) VALUES (?, ?)",
+            array(
+                'PARAM_TIPO_DOCUMENTO_RESULTADO',
+                $idSerieResposta,
+            )
+        );
+        $bancoSEI->execute(
+            "INSERT INTO md_resposta_parametro (
+                nome,
+                valor
+            ) VALUES (?, ?)",
+            array(
+                'PARAM_TIPO_DOCUMENTO_AJUSTE_COMPLEMENTACAO',
+                $idSerieResposta,
+            )
+        );  
     }
 
     public static function setUpBeforeClass(): void

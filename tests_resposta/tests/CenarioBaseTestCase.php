@@ -59,6 +59,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
 
         $result = $bancoSEI->query("SELECT MAX(id_usuario) as id FROM usuario");
         $maximoUsuarios = $result[0]['id'];
+        $maximoUsuarios += 1;
 
         $bancoSEI->execute(
             "INSERT INTO usuario (
@@ -74,7 +75,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
                 sin_gov_br
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             array(
-                $maximoUsuarios + 1,
+                $maximoUsuarios,
                 $idContatoProtocoloDigital,
                 0,
                 null,
@@ -201,6 +202,68 @@ class CenarioBaseTestCase extends Selenium2TestCase
                 '30',
                 '0',
             )
+        );
+
+        // Criação do Serviço
+
+        $result = $bancoSEI->query("SELECT MAX(id_servico) as id FROM servico");
+        $maximoServicos = $result[0]['id'];
+        $idServicoAssociado = $maximoServicos + 1;
+        $bancoSEI->execute(
+            "INSERT INTO servico (
+                id_servico,
+                id_usuario,
+                identificacao,
+                descricao,
+                servidor,
+                sin_link_externo,
+                sin_ativo,
+                sin_chave_acesso,
+                sin_servidor
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            array(
+                $idServicoAssociado,
+                $maximoUsuarios,
+                'SeiResposta',
+                'Resposta ao protocolo digital',
+                '*',
+                'N',
+                'S',
+                'N',
+                'S'
+            )
+        );
+
+        $result = $bancoSEI->query("SELECT MAX(id_operacao_servico) as id FROM operacao_servico");
+        $maximoOperacoesServico = $result[0]['id'];
+        $idOperacaoServicoAssociado = $maximoOperacoesServico + 1;
+        $bancoSEI->execute(
+            "INSERT INTO operacao_servico (id_operacao_servico, id_servico, sta_operacao_servico) VALUES (?, ?, ?)",
+            array($idOperacaoServicoAssociado, $idServicoAssociado, '2')
+        );
+
+        $idOperacaoServicoAssociado += 1;
+        $bancoSEI->execute(
+            "INSERT INTO operacao_servico (id_operacao_servico, id_servico, sta_operacao_servico) VALUES (?, ?, ?)",
+            array($idOperacaoServicoAssociado, $idServicoAssociado, '15')
+        );
+
+        $idOperacaoServicoAssociado += 1;
+        $bancoSEI->execute(
+            "INSERT INTO operacao_servico (id_operacao_servico, id_servico, sta_operacao_servico) VALUES (?, ?, ?)",
+            array($idOperacaoServicoAssociado, $idServicoAssociado, '0')
+        );
+
+        $idOperacaoServicoAssociado += 1;
+        $bancoSEI->execute(
+            "INSERT INTO operacao_servico (id_operacao_servico, id_servico, sta_operacao_servico) VALUES (?, ?, ?)",
+            array($idOperacaoServicoAssociado, $idServicoAssociado, '1')
+        );
+
+        $idOperacaoServicoAssociado += 1;
+        $bancoSEI->execute(
+            "INSERT INTO operacao_servico (id_operacao_servico, id_servico, sta_operacao_servico) VALUES (?, ?, ?)",
+            array($idOperacaoServicoAssociado, $idServicoAssociado, '3')
         );
 
         // Configuraçao do Modulo

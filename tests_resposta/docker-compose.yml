@@ -140,6 +140,7 @@ services:
     links:
       - database:${DATABASE_HOST}
       - selenium:selenium
+      - proxy:org-http
     command: "true"
 
 volumes:

@@ -4,13 +4,14 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Conversao do teste funcional em Python
- * (tests_sei5/funcional/seleniumPython/02-SEI-MR-EnviarResposta/test_00EnviarRespostaDefinitiva.py).
+ * (tests_sei5/funcional/seleniumPython/02-SEI-MR-EnviarResposta/test_02EnviarRespostaValidacaoMensagem.py).
  *
  * O teste e dividido em duas etapas:
  *  - testGerarProcesso: realiza a chamada mock SOAP "gerarProcedimento" no SeiWS para criar o processo;
- *  - testEnviarRespostaDefinitiva: executa o cenario de UI (Selenium) e valida o envio da resposta definitiva.
+ *  - testEnviarRespostaValidacaoMensagem: executa o cenario de UI (Selenium) e valida que o envio
+ *    da resposta sem mensagem exibe o alerta de validacao "Informe a Mensagem.".
  */
-class EnviarRespostaTest extends FixtureCenarioBaseTestCase
+class EnviarRespostaValidacaoMensagemTest extends FixtureCenarioBaseTestCase
 {
     public static $contextoTeste;
     public static $procedimentoFormatado;
@@ -99,12 +100,12 @@ XML;
     }
 
     /**
-     * Etapa 2: cenario de validacao do envio da resposta definitiva.
-     * Equivalente ao metodo Python test_00EnviarRespostaDefinitiva (linha 92 em diante).
+     * Etapa 2: cenario de validacao da mensagem obrigatoria no envio da resposta.
+     * Equivalente ao metodo Python test_02EnviarRespostaValidacaoMensagem (linha 92 em diante).
      *
      * @depends testGerarProcesso
      */
-    public function testEnviarRespostaDefinitiva($procedimentoFormatado)
+    public function testEnviarRespostaValidacaoMensagem($procedimentoFormatado)
     {
         self::$contextoTeste = $this->definirContextoTeste(CONTEXTO_SEI);
 
@@ -119,108 +120,21 @@ XML;
         $this->frame(null);
         $this->byLinkText($procedimentoFormatado)->click();
 
-        // Incluir documento (Despacho) no processo
-        $this->frame(1);
-        $this->waitUntil(function () {
-            return $this->elementoVisivel("//img[@alt='Incluir Documento']");
-        }, 30000);
-        $this->byXPath("//img[@alt='Incluir Documento']")->click();
-
-        $this->frame(0);
-        $this->byLinkText('Despacho')->click();
-        $this->byCssSelector('#divOptPublico .infraRadioLabel')->click();
-        $this->waitUntil(function () {
-            return $this->elementoVisivel('#divInfraBarraComandosInferior > #btnSalvar', 'css');
-        }, 30000);
-
-        // Salvar abre a janela do editor; fecha-se a janela sem editar o conteudo
-        $janelasAntes = $this->windowHandles();
-        $this->byCssSelector('#divInfraBarraComandosInferior > #btnSalvar')->click();
-        $janelaEditor = $this->aguardarNovaJanela($janelasAntes, 30000);
-        $janelaRaiz = $this->windowHandle();
-        $this->window($janelaEditor);
-        $this->closeWindow();
-        $this->window($janelaRaiz);
-
-        // Assinar o documento
-        $this->frame(1);
-        $this->waitUntil(function () {
-            return $this->elementoVisivel("//img[@alt='Assinar Documento']");
-        }, 30000);
-        $this->byXPath("//img[@alt='Assinar Documento']")->click();
-
-        $this->frame(null);
-        $this->frame(2);
-        $this->waitUntil(function () {
-            return $this->elementoVisivel('selCargoFuncao', 'id');
-        }, 30000);
-        $this->select($this->byId('selCargoFuncao'))->selectOptionByLabel('Corregedor');
-        $this->byId('pwdSenha')->value(self::$contextoTeste['SENHA']);
-        $this->byId('btnAssinar')->click();
-        sleep(5);
-
-        // Navegar de volta a arvore do processo
-        $this->frame(null);
-        $this->frame(0);
-        $this->byXPath("//div[@id='topmenu']/a[2]")->click();
-
-        // Enviar Resposta
-        $this->frame(null);
+        // Acessar a acao "Enviar Resposta"
         $this->frame(1);
         $this->waitUntil(function () {
             return $this->elementoVisivel("//img[@alt='Enviar Resposta']");
         }, 30000);
         $this->byXPath("//img[@alt='Enviar Resposta']")->click();
 
+        // Tentar enviar a resposta sem preencher a mensagem
         $this->frame(0);
-        $this->byId('txaMensagem')->click();
-        $this->byId('txaMensagem')->value('teste');
-        $this->byId('imgInfraCheck')->click();
-        $this->byId('lblDefinitiva')->click();
         $this->byName('btnEnviar')->click();
 
-        // Confirmacao do envio definitivo
+        // Validacao: alerta informando que a mensagem e obrigatoria
         $textoAlerta = $this->alertText();
-        $this->assertStringContainsString('Confirma o envio da resposta', $textoAlerta);
-        $this->assertStringContainsString('Termo de Ci', $textoAlerta);
+        $this->assertStringContainsString('Informe a Mensagem', $textoAlerta);
         $this->acceptAlert();
-
-        // Validacao: documento "Voto" presente na arvore apos o envio
-        $this->frame(null);
-        $this->frame(0);
-        $this->waitUntil(function () {
-            return $this->elementoVisivel("//span[contains(.,'Voto')]");
-        }, 30000);
-        $this->assertGreaterThan(
-            0,
-            count($this->elements($this->using('xpath')->value("//span[contains(.,'Voto')]"))),
-            'Documento "Voto" nao encontrado na arvore do processo.'
-        );
-        $this->byXPath("//span[contains(.,'Voto')]")->click();
-
-        // Validacao do conteudo do documento "Voto" (Anexos, Despacho e Voto)
-        $this->frame(null);
-        $this->frame(1);
-        $this->frame(0);
-        $this->waitUntil(function () {
-            return $this->elementoVisivel("//label[contains(.,'Voto')]");
-        }, 30000);
-
-        $this->assertGreaterThan(
-            0,
-            count($this->elements($this->using('xpath')->value("//b[contains(.,'Anexos')]"))),
-            'Secao "Anexos" nao encontrada no documento de resposta.'
-        );
-        $this->assertGreaterThan(
-            0,
-            count($this->elements($this->using('xpath')->value("//a[contains(text(),'Despacho')]"))),
-            'Documento "Despacho" nao encontrado no anexo da resposta.'
-        );
-        $this->assertGreaterThan(
-            0,
-            count($this->elements($this->using('xpath')->value("//label[contains(.,'Voto')]"))),
-            'Documento "Voto" nao encontrado no anexo da resposta.'
-        );
     }
 
     /**
@@ -264,23 +178,5 @@ XML;
         } catch (\Exception $e) {
             return null;
         }
-    }
-
-    /**
-     * Aguarda a abertura de uma nova janela do navegador e retorna o seu handle.
-     * Equivalente ao metodo Python wait_for_window.
-     */
-    private function aguardarNovaJanela(array $janelasAntes, $timeout = 30000)
-    {
-        $novaJanela = $this->waitUntil(function () use ($janelasAntes) {
-            $janelasAtuais = $this->windowHandles();
-            if (count($janelasAtuais) > count($janelasAntes)) {
-                $diferenca = array_values(array_diff($janelasAtuais, $janelasAntes));
-                return !empty($diferenca) ? $diferenca[0] : null;
-            }
-            return null;
-        }, $timeout);
-
-        return $novaJanela;
     }
 }

@@ -267,6 +267,11 @@ class CenarioBaseTestCase extends Selenium2TestCase
         );
 
         // Configuraçao do Modulo
+        $result = $bancoSEI->query("SELECT id_usuario FROM usuario where sigla = 'PD_GOV_BR' ORDER BY id_usuario DESC LIMIT 1");
+        $idUsuarioPDGovBr = $result[0]['id_usuario'];
+        $result = $bancoSEI->query("SELECT id_usuario FROM usuario where sigla = 'Intranet' ORDER BY id_usuario DESC LIMIT 1");
+        $idUsuarioIntranet = $result[0]['id_usuario'];
+
         $bancoSEI->execute(
             "INSERT INTO md_resposta_parametro (
                 nome,
@@ -274,7 +279,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
             ) VALUES (?, ?)",
             array(
                 'PARAM_SISTEMA',
-                'a:1:{i:0;s:9:"100000002";}',
+                serialize(array($idUsuarioPDGovBr, $idUsuarioIntranet)),
             )
         );
         $bancoSEI->execute(
@@ -284,7 +289,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
             ) VALUES (?, ?)",
             array(
                 'PARAM_TIPO_DOCUMENTO_RESULTADO',
-                $idSerieResposta,
+                "94",
             )
         );
         $bancoSEI->execute(

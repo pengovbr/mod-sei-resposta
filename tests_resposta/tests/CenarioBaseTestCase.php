@@ -22,23 +22,43 @@ class CenarioBaseTestCase extends Selenium2TestCase
 
         // Criação de Sistema
         $result = $bancoSEI->query("SELECT MAX(id_contato) as id FROM contato");
-        $maximoContatos = $result[0]['id'];
+        $maximoContatos = $result[0]['ID'];
         $idContatoAssociado = $maximoContatos + 1;
 
+        $dataHoraAtual = date('Y-m-d H:i:s');
+        $databaseType = getenv('DATABASE_TYPE') ?: 'Oracle';
+        if (strtoupper($databaseType) === 'ORACLE') {
+            $query = "INSERT INTO contato (
+                        id_contato,
+                        id_contato_associado,
+                        id_unidade_cadastro,
+                        id_tipo_contato,
+                        nome,
+                        idx_contato,
+                        sigla,
+                        dth_cadastro,
+                        sta_natureza,
+                        sin_ativo,
+                        sin_endereco_associado
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS'), ?, ?, ?)";
+        } else {
+            // Para SQL Server ou outros que aceitam 'YYYY-MM-DD HH:MI:SS' diretamente
+            $query = "INSERT INTO contato (
+                        id_contato,
+                        id_contato_associado,
+                        id_unidade_cadastro,
+                        id_tipo_contato,
+                        nome,
+                        idx_contato,
+                        sigla,
+                        dth_cadastro,
+                        sta_natureza,
+                        sin_ativo,
+                        sin_endereco_associado
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        }
         $bancoSEI->execute(
-            "INSERT INTO contato (
-                id_contato,
-                id_contato_associado,
-                id_unidade_cadastro,
-                id_tipo_contato,
-                nome,
-                idx_contato,
-                sigla,
-                dth_cadastro,
-                sta_natureza,
-                sin_ativo,
-                sin_endereco_associado
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            $query,
             array(
                 $idContatoAssociado,
                 $idContatoAssociado,
@@ -47,18 +67,17 @@ class CenarioBaseTestCase extends Selenium2TestCase
                 'Protocolo Digital',
                 'pd_gov_br protocolo digital',
                 'PD_GOV_BR',
-                \InfraData::getStrDataHoraAtual(),
+                $dataHoraAtual,
                 'F',
                 'S',
                 'N'
             )
         );
-
-        $result = $bancoSEI->query("SELECT id_contato FROM contato where sigla = 'PD_GOV_BR' ORDER BY id_contato DESC LIMIT 1");
-        $idContatoProtocoloDigital = $result[0]['id_contato'];
+        $result = $bancoSEI->query("SELECT id_contato FROM contato where sigla = 'PD_GOV_BR'");
+        $idContatoProtocoloDigital = ((strtoupper($databaseType) === 'ORACLE') ? $result[0]['ID_CONTATO'] : $result[0]['id_contato']);
 
         $result = $bancoSEI->query("SELECT MAX(id_usuario) as id FROM usuario");
-        $maximoUsuarios = $result[0]['id'];
+        $maximoUsuarios = ((strtoupper($databaseType) === 'ORACLE') ? $result[0]['ID'] : $result[0]['id']);
         $maximoUsuarios += 1;
 
         $bancoSEI->execute(
@@ -90,7 +109,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
 
         // Criação de Tipo de Documento	
         $result = $bancoSEI->query("SELECT MAX(id_serie) as id FROM serie");
-        $maximoSeries = $result[0]['id'];
+        $maximoSeries = ((strtoupper($databaseType) === 'ORACLE') ? $result[0]['ID'] : $result[0]['id']);
         $idSerieResposta = $maximoSeries + 1;
 
         $bancoSEI->execute(
@@ -130,7 +149,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
 
         // Criação de Tipo de Procedimento
         $result = $bancoSEI->query("SELECT MAX(id_tipo_procedimento) as id FROM tipo_procedimento");
-        $maximoTiposProcedimentos = $result[0]['id'];
+        $maximoTiposProcedimentos = ((strtoupper($databaseType) === 'ORACLE') ? $result[0]['ID'] : $result[0]['id']);
         $idTipoProcedimentoAssociado = $maximoTiposProcedimentos + 1;
 
         $bancoSEI->execute(
@@ -147,8 +166,8 @@ class CenarioBaseTestCase extends Selenium2TestCase
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
             array(
                 $idTipoProcedimentoAssociado,
-                'Protocolização de documentos para o Protocolo Central do ME',
-                'Protocolização de documentos para o Protocolo Central do ME',
+                'Protocolizacao de documentos para o Protocolo Central do ME',
+                'Protocolizacao de documentos para o Protocolo Central do ME',
                 'S',
                 '0',
                 'N',
@@ -159,7 +178,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
         );
         
         $result = $bancoSEI->query("SELECT MAX(id_nivel_acesso_permitido) as id FROM nivel_acesso_permitido");
-        $maximoNivelAcessoPermitido = $result[0]['id'];
+        $maximoNivelAcessoPermitido = ((strtoupper($databaseType) === 'ORACLE') ? $result[0]['ID'] : $result[0]['id']);
         $idNivelAcessoPermitidoAssociado = $maximoNivelAcessoPermitido + 1;
         $bancoSEI->execute(
             "INSERT INTO nivel_acesso_permitido (
@@ -189,7 +208,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
         );
         
         $result = $bancoSEI->query("SELECT MAX(id_tipo_procedimento) as id FROM rel_tipo_procedimento_assunto");
-        $maximoRelTipoProcedimentoAssunto = $result[0]['id'];
+        $maximoRelTipoProcedimentoAssunto = ((strtoupper($databaseType) === 'ORACLE') ? $result[0]['ID'] : $result[0]['id']);
         $idRelTipoProcedimentoAssuntoAssociado = $maximoRelTipoProcedimentoAssunto + 1;
         $bancoSEI->execute(
             "INSERT INTO rel_tipo_procedimento_assunto (
@@ -207,7 +226,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
         // Criação do Serviço
 
         $result = $bancoSEI->query("SELECT MAX(id_servico) as id FROM servico");
-        $maximoServicos = $result[0]['id'];
+        $maximoServicos = ((strtoupper($databaseType) === 'ORACLE') ? $result[0]['ID'] : $result[0]['id']);
         $idServicoAssociado = $maximoServicos + 1;
         $bancoSEI->execute(
             "INSERT INTO servico (
@@ -235,7 +254,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
         );
 
         $result = $bancoSEI->query("SELECT MAX(id_operacao_servico) as id FROM operacao_servico");
-        $maximoOperacoesServico = $result[0]['id'];
+        $maximoOperacoesServico = ((strtoupper($databaseType) === 'ORACLE') ? $result[0]['ID'] : $result[0]['id']);
         $idOperacaoServicoAssociado = $maximoOperacoesServico + 1;
         $bancoSEI->execute(
             "INSERT INTO operacao_servico (id_operacao_servico, id_servico, sta_operacao_servico) VALUES (?, ?, ?)",
@@ -267,10 +286,10 @@ class CenarioBaseTestCase extends Selenium2TestCase
         );
 
         // Configuraçao do Modulo
-        $result = $bancoSEI->query("SELECT id_usuario FROM usuario where sigla = 'PD_GOV_BR' ORDER BY id_usuario DESC LIMIT 1");
-        $idUsuarioPDGovBr = $result[0]['id_usuario'];
-        $result = $bancoSEI->query("SELECT id_usuario FROM usuario where sigla = 'Intranet' ORDER BY id_usuario DESC LIMIT 1");
-        $idUsuarioIntranet = $result[0]['id_usuario'];
+        $result = $bancoSEI->query("SELECT id_usuario FROM usuario where sigla = 'PD_GOV_BR'");
+        $idUsuarioPDGovBr = ((strtoupper($databaseType) === 'ORACLE') ? $result[0]['ID_USUARIO'] : $result[0]['id_usuario']);
+        $result = $bancoSEI->query("SELECT id_usuario FROM usuario where sigla = 'Intranet'");
+        $idUsuarioIntranet = ((strtoupper($databaseType) === 'ORACLE') ? $result[0]['ID_USUARIO'] : $result[0]['id_usuario']);
 
         $bancoSEI->execute(
             "INSERT INTO md_resposta_parametro (

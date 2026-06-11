@@ -14,7 +14,7 @@ env: # Or as an environment variable
 
 jobs:
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:

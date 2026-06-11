@@ -38,4 +38,10 @@ jobs:
              sudo echo "127.0.0.1 org-http" | sudo tee -a /etc/hosts
              cd sei/src/sei/web/modulos/mod-sei-resposta
              make config base=${{ matrix.banco }}; make up; sleep 30s; make update; make install
-             make tests-functional-full
+
+      - name: Run headless test
+        uses: coactions/setup-xvfb@v1
+        with:
+          working-directory: sei/src/sei/web/modulos/mod-gestao-documental
+          run: make tests-functional-full
+          options: "-screen 0 1920x1080x24"

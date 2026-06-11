@@ -14,5 +14,6 @@ compatibilidade.json
 *.out
 *.swp
 **/__pycache__
+.tmp/
 
 tests/functional/SoapUI/result/

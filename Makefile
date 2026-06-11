@@ -1,19 +1,30 @@
-.PHONY: .env help clean build all install restart down destroy up config
-
-# Par√¢metros de execu√ß√£o do comando MAKE
-# Op√ß√µes poss√≠veis para spe (sistema de proc eletronico): sei5
-sistema=sei5
+.PHONY: .env .modulo.env help clean build all install restart down destroy up config test-functional-resposta install-phpunit-vendor vendor tests-functional-soap tests-functional-full
 
 -include .testselenium.env
--include .env
--include .modulo.env
 
-
-# Par√¢metros de configura√ß√£o
+# Par‚metros de configuraÁ„o
 base = mysql
+RESPOSTA_TEST_FUNC = tests_resposta
+
+-include $(RESPOSTA_TEST_FUNC)/.env
+-include $(RESPOSTA_TEST_FUNC)/.modulo.env
 
 ifndef HOST_URL
-HOST_URL=http://localhost:8000
+HOST_URL=http://org-http:8000
+endif
+
+ifeq (, $(shell groups |grep docker))
+ CMD_DOCKER_SUDO=sudo
+else
+ CMD_DOCKER_SUDO=
+endif
+
+ifeq (, $(shell which docker-compose))
+ CMD_DOCKER_COMPOSE=$(CMD_DOCKER_SUDO) docker compose
+ CMD_COMPOSE_FUNC = $(CMD_DOCKER_COMPOSE) -f $(RESPOSTA_TEST_FUNC)/docker-compose.yml --env-file $(RESPOSTA_TEST_FUNC)/.env
+else
+ CMD_DOCKER_COMPOSE=$(CMD_DOCKER_SUDO) docker-compose
+ CMD_COMPOSE_FUNC = $(CMD_DOCKER_COMPOSE) -f $(RESPOSTA_TEST_FUNC)/docker-compose.yml --env-file $(RESPOSTA_TEST_FUNC)/.env
 endif
 
 MODULO_NOME = mod-sei-resposta
@@ -24,15 +35,8 @@ SEI_SCRIPTS_DIR = dist/sei/scripts/$(MODULO_PASTAS_CONFIG)
 SEI_CONFIG_DIR = dist/sei/config/$(MODULO_PASTAS_CONFIG)
 SEI_MODULO_DIR = dist/sei/web/modulos/$(MODULO_NOME)
 SIP_SCRIPTS_DIR = dist/sip/scripts/$(MODULO_PASTAS_CONFIG)
-TEST_FUNC = tests_$(sistema)/funcional
-
--include $(TEST_FUNC)/.testselenium.env
--include $(TEST_FUNC)/.env
--include $(TEST_FUNC)/.modulo.env
-
-ARQUIVO_CONFIG_SEI=$(SEI_PATH)/sei/config/ConfiguracaoSEI.php
-ARQUIVO_ENV_RESPOSTA=.modulo.env
 MODULO_COMPACTADO = $(MODULO_NOME)-$(VERSAO_MODULO).zip
+
 CMD_INSTALACAO_SEI = echo -ne '$(SEI_DATABASE_USER)\n$(SEI_DATABASE_PASSWORD)\n' | php atualizar_versao_sei.php
 CMD_INSTALACAO_SIP = echo -ne '$(SIP_DATABASE_USER)\n$(SIP_DATABASE_PASSWORD)\n' | php atualizar_versao_sip.php
 CMD_INSTALACAO_RECURSOS_SEI = echo -ne '$(SIP_DATABASE_USER)\n$(SIP_DATABASE_PASSWORD)\n' | php atualizar_recursos_sei.php
@@ -43,31 +47,20 @@ RED=\033[0;31m
 NC=\033[0m
 YELLOW=\033[1;33m
 
-MENSAGEM_AVISO_MODULO = $(RED)[ATEN√á√ÉO]:$(NC)$(YELLOW) Necess√°rio configurar a chave de configura√ß√£o do m√≥dulo no arquivo de configura√ß√£o do SEI (ConfiguracaoSEI.php) e prover o modulo na pasta correta $(NC)\n               $(YELLOW)'Modulos' => array('MdRespostaIntegracao' => 'mod-sei-resposta') $(NC)
-MENSAGEM_AVISO_ENV = $(RED)[ATEN√á√ÉO]:$(NC)$(YELLOW) Configurar par√¢metros de autentica√ß√£o do ambiente de testes do m√≥dulo de Resposta no arquivo .modulo.env $(NC)
-MENSAGEM_AVISO_FONTES = $(RED)[ATEN√á√ÉO]:$(NC)$(YELLOW) Nao foi possivel localizar o fonte do Super. Verifique o valor SEI_PATH no arquivo .env $(NC)
+MENSAGEM_AVISO_MODULO = $(RED)[ATEN«√O]:$(NC)$(YELLOW) Necess·rio configurar a chave de configuraÁ„o do mÛdulo no arquivo de configuraÁ„o do SEI (ConfiguracaoSEI.php) e prover o modulo na pasta correta $(NC)\n               $(YELLOW)'Modulos' => array('MdRespostaIntegracao' => 'mod-sei-resposta') $(NC)
+MENSAGEM_AVISO_ENV = $(RED)[ATEN«√O]:$(NC)$(YELLOW) Configurar par‚metros de autenticaÁ„o do ambiente de testes do mÛdulo de Resposta no arquivo .modulo.env $(NC)
 
 CMD_CURL_SUPER_LOGIN = curl -s -L $(HOST_URL)/sei | grep "txtUsuario"
 
 define TESTS_MENSAGEM_ORIENTACAO
 Leia o arquivo README relacionado aos testes.
-O arquivo encontra-se nesse repositorio na pasta de testes funcionais.
+O arquivo encontra-se nesse repositorio na pasta tests_resposta.
 
 Pressione y para continuar [y/n]...
 endef
 export TESTS_MENSAGEM_ORIENTACAO
 
-ifeq (, $(shell groups |grep docker))
- CMD_DOCKER_SUDO=sudo
-else
- CMD_DOCKER_SUDO=
-endif
-
-ifeq (, $(shell which docker-compose))
- CMD_DOCKER_COMPOSE=$(CMD_DOCKER_SUDO) docker compose
-else
- CMD_DOCKER_COMPOSE=$(CMD_DOCKER_SUDO) docker-compose
-endif
+FILE_VENDOR_FUNCIONAL = $(RESPOSTA_TEST_FUNC)/vendor/autoload.php
 
 all: clean dist
 
@@ -86,28 +79,29 @@ dist: cria_json_compatibilidade
 	@mv $(SEI_MODULO_DIR)/scripts/sip_atualizar_versao_modulo_resposta.php $(SIP_SCRIPTS_DIR)/
 	@rm -rf $(SEI_MODULO_DIR)/config
 	@rm -rf $(SEI_MODULO_DIR)/scripts
-	@cd dist/ && zip -r $(MODULO_COMPACTADO) INSTALACAO.md ATUALIZACAO.md NOTAS_VERSAO.md compatibilidade.json sei/ sip/	
+	@cd dist/ && zip -r $(MODULO_COMPACTADO) INSTALACAO.md ATUALIZACAO.md NOTAS_VERSAO.md compatibilidade.json sei/ sip/
 	@rm -rf dist/sei dist/sip dist/INSTALACAO.md dist/ATUALIZACAO.md
-	@echo "Constru√ß√£o do pacote de distribui√ß√£o finalizada com sucesso"
+	@echo "ConstruÁ„o do pacote de distribuiÁ„o finalizada com sucesso"
 
 
 clean:
 	@rm -rf dist
-	@echo "Limpeza do diret√≥rio de distribui√ß√£o do realizada com sucesso"
+	@echo "Limpeza do diretÛrio de distribuiÁ„o do realizada com sucesso"
 
 
 .env:
-	@if [ ! -f ".env" ]; then \
-	cp envs/$(base).env .env; \
-	echo "Arquivo .env nao existia. Copiado o arquivo default da pasta envs."; \
+	@if [ ! -f "$(RESPOSTA_TEST_FUNC)/.env" ]; then \
+	cp envs/$(base).env $(RESPOSTA_TEST_FUNC)/.env; \
+	echo "Arquivo $(RESPOSTA_TEST_FUNC)/.env nao existia. Copiado o arquivo default da pasta envs."; \
 	echo "Se for o caso, faca as alteracoes nele antes de subir o ambiente."; \
 	echo ""; sleep 5; \
 	fi
 
 
 .modulo.env:
-	@if [ ! -f ".modulo.env" ]; then \
-	cp envs/modulo.env .modulo.env; \
+	@if [ ! -f "$(RESPOSTA_TEST_FUNC)/.modulo.env" ]; then \
+	cp envs/modulo.env $(RESPOSTA_TEST_FUNC)/.modulo.env; \
+	echo "Arquivo $(RESPOSTA_TEST_FUNC)/.modulo.env nao existia. Copiado o arquivo default da pasta envs."; \
 	fi
 
 
@@ -120,22 +114,9 @@ clean:
 	fi
 
 
-check-super-path:
-	@if [ ! -f $(SEI_PATH)/sei/web/SEI.php ]; then \
-	echo "$(MENSAGEM_AVISO_FONTES)\n" ; \
-	exit 1 ; \
-	fi
-
-
-check-module-config:
-	@docker cp utils/verificar_modulo.php httpd:/
-	@$(CMD_DOCKER_COMPOSE) exec -T httpd bash -c "php /verificar_modulo.php" ; ret=$$?; echo "$$ret"; if [ ! $$ret -eq 0 ]; then echo "$(MENSAGEM_AVISO_MODULO)\n"; exit 1; fi
-
-
-# acessa o super e verifica se esta respondendo a tela de login
 check-super-isalive:
 	@echo ""
-	@echo "Vamos tentar acessar a pagina de login do $(sistema), vamos aguardar por 45 segs."
+	@echo "Vamos tentar acessar a pagina de login do SEI, vamos aguardar por 45 segs."
 	@for number in 1 2 3 4 5 6 7 8 9 ; do \
 	    echo 'Tentando acessar...'; var=$$(echo $$($(CMD_CURL_SUPER_LOGIN))); \
 			if [ "$$var" != "" ]; then \
@@ -148,52 +129,59 @@ check-super-isalive:
 	done
 
 
-prerequisites-up: .env .modulo.env check-super-path
+prerequisites-up: .env .modulo.env
 
 
-prerequisites-modulo-instalar: check-super-path check-module-config check-super-isalive
+prerequisites-modulo-instalar: check-super-isalive
 
 
 install: prerequisites-modulo-instalar
-	$(CMD_DOCKER_COMPOSE) exec -T -w /opt/sei/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SEI_MODULO)";
-	$(CMD_DOCKER_COMPOSE) exec -T -w /opt/sip/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SIP_MODULO)";
+	$(CMD_COMPOSE_FUNC) exec -T -w /opt/sei/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SEI_MODULO)";
+	$(CMD_COMPOSE_FUNC) exec -T -w /opt/sip/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SIP_MODULO)";
 	@echo "==================================================================================================="
 	@echo ""
-	@echo "Fim da instala√ß√£o do m√≥dulo"
+	@echo "Fim da instalaÁ„o do mÛdulo"
 
 
-up: prerequisites-up
-	$(CMD_DOCKER_COMPOSE) up -d
-	make check-super-isalive
+up: prerequisites-up prepare-upload-tmp
+	$(CMD_COMPOSE_FUNC) up -d
+
+
+prepare-upload-tmp:
+	@if [ ! -d "$(RESPOSTA_TEST_FUNC)/.tmp" ]; then \
+		echo "Criando diretÛrio .tmp..."; \
+		mkdir -p "$(RESPOSTA_TEST_FUNC)/.tmp"; \
+		chmod -R 777 "$(RESPOSTA_TEST_FUNC)/.tmp"; \
+	fi
 
 
 config:
-	@cp -f envs/$(base).env .env
-	@echo "Ambiente configurado para utilizar a base de dados $(base). (base=[mysql|oracle|sqlserver])"
+	@cp -f envs/$(base).env $(RESPOSTA_TEST_FUNC)/.env
+	@echo "Ambiente configurado para utilizar a base de dados $(base). (base=[mysql|oracle|sqlserver|postgresql])"
 
 
-down: 
-	$(CMD_DOCKER_COMPOSE) down
+down: prerequisites-up
+	$(CMD_COMPOSE_FUNC) down
 
 
 restart: down up
 
 
-destroy: 
-	$(CMD_DOCKER_COMPOSE) down --volumes
+destroy: prerequisites-up
+	$(CMD_COMPOSE_FUNC) down --volumes
 
 
-# mensagens de orientacao para first time buccaneers
 tests-functional-orientations:
-	@if [ "$$CI" != "true" ] && [ -z "$$MSGORIENTACAO" ]; then \
-		read -p "$$TESTS_MENSAGEM_ORIENTACAO" sure && case "$$sure" in [yY]) true;; *) false;; esac \
+ifndef MSGORIENTACAO
+	@if [ "$$CI" != "true" ]; then \
+		read -p "$$TESTS_MENSAGEM_ORIENTACAO" sure && case "$$sure" in [yY]) true;; *) false;; esac; \
 	fi
+endif
 
 
-# validar os testes antes de rodar
 tests-functional-validar: tests-functional-orientations
 	@if [ -z "$$SELENIUMTEST_SISTEMA_URL" ] || [ -z "$$SELENIUMTEST_SISTEMA_ORGAO" ]; then \
-	    echo "Variaveis de ambientes: SELENIUMTEST_SISTEMA_URL, SELENIUMTEST_SISTEMA_ORGAO, SELENIUMTEST_MODALIDADE nao definidas."; \
+	    echo "Variaveis de ambientes: SELENIUMTEST_SISTEMA_URL, SELENIUMTEST_SISTEMA_ORGAO nao definidas."; \
 			echo "Verifique se o arquivo de configuracao para os testes esta criado (.testselenium.env)"; \
 			echo "Existe um modelo desse arquivo na pasta envs."; \
 			exit 1; \
@@ -203,25 +191,38 @@ tests-functional-validar: tests-functional-orientations
 tests-functional-prerequisites: .testselenium.env tests-functional-validar
 
 
-# roda apenas os testes, o ajuste de data inicial e a criacao do ambiente ja devem ter sido realizados
-tests-functional: tests-functional-prerequisites check-super-isalive
-	@echo "Vamos iniciar a execucao dos testes..."
-	@cd $(TEST_FUNC) && HOST_URL=$(HOST_URL) ./testes.sh
+# make teste=NomeDoTeste test-functional-resposta  (sem teste= executa a suite funcional)
+test-functional-resposta: .env $(FILE_VENDOR_FUNCIONAL) up vendor
+	$(CMD_COMPOSE_FUNC) run --rm php-test-functional /tests/vendor/bin/phpunit -c /tests/phpunit.xml --testdox /tests/tests/$(addsuffix .php,$(teste)) ;
 
+$(FILE_VENDOR_FUNCIONAL):
+	make install-phpunit-vendor
 
-tests-functional-soap:
+install-phpunit-vendor:
+	$(CMD_COMPOSE_FUNC) run --rm -w /tests php-test-functional bash -c './composer.phar install'
+
+vendor: $(RESPOSTA_TEST_FUNC)/composer.json
+	$(CMD_COMPOSE_FUNC) run --rm -w /tests php-test-functional bash -c './composer.phar install'
+
+tests-functional-soap: tests-functional-prerequisites check-super-isalive
 	@if [ "$(chave)" ]; then \
-		sed -i -E 's|(>)[^<]*(</ChaveAcesso>)|\1$(chave)\2|g' $(TEST_FUNC)/SoapUI/MdRespostaWS-soapui-project.xml ; \
+		sed -i -E 's|(>)[^<]*(</ChaveAcesso>)|\1$(chave)\2|g' $(RESPOSTA_TEST_FUNC)/SoapUI/MdRespostaWS-soapui-project.xml ; \
 		echo "Arquivo de testes atualizado com a chave de acesso informada."; \
 	fi
-	docker run -i --network=host --rm -v "$$PWD"/$(TEST_FUNC)/SoapUI:/opt/soapui/projects -v "$$PWD"/$(TEST_FUNC)/SoapUI/result:/opt/soapui/projects/testresult lukastosic/docker-soapui -e$(HOST_URL)/sei/modulos/$(MODULO_NOME)/ws/MdRespostaWS.php -s"SeiMdRespostaSOAP TestSuite" -r -j -f/opt/soapui/projects/testresult -I "/opt/soapui/projects/MdRespostaWS-soapui-project.xml"
+	docker run -i --network=host --rm \
+		-v "$$PWD"/$(RESPOSTA_TEST_FUNC)/SoapUI:/opt/soapui/projects \
+		-v "$$PWD"/$(RESPOSTA_TEST_FUNC)/SoapUI/result:/opt/soapui/projects/testresult \
+		lukastosic/docker-soapui \
+		-e$(HOST_URL)/sei/modulos/$(MODULO_NOME)/ws/MdRespostaWS.php \
+		-s"SeiMdRespostaSOAP TestSuite" -r -j -f/opt/soapui/projects/testresult \
+		-I "/opt/soapui/projects/MdRespostaWS-soapui-project.xml"
 
-update: ## Atualiza banco de dados atrav√©s dos scripts de atualiza√ß√£o do sistema
-	$(CMD_DOCKER_COMPOSE) run --rm -w /opt/sei/scripts/ httpd sh -c "$(CMD_INSTALACAO_SEI)"; true
-	$(CMD_DOCKER_COMPOSE) run --rm -w /opt/sip/scripts/ httpd sh -c "$(CMD_INSTALACAO_SIP)"; true
-	$(CMD_DOCKER_COMPOSE) run --rm -w /opt/sip/scripts/ httpd sh -c "$(CMD_INSTALACAO_RECURSOS_SEI)"; true
+tests-functional-full: test-functional-resposta tests-functional-soap
 
-tests-functional-full: tests-functional tests-functional-soap
+update:
+	$(CMD_COMPOSE_FUNC) run --rm -w /opt/sei/scripts/ httpd sh -c "$(CMD_INSTALACAO_SEI)"; true
+	$(CMD_COMPOSE_FUNC) run --rm -w /opt/sip/scripts/ httpd sh -c "$(CMD_INSTALACAO_SIP)"; true
+	$(CMD_COMPOSE_FUNC) run --rm -w /opt/sip/scripts/ httpd sh -c "$(CMD_INSTALACAO_RECURSOS_SEI)"; true
 
 generate-der: up
 	docker run --network host --rm -v .:/work -w /work ghcr.io/k1low/tbls doc --rm-dist mariadb://$(SEI_DATABASE_USER):$(SEI_DATABASE_PASSWORD)@localhost:3306/sei

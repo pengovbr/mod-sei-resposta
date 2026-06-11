@@ -1,0 +1,74 @@
+Status: FAILED
+Time Taken: 3268
+Size: 382
+Timestamp: Fri Sep 26 12:45:21 GMT 2025
+TestStep: ProcedimentoNaoInformado
+
+----------------- Messages ------------------------------
+[Contains] Missing token [Identificador e/ou processo da resposta não foi informado.] in Response
+
+----------------- Properties ------------------------------
+Endpoint: http://localhost:8000/sei/modulos/mod-sei-resposta/ws/MdRespostaWS.php
+Encoding: UTF-8
+
+---------------- Request ---------------------------
+Request Headers: SOAPAction : "SeiMdRespostaAction"
+Connection : Keep-Alive
+User-Agent : Apache-HttpClient/4.1.1 (java 1.5)
+Host : localhost:8000
+Accept-Encoding : gzip,deflate
+Content-Length : 1086
+Content-Type : text/xml;charset=UTF-8
+
+
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:seim="SeiMdResposta">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <seim:RespostaRequest>
+         <SiglaSistema xsi:type="xsd:string">PD_GOV_BR</SiglaSistema>
+         <IdentificacaoServico xsi:type="xsd:string">SeiResposta</IdentificacaoServico>
+         <!--Optional:-->
+         <IdProcedimentos xsi:type="seim:IdProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <IdProcedimento xsi:type="xsd:int"/>
+         </IdProcedimentos>
+         <!--Optional:-->
+         <NumProcedimentos xsi:type="seim:NumProcedimentos">
+            <!--0 to 100 repetitions:-->
+            <NumProcedimento xsi:type="xsd:string"/>
+         </NumProcedimentos>
+         <!--Optional:-->
+         <IdResposta xsi:type="xsd:string"/>
+         <ChaveAcesso xsi:type="xsd:string">?</ChaveAcesso>
+      </seim:RespostaRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+---------------- Response --------------------------
+Response Headers: Server : Apache/2.4.62 (Rocky Linux) OpenSSL/3.2.2
+Content-Encoding : gzip
+Connection : close
+Set-Cookie : XDEBUG_SESSION=default; path=/; SameSite=Lax
+Set-Cookie : XDEBUG_SESSION=default; path=/; SameSite=Lax
+Vary : Accept-Encoding
+#status# : HTTP/1.1 500 Internal Server Error
+Content-Length : 257
+Date : Fri, 26 Sep 2025 12:45:21 GMT
+X-Powered-By : PHP/8.2.27
+Content-Type : text/xml; charset=utf-8
+
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Body>
+      <SOAP-ENV:Fault>
+         <faultcode>SOAP-ENV:Client</faultcode>
+         <faultstring>Chave de Acesso inválida.</faultstring>
+         <detail>
+            <item>
+               <key>infra_tipo_excecao</key>
+               <value>INFRA_VALIDACAO</value>
+            </item>
+         </detail>
+      </SOAP-ENV:Fault>
+   </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

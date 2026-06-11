@@ -42,6 +42,6 @@ jobs:
       - name: Run headless test
         uses: coactions/setup-xvfb@v1
         with:
-          working-directory: sei/src/sei/web/modulos/mod-gestao-documental
+          working-directory: sei/src/sei/web/modulos/mod-sei-resposta
           run: make tests-functional-full
           options: "-screen 0 1920x1080x24"

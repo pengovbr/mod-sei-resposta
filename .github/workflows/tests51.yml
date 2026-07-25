@@ -41,5 +41,5 @@ jobs:
             
       - name: Run headless test
         run: |
-          cd sei/src/sei/web/modulos/mod-sei-pen
+          cd sei/src/sei/web/modulos/mod-sei-resposta
           xvfb-run -s "-screen 0 1920x1080x24" make test-functional

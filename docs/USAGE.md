@@ -1,15 +1,15 @@
-# Módulo de Resposta à plataforma Gov.br
+# Módulo de Resposta (Protocolo GOV.BR)
 
 O módulo é responsável por integrar o Sistema Eletrônico de Informações (SEI) à plataforma GOV.BR. Tem como objetivo possibilitar que o Órgão ou Entidade se comunique com o cidadão via SPE para demandar ajustes ou complementações e enviar os resultados das solicitações recebidas via Protocolo GOV.BR.
 
 
 A utilização deste módulo adicionará nova funcionalidade ao SEI, permitindo:
  - Solicitar ajustes ou complementos à documentação enviada pelo cidadão;
- - Enviar resultados à processos administrativos abertos por meio da plataforma Gov.br
+ - Enviar resultados à processos administrativos abertos por meio do Protocolo GOV.BR
 
 ## Manual de Utilização
 
-Esta seção tem por objetivo demonstrar a funcionalidade que será disponibilizada pelo módulo de resposta do SEI à plataforma Gov.br.
+Esta seção tem por objetivo demonstrar a funcionalidade que será disponibilizada pelo módulo de Resposta do SEI à plataforma Protocolo GOV.BR.
 
 ### Pré-requisitos
 - SEI com acesso externo liberado
@@ -18,7 +18,7 @@ Esta seção tem por objetivo demonstrar a funcionalidade que será disponibiliz
 
 Para permitir a interoperabilidade entre o SEI e a plataforma Gov.br, definiu-se um padrão de dados para intercâmbio. Este padrão define atributos que são obrigatórios e/ou opcionais.
 
-Ao enviar resposta, a Plataforma Gov.br, são obrigatórios os campos **processo, mensagem, lista de documentos e tipo de resposta**. O SEI fará validações das informações pendentes para envio e exibirá mensagens para o usuário, tais como:
+Ao enviar resposta são obrigatórios os campos **processo, mensagem, lista de documentos e tipo de resposta**. O SEI fará validações das informações pendentes para envio e exibirá mensagens para o usuário, tais como:
 
 - Informe a Mensagem
 - Nenhum documento selecionado (Verifica se o foi selecionado pelo menos um documento interno assinado ou se possui algum documento externo)
@@ -32,7 +32,7 @@ Ao enviar resposta, a Plataforma Gov.br, são obrigatórios os campos **processo
 
 ### Consulta às respostas enviadas
 
-O módulo disponibiliza um webservice a respeito das resposta enviadas. Para consultar as respostas geradas, deve-se acessar o serviço, informando para tanto as seguintes informações:
+O módulo disponibiliza um webservice para as respostas enviadas. Para consultá-las, deve-se acessar o serviço, fornecendo as seguintes informações:
 
 O wsdl pode ser acessado em:```<URL-SUPER>/controlador_ws.php?servico=MdRespostaWS```
 

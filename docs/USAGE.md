@@ -20,15 +20,21 @@ Para permitir a interoperabilidade entre o SEI e a plataforma Gov.br, definiu-se
 
 Ao enviar resposta são obrigatórios os campos **processo, mensagem, lista de documentos e tipo de resposta**. O SEI fará validações das informações pendentes para envio e exibirá mensagens para o usuário, tais como:
 
-- Informe a Mensagem
-- Nenhum documento selecionado (Verifica se o foi selecionado pelo menos um documento interno assinado ou se possui algum documento externo)
-- Selecione o Tipo de resposta
+- "Informe a Mensagem";
+- "Nenhum documento selecionado" (Verifica se o foi selecionado pelo menos um documento interno assinado ou se possui algum documento externo);
+- "Selecione o Tipo de resposta"
+  
 
-![Tela de envio de resposta](imagens/tela_mod_resposta.gif)
+Solicitação de ajustes:
+
+<img width="1900" height="831" alt="Módulo Resposta - Solicitação de justes" src="https://github.com/user-attachments/assets/bcc1cada-7923-4934-8443-3a041a26338f" />
 
 ---
 
-![Validação dos Campos obrigatórios no momento do envio da resposta](imagens/mod_resposta_validacoes.gif)
+Envio de resultado:
+
+<img width="1899" height="855" alt="Módulo Resposta - Envio de resultado" src="https://github.com/user-attachments/assets/8b30be6a-0f8f-4530-8feb-70b80c0f6520" />
+
 
 ### Consulta às respostas enviadas
 

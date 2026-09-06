@@ -1,8 +1,7 @@
-.PHONY: .env .modulo.env help clean build all install restart down destroy up config test-functional-resposta install-phpunit-vendor vendor tests-functional-soap tests-functional-full
-
+.PHONY: .env .modulo.env help clean build all install restart down destroy up config test-functional-resposta install-phpunit-vendor vendor tests-functional-soap tests-functional-full minify-svg minify-png minify-js generate-brotli
 -include .testselenium.env
 
-# Parâmetros de configuração
+# Parï¿½metros de configuraï¿½ï¿½o
 base = mysql
 RESPOSTA_TEST_FUNC = tests_resposta
 
@@ -47,8 +46,8 @@ RED=\033[0;31m
 NC=\033[0m
 YELLOW=\033[1;33m
 
-MENSAGEM_AVISO_MODULO = $(RED)[ATENÇÃO]:$(NC)$(YELLOW) Necessário configurar a chave de configuração do módulo no arquivo de configuração do SEI (ConfiguracaoSEI.php) e prover o modulo na pasta correta $(NC)\n               $(YELLOW)'Modulos' => array('MdRespostaIntegracao' => 'mod-sei-resposta') $(NC)
-MENSAGEM_AVISO_ENV = $(RED)[ATENÇÃO]:$(NC)$(YELLOW) Configurar parâmetros de autenticação do ambiente de testes do módulo de Resposta no arquivo .modulo.env $(NC)
+MENSAGEM_AVISO_MODULO = $(RED)[ATENï¿½ï¿½O]:$(NC)$(YELLOW) Necessï¿½rio configurar a chave de configuraï¿½ï¿½o do mï¿½dulo no arquivo de configuraï¿½ï¿½o do SEI (ConfiguracaoSEI.php) e prover o modulo na pasta correta $(NC)\n               $(YELLOW)'Modulos' => array('MdRespostaIntegracao' => 'mod-sei-resposta') $(NC)
+MENSAGEM_AVISO_ENV = $(RED)[ATENï¿½ï¿½O]:$(NC)$(YELLOW) Configurar parï¿½metros de autenticaï¿½ï¿½o do ambiente de testes do mï¿½dulo de Resposta no arquivo .modulo.env $(NC)
 
 CMD_CURL_SUPER_LOGIN = curl -s -L $(HOST_URL)/sei | grep "txtUsuario"
 
@@ -81,12 +80,39 @@ dist: cria_json_compatibilidade
 	@rm -rf $(SEI_MODULO_DIR)/scripts
 	@cd dist/ && zip -r $(MODULO_COMPACTADO) INSTALACAO.md ATUALIZACAO.md NOTAS_VERSAO.md compatibilidade.json sei/ sip/
 	@rm -rf dist/sei dist/sip dist/INSTALACAO.md dist/ATUALIZACAO.md
-	@echo "Construção do pacote de distribuição finalizada com sucesso"
+	@echo "Construï¿½ï¿½o do pacote de distribuiï¿½ï¿½o finalizada com sucesso"
 
+generate-brotli:
+	docker run --rm \
+		-v "$(PWD)/src:/work" \
+		-w /work \
+		alpine:latest \
+		sh -c "apk add --no-cache brotli >/dev/null && \
+			find . \
+				-type d -name modulos -prune -o \
+				\( -name '*.svg' -o -name '*.js' -o -name '*.css' \) \
+				-exec brotli -v -f -q 11 {} \;"
+
+minify-js:
+	docker run --rm \
+		-v "./src:/app" \
+		-v "./scripts:/scripts:ro" \
+		-w /app \
+		node:24-bookworm-slim \
+		sh /scripts/minify-js.sh
+
+minify-png:
+	@find . -type f -name "*.png" \
+	    -exec docker run --rm -v .:/work ghcr.io/oxipng/oxipng -o max --strip safe {} \;
+
+minify-svg:
+	@echo "Minificando SVG..."
+	@find . -type f -name "*.svg" \
+		-exec docker run --rm -v .:/app -w /app minidocks/svgo --multipass {} \;
 
 clean:
 	@rm -rf dist
-	@echo "Limpeza do diretório de distribuição do realizada com sucesso"
+	@echo "Limpeza do diretï¿½rio de distribuiï¿½ï¿½o do realizada com sucesso"
 
 
 .env:
@@ -140,7 +166,7 @@ install: prerequisites-modulo-instalar
 	$(CMD_COMPOSE_FUNC) exec -T -w /opt/sip/scripts/$(MODULO_PASTAS_CONFIG) httpd bash -c "$(CMD_INSTALACAO_SIP_MODULO)";
 	@echo "==================================================================================================="
 	@echo ""
-	@echo "Fim da instalação do módulo"
+	@echo "Fim da instalaï¿½ï¿½o do mï¿½dulo"
 
 
 up: prerequisites-up prepare-upload-tmp
@@ -149,7 +175,7 @@ up: prerequisites-up prepare-upload-tmp
 
 prepare-upload-tmp:
 	@if [ ! -d "$(RESPOSTA_TEST_FUNC)/.tmp" ]; then \
-		echo "Criando diretório .tmp..."; \
+		echo "Criando diretï¿½rio .tmp..."; \
 		mkdir -p "$(RESPOSTA_TEST_FUNC)/.tmp"; \
 		chmod -R 777 "$(RESPOSTA_TEST_FUNC)/.tmp"; \
 	fi
@@ -228,4 +254,4 @@ generate-der: up
 	docker run --network host --rm -v .:/work -w /work ghcr.io/k1low/tbls doc --rm-dist mariadb://$(SEI_DATABASE_USER):$(SEI_DATABASE_PASSWORD)@localhost:3306/sei
 
 cria_json_compatibilidade:
-	$(shell ./gerar_json_compatibilidade.sh)
+	$(shell ./scripts/gerar_json_compatibilidade.sh)

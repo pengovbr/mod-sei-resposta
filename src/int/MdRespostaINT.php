@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__).'/../../../SEI.php';
+require_once __DIR__.'/../../../SEI.php';
 
 class MdRespostaINT extends InfraINT {
 
@@ -13,13 +13,11 @@ class MdRespostaINT extends InfraINT {
       switch ($imagem) {
         case 'enviar_resposta_sei3.png':
             return 'enviar_resposta_sei4.png';
-            break;
         default:
           if($relPath==null){
                 return $imagem;
           }        
             return $relPath . $imagem;
-            break;
       }
 
     }
@@ -38,14 +36,10 @@ class MdRespostaINT extends InfraINT {
 
     if ($versao > 3) {
 
-      switch ($arquivo) {
-        case 'md_resposta_sei3.css':
-            return 'md_resposta_sei4.css';
-            break;
-        default:
-            return $arquivo;
-            break;
-      }
+      return match ($arquivo) {
+          'md_resposta_sei3.css' => 'md_resposta_sei4.css',
+          default => $arquivo,
+      };
     }
 
       return $arquivo;

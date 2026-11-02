@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../web/SEI.php';
+require_once __DIR__ . '/../../web/SEI.php';
 
 class VersaoSeiRN extends InfraScriptVersao
 {
@@ -67,9 +67,9 @@ class VersaoSeiRN extends InfraScriptVersao
                 dth_resposta ' . $this->objMetaBD->tipoDataHora() . '  NOT NULL
             )');
             
-        $this->objMetaBD->adicionarChavePrimaria('md_resposta_envio', 'pk_md_resposta_envio', array('id_resposta'));
-        $this->objMetaBD->adicionarChaveEstrangeira('fk_md_resposta_procedimento', 'md_resposta_envio', array('id_procedimento'), 'procedimento', array('id_procedimento'));
-        $this->objMetaBD->adicionarChaveEstrangeira('fk_md_resposta_documento', 'md_resposta_envio', array('id_documento'), 'documento', array('id_documento'));
+        $this->objMetaBD->adicionarChavePrimaria('md_resposta_envio', 'pk_md_resposta_envio', ['id_resposta']);
+        $this->objMetaBD->adicionarChaveEstrangeira('fk_md_resposta_procedimento', 'md_resposta_envio', ['id_procedimento'], 'procedimento', ['id_procedimento']);
+        $this->objMetaBD->adicionarChaveEstrangeira('fk_md_resposta_documento', 'md_resposta_envio', ['id_documento'], 'documento', ['id_documento']);
     
         // Cria a tabela de configuração
         $this->objInfraBanco->executarSql('CREATE TABLE md_resposta_parametro (
@@ -77,7 +77,7 @@ class VersaoSeiRN extends InfraScriptVersao
                 valor ' . $this->objMetaBD->tipoTextoGrande() . '  NOT NULL
             )');
 
-        $this->objMetaBD->adicionarChavePrimaria('md_resposta_parametro', 'pk_md_resposta_parametro_nome', array('nome'));
+        $this->objMetaBD->adicionarChavePrimaria('md_resposta_parametro', 'pk_md_resposta_parametro_nome', ['nome']);
     
         // Cria a tabela de relacionamento
         $this->objInfraBanco->executarSql('CREATE TABLE md_resposta_rel_documento (
@@ -85,8 +85,8 @@ class VersaoSeiRN extends InfraScriptVersao
                 id_documento ' . $this->objMetaBD->tipoNumeroGrande() . '  NOT NULL
             )');
 
-        $this->objMetaBD->adicionarChavePrimaria('md_resposta_rel_documento', 'pk_md_resposta_list_documento', array('id_resposta', 'id_documento'));
-        $this->objMetaBD->adicionarChaveEstrangeira('fk_md_resposta_doc_resposta', 'md_resposta_rel_documento', array('id_resposta'), 'md_resposta_envio', array('id_resposta'));
+        $this->objMetaBD->adicionarChavePrimaria('md_resposta_rel_documento', 'pk_md_resposta_list_documento', ['id_resposta', 'id_documento']);
+        $this->objMetaBD->adicionarChaveEstrangeira('fk_md_resposta_doc_resposta', 'md_resposta_rel_documento', ['id_resposta'], 'md_resposta_envio', ['id_resposta']);
     
         // Sequência: md_seq_resposta_envio
         $this->objInfraSequencia->criarSequencia('md_resposta_envio', '1', '0', '9999999999');
@@ -131,12 +131,12 @@ class VersaoSeiRN extends InfraScriptVersao
                 id_procedimento ' . $this->objMetaBD->tipoNumeroGrande() . '  NOT NULL
             )');
             
-        $this->objMetaBD->adicionarChavePrimaria('md_resposta_processo', 'pk_md_resposta_processo', array('id_procedimento'));
+        $this->objMetaBD->adicionarChavePrimaria('md_resposta_processo', 'pk_md_resposta_processo', ['id_procedimento']);
 
       if (BancoSEI::getInstance() instanceof InfraOracle) {
         BancoSEI::getInstance()->executarSql('ALTER TABLE md_resposta_processo ADD CONSTRAINT fk_md_resposta_processo FOREIGN KEY (id_procedimento) REFERENCES procedimento(id_procedimento)');
       }else{
-        $this->objMetaBD->adicionarChaveEstrangeira('fk_md_resposta_processo', 'md_resposta_processo', array('id_procedimento'), 'procedimento', array('id_procedimento'));
+        $this->objMetaBD->adicionarChaveEstrangeira('fk_md_resposta_processo', 'md_resposta_processo', ['id_procedimento'], 'procedimento', ['id_procedimento']);
       }
     } catch (Exception $ex) {
         throw new InfraException('Erro ao atualizar a versão 1.2.0 do módulo de resposta', $ex);
@@ -181,7 +181,7 @@ try {
     $objVersaoSeiRN->setStrVersaoAtual(MdRespostaIntegracao::VERSAO_MODULO);
     $objVersaoSeiRN->setStrParametroVersao(VersaoSeiRN::PARAMETRO_VERSAO_MODULO);
     $objVersaoSeiRN->setArrVersoes(
-        array(
+        [
             '0.0.0' => 'versao_0_0_0',
             '1.0.0' => 'versao_1_0_0',
             '1.0.1' => 'versao_1_0_1',
@@ -194,7 +194,7 @@ try {
             '1.3.0' => 'versao_1_3_0',
             '2.0.0' => 'versao_2_0_0',
             '2.0.1' => 'versao_2_0_1',
-        )
+        ]
     );
 
     $objVersaoSeiRN->setStrVersaoAtual(array_key_last($objVersaoSeiRN->getArrVersoes()));
@@ -209,7 +209,7 @@ try {
     echo (InfraException::inspecionar($e));
   try {
       LogSEI::getInstance()->gravar(InfraException::inspecionar($e));
-  } catch (Exception $e) {
+  } catch (Exception) {
   }
     exit(1);
 }

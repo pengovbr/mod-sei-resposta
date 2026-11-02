@@ -2,15 +2,16 @@
   "config": {
     "vendor-dir": "./vendor",
     "platform": {
-      "php": "7.3.12"
+      "php": "8.2"
     }
    },
   "require-dev": {
-      "php": "7.3.12",
+      "php": "8.2",
       "phpunit/phpunit": "*",
-      "squizlabs/php_codesniffer": "^3.13",
-      "mockery/mockery": "^1.5",
-      "phpcompatibility/php-compatibility": "^9.3"
+      "squizlabs/php_codesniffer": "*",
+      "mockery/mockery": "*",
+      "phpcompatibility/php-compatibility": "*",
+    "rector/rector": "*"
   },
   "require": {
       "pheromone/phpcs-security-audit": "*"

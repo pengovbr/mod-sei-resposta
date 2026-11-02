@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__).'/../../../SEI.php';
+require_once __DIR__.'/../../../SEI.php';
 
 /**
  * Mapeamento dos metadados sobre a estrutura do banco de dados
@@ -47,6 +47,7 @@ class MdMetaBD extends InfraMetaBD {
     else {
         return  $strQuery;
     }
+    return null;
   }
 
     /**
@@ -59,7 +60,7 @@ class MdMetaBD extends InfraMetaBD {
 
       $objInfraBanco = $this->getObjInfraIBanco();
 
-    if(count($this->obterTabelas('sei_teste'))==0){
+    if(count($this->obterTabelas('sei_teste')) === 0){
         $objInfraBanco->executarSql('CREATE TABLE sei_teste (id '.$this->tipoNumero().' NULL)');
     }
 
@@ -121,7 +122,7 @@ class MdMetaBD extends InfraMetaBD {
       return $this;
   }
 
-  public function adicionarChaveUnica($strNomeTabela = '', $arrNomeChave = array()){
+  public function adicionarChaveUnica($strNomeTabela = '', $arrNomeChave = []){
 
       $this->getObjInfraIBanco()
               ->executarSql('ALTER TABLE '.$strNomeTabela.' ADD CONSTRAINT UK_'.$strNomeTabela.' UNIQUE('.implode(', ', $arrNomeChave).')');
@@ -137,6 +138,7 @@ class MdMetaBD extends InfraMetaBD {
 
       switch ($strTableDrive) {
         case 'InfraMySqli':
+        case 'InfraPostgreSql':
           $strQuery = sprintf("ALTER TABLE `%s` RENAME TO `%s`", $strNomeTabelaAtual, $strNomeTabelaNovo);
             break;
 
@@ -146,10 +148,6 @@ class MdMetaBD extends InfraMetaBD {
 
         case 'InfraOracle':
           $strQuery = sprintf("RENAME TABLE %s TO %s", $strNomeTabelaAtual, $strNomeTabelaNovo);
-            break;
-                        
-        case 'InfraPostgreSql':
-          $strQuery = sprintf("ALTER TABLE `%s` RENAME TO `%s`", $strNomeTabelaAtual, $strNomeTabelaNovo);
             break;
 
       }
@@ -177,8 +175,6 @@ class MdMetaBD extends InfraMetaBD {
             break;
 
         case 'InfraOracle':
-            $strQuery = sprintf("ALTER TABLE %s RENAME COLUMN %s TO %s", $strNomeTabela, $strNomeColunaAtual, $strNomeColunaNova);
-            break;
                         
         case 'InfraPostgreSql':
           $strQuery = sprintf("ALTER TABLE %s RENAME COLUMN %s TO %s", $strNomeTabela, $strNomeColunaAtual, $strNomeColunaNova);
@@ -200,7 +196,7 @@ class MdMetaBD extends InfraMetaBD {
      */
   public function isTabelaExiste($strNomeTabela = ''){
 
-      return count($this->obterTabelas($strNomeTabela)) != 0;
+      return count($this->obterTabelas($strNomeTabela)) !== 0;
   }
 
   public function isColunaExiste($strNomeTabela = '', $strNomeColuna = ''){
@@ -233,7 +229,7 @@ class MdMetaBD extends InfraMetaBD {
      * @throws InfraException
      * @return MdMetaBD
      */
-  public function criarTabela($arrSchema = array()){
+  public function criarTabela($arrSchema = []){
 
       $strNomeTabela = $arrSchema['tabela'];
 
@@ -242,12 +238,12 @@ class MdMetaBD extends InfraMetaBD {
     }
 
       $objInfraBanco = $this->getObjInfraIBanco();
-      $arrColunas = array();
-      $arrStrQuery = array();
+      $arrColunas = [];
+      $arrStrQuery = [];
 
     foreach($arrSchema['cols'] as $strNomeColuna => $arrColunaConfig) {
 
-        list($strTipoDado, $strValorPadrao) = $arrColunaConfig;
+        [$strTipoDado, $strValorPadrao] = $arrColunaConfig;
 
       if($strValorPadrao != self::SNULLO && $strValorPadrao != self::NNULLO) {
 
@@ -285,7 +281,7 @@ class MdMetaBD extends InfraMetaBD {
           $arrCamposOrigem = (array)array_shift($arrayColumns);
           $arrCampos = $arrCamposOrigem;
 
-        if(!empty($arrayColumns)) {
+        if($arrayColumns !== []) {
           $arrCampos = (array)array_shift($arrayColumns);
         }
 
@@ -293,11 +289,8 @@ class MdMetaBD extends InfraMetaBD {
       }
     }
 
-    if(!empty($arrStrQuery)) {
-
-      foreach($arrStrQuery as $strQuery) {
-          $objInfraBanco->executarSql($strQuery);
-      }
+    foreach($arrStrQuery as $strQuery) {
+        $objInfraBanco->executarSql($strQuery);
     }
 
       return $this;

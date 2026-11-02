@@ -1,14 +1,14 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../web/Sip.php';
+require_once __DIR__ . '/../../web/Sip.php';
 
 class VersaoSipRN extends InfraScriptVersao
 {
     const PARAMETRO_VERSAO_MODULO = 'VERSAO_MODULO_RESPOSTA';
     const NOME_MODULO = 'Módulo de Respsota';
 
-    private $arrRecurso = array();
-    private $arrMenu = array();
+    private $arrRecurso = [];
+    private $arrMenu = [];
 
   public function __construct()
     {
@@ -62,7 +62,7 @@ class VersaoSipRN extends InfraScriptVersao
 
       foreach ($this->arrMenu as $array) {
 
-        list($numIdItemMenu, $numIdMenu, $numIdRecurso) = $array;
+        [$numIdItemMenu, $numIdMenu, $numIdRecurso] = $array;
 
         $objDTO->setNumIdPerfil($numIdPerfil);
         $objDTO->setNumIdSistema($numIdSistema);
@@ -83,7 +83,7 @@ class VersaoSipRN extends InfraScriptVersao
       $objRN = $this;
 
       // Vincula a um perfil os recursos e menus adicionados
-      $fnCadastrar = function($strNome, $numIdSistema) use($objDTO, $objBD, $objRN) {
+      $fnCadastrar = function($strNome, $numIdSistema) use($objDTO, $objBD, $objRN): void {
 
           $objDTO->unSetTodos();
           $objDTO->setNumIdSistema($numIdSistema);
@@ -223,7 +223,7 @@ class VersaoSipRN extends InfraScriptVersao
 
       //Cria o item de menu de edição de parâmetros
       $id_menu_parametros = $fnItemMenu($id_menu, $id_menu_resposta_configuracao, $id_sistema, $id_recurso_parametro_configuracao, 'Parâmetros de Configuração', 'N', 'S', 1);
-      $this->arrMenu[] = array($id_menu_parametros, $id_menu, $id_recurso_parametro_configuracao);
+      $this->arrMenu[] = [$id_menu_parametros, $id_menu, $id_recurso_parametro_configuracao];
 
       //Atribui as permissões aos recursos e menus
       $this->atribuirPerfil($id_sistema);
@@ -327,7 +327,7 @@ try {
     $objVersaoSipRN->setStrNome(VersaoSipRN::NOME_MODULO);
     $objVersaoSipRN->setStrParametroVersao(VersaoSipRN::PARAMETRO_VERSAO_MODULO);
     $objVersaoSipRN->setArrVersoes(
-        array(
+        [
             '0.0.0' => 'versao_0_0_0',
             '1.0.0' => 'versao_1_0_0',
             '1.0.1' => 'versao_1_0_1',
@@ -340,7 +340,7 @@ try {
             '1.3.0' => 'versao_1_3_0',
             '2.0.0' => 'versao_2_0_0',
             '2.0.1' => 'versao_2_0_1'
-        )
+        ]
     );
 
     $objVersaoSipRN->setStrVersaoAtual(array_key_last($objVersaoSipRN->getArrVersoes()));
@@ -356,7 +356,7 @@ try {
     echo (InfraException::inspecionar($e));
   try {
       LogSip::getInstance()->gravar(InfraException::inspecionar($e));
-  } catch (Exception $e) {
+  } catch (Exception) {
   }
     exit(1);
 }

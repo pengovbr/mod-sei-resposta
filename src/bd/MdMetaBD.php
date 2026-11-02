@@ -175,13 +175,10 @@ class MdMetaBD extends InfraMetaBD {
             break;
 
         case 'InfraOracle':
-                        
         case 'InfraPostgreSql':
           $strQuery = sprintf("ALTER TABLE %s RENAME COLUMN %s TO %s", $strNomeTabela, $strNomeColunaAtual, $strNomeColunaNova);
             break;
 
-                        
-                    
       }
 
         $objInfraBanco->executarSql($strQuery);

@@ -3,7 +3,7 @@
 
 class MdRespostaIntegracao extends SeiIntegracao{
 
-  const VERSAO_MODULO = "2.0.2";
+  const VERSAO_MODULO = "2.0.3";
 
 
   const COMPATIBILIDADE_MODULO_SEI = [
